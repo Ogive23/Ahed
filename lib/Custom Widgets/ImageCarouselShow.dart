@@ -4,14 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:ahed/Models/NeedyMedia.dart';
 
 class ImageCarouselShow extends StatelessWidget {
-  final List<String> images;
+  final List<NeedyMedia> needyMedias;
   final int currentIndex;
   final String type;
   final AppTheme appTheme;
   ImageCarouselShow(
-      {@required this.images,
+      {@required this.needyMedias,
       @required this.currentIndex,
       @required this.type,
       @required this.appTheme});
@@ -32,17 +33,17 @@ class ImageCarouselShow extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 enableInfiniteScroll: false,
                 viewportFraction: 1.0),
-            items: images
+            items: needyMedias
                 .map(
-                  (image) => Image.asset(
-                    image,
+                  (needyMedia) => Image.network(
+                    needyMedia.url,
                   ),
                 )
                 .toList(),
           ),
         );
       case 'After':
-        return images.isEmpty
+        return needyMedias.isEmpty
             ? Container(
                 height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(color: Colors.blueGrey),
@@ -85,10 +86,10 @@ class ImageCarouselShow extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       enableInfiniteScroll: false,
                       viewportFraction: 1.0),
-                  items: images
+                  items: needyMedias
                       .map(
-                        (image) => Image.asset(
-                          image,
+                        (needyMedia) => Image.network(
+                          needyMedia.url,
                         ),
                       )
                       .toList(),

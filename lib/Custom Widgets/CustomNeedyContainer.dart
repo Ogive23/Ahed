@@ -23,7 +23,8 @@ class CustomNeedyContainer extends StatelessWidget {
 
   int currentIndex = 0;
   CustomNeedyContainer({@required this.needy});
-  AppTheme appTheme;CommonData commonData;
+  AppTheme appTheme;
+  CommonData commonData;
   NeedyData needyData;
   double w, h;
   SessionManager sessionManager = new SessionManager();
@@ -75,14 +76,14 @@ class CustomNeedyContainer extends StatelessWidget {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               ImageCarouselShow(
-                                                images: needy.imagesBefore,
+                                                needyMedias: needy.imagesBefore,
                                                 currentIndex: currentIndex,
                                                 type: 'Before',
                                                 appTheme: appTheme,
                                               )));
                                 },
-                                child: Image.asset(
-                                  image,
+                                child: Image.network(
+                                 image.url,
                                   fit: BoxFit.cover,
                                   height: h / 3,
                                 ),
@@ -278,7 +279,7 @@ class CustomNeedyContainer extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ImageCarouselShow(
-                                      images: needy.imagesAfter,
+                                      needyMedias: needy.imagesAfter,
                                       type: 'After',
                                       currentIndex: currentIndex,
                                       appTheme: appTheme,
@@ -296,7 +297,8 @@ class CustomNeedyContainer extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           needyData.chooseNeedy(needy);
-                          commonData.changeStep(Pages.OnlineTransactionCreationScreen.index);
+                          commonData.changeStep(
+                              Pages.OnlineTransactionCreationScreen.index);
                         },
                         child: Text('Online Donation'),
                         style: ButtonStyle(
@@ -306,7 +308,8 @@ class CustomNeedyContainer extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           needyData.chooseNeedy(needy);
-                          commonData.changeStep(Pages.OfflineTransactionCreationScreen.index);
+                          commonData.changeStep(
+                              Pages.OfflineTransactionCreationScreen.index);
                         },
                         child: Text(
                           'Offline Donation',
