@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'package:ahed/ApiCallers/NeedyApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomNeedyContainer.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/LoadingNeedyContainer.dart';
 import 'package:ahed/Models/Needy.dart';
+import 'package:ahed/Models/NeedyMedia.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
@@ -37,69 +39,6 @@ class _NeediesScreenState extends State<NeediesScreen> {
       needies = [];
       needies.addAll(addedNeedies);
     });
-  }
-
-  getRandomType(int randomNumber) {
-    switch (randomNumber) {
-      case 0:
-        return 'Finding Living';
-      case 1:
-        return 'Upgrade Standard of Living';
-      case 2:
-        return 'Bride Preparation';
-      case 3:
-        return 'Debt';
-      case 4:
-        return 'Cure';
-    }
-  }
-
-  List<String> getRandomImage(int randomNumber) {
-    print(randomNumber);
-    switch (randomNumber) {
-      case 0:
-        return ['assets/images/2018_12_05_4268-Edit.jpg'];
-      case 1:
-        return ['assets/images/319028.jpg'];
-      case 2:
-        return ['assets/images/images.jpg'];
-      case 3:
-        return ['assets/images/dept.jpg'];
-      case 4:
-        return ['assets/images/child-hospital-002.jpg'];
-    }
-  }
-
-  String getRandomCharity(int randomNumber) {
-    print(randomNumber);
-    switch (randomNumber) {
-      case 0:
-        return 'Resala';
-      case 1:
-        return 'Gamiet El-Br';
-      case 2:
-        return 'El Jalila';
-      case 3:
-        return 'Khalaf Ahmad Al Habtoor';
-      case 4:
-        return 'Magdi Yacoub';
-    }
-  }
-
-  String getRandomCharityImage(int randomNumber) {
-    print(randomNumber);
-    switch (randomNumber) {
-      case 0:
-        return 'assets/images/bSOfYXcD_400x400.png';
-      case 1:
-        return 'assets/images/dar-al-ber-society.jpg';
-      case 2:
-        return 'assets/images/1519881695999.png';
-      case 3:
-        return 'assets/images/khalaf-al-habtoor.jpg';
-      case 4:
-        return 'assets/images/1519887944403.png';
-    }
   }
 
   Widget getNeediesBody(context) {
@@ -142,30 +81,13 @@ class _NeediesScreenState extends State<NeediesScreen> {
   }
 
   Future<List<Needy>> getGeneratedNeedies() async {
-    // await Future.delayed(Duration(seconds: 2));
-    int random = Random().nextInt(4);
-    int severity = Random().nextInt(10);
-    return [
-      Needy(
-          '1',
-          '1',
-          Random().nextInt(5) < 2 ? null : Random().nextDouble() * 100,
-          severity,
-          getSeverityClass(severity),
-          getRandomType(random),
-          'details',
-          (Random().nextDouble() * 1000).abs(),
-          (Random().nextDouble() * 10).abs(),
-          Random().nextInt(255).toString(),
-          Random().nextBool(),
-          Random().nextBool(),
-          DateTime.now(),
-          getRandomImage(random),
-          [],
-          Random().nextInt(255).toString(),
-          getRandomCharity(random),
-          getRandomCharityImage(random))
-    ];
+    NeedyApiCaller needyApiCaller = new NeedyApiCaller();
+    Map<String,dynamic> status = await needyApiCaller.getAll();
+    print(status);
+    if(!status['Err_Flag'])
+      return status['Values'];
+    //ToDo: Handle Error
+    print(status['Err_Flag']);
   }
 
   @override
