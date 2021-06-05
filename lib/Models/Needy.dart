@@ -1,3 +1,5 @@
+import 'NeedyMedia.dart';
+
 class Needy {
   String id;
   String name;
@@ -12,8 +14,8 @@ class Needy {
   bool satisfied;
   bool approved;
   DateTime createdOn;
-  List<String> imagesBefore;
-  List<String> imagesAfter;
+  List<NeedyMedia> imagesBefore;
+  List<NeedyMedia> imagesAfter;
   String url;
   String createdBy;
   String createdByImage;
