@@ -7,9 +7,8 @@ class CustomTimelineTile extends StatelessWidget {
   final bool done;
   final DateTime time;
   final double amount;
-  final String type;
   final String text;
-  CustomTimelineTile({this.done, this.time, this.amount, this.type, this.text});
+  CustomTimelineTile({this.done, this.time, this.amount, this.text});
   @override
   Widget build(BuildContext context) {
     return TimelineTile(
@@ -54,22 +53,11 @@ class CustomTimelineTile extends StatelessWidget {
             amount == null
                 ? SizedBox()
                 : Text(
-                    amount.toStringAsFixed(2)+" EGP",
+                    amount.toStringAsFixed(2)+" جنيه مصري",
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black.withOpacity(0.8),
                       fontWeight: FontWeight.bold,
-                    ),
-                  ),
-            const SizedBox(height: 4),
-            type == null
-                ? SizedBox()
-                : Text(
-                    type,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black.withOpacity(0.8),
-                      fontWeight: FontWeight.normal,
                     ),
                   ),
             const SizedBox(height: 4),
