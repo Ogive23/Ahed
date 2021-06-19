@@ -1,5 +1,7 @@
 
 
+import 'package:ahed/Screens/RegistrationScreens/login_screen.dart';
+
 import 'Screens/NeediesScreens/NeediesScreen.dart';
 import 'Screens/NeediesScreens/NeedyCreationScreen.dart';
 import 'Screens/SideScreens/profile_screen.dart';
@@ -11,18 +13,19 @@ import 'Screens/TransactionsScreens/OfflineTransactionCreationScreen.dart';
 import 'Screens/TransactionsScreens/OnlineTransactionCreationScreen.dart';
 
 enum Pages {
+  MyDonationScreen,
   HomeScreen,
   SettingsScreen,
   NeediesScreen,
   NeedyCreationScreen,
   OnlineTransactionCreationScreen,
   OfflineTransactionCreationScreen,
-  MyDonationScreen,
   ProfileScreen,
-  StayInTouchScreen
+  StayInTouchScreen,
+  LoginScreen
 }
 final pageTitles = [
-  'Ahed',
+  'عهد',
   'Settings',
   'Cases',
   'Create Case',
@@ -31,17 +34,18 @@ final pageTitles = [
   'My Donations',
   'Profile',
   'Our Society',
+  'Login'
 ];
 
 final pageOptions = [
+  MyDonationScreen(),
   HomeScreen(),
   SettingsScreen(),
   NeediesScreen(),
   NeedyCreationScreen(),
   OnlineTransactionCreationScreen(),
   OfflineTransactionCreationScreen(),
-  MyDonationScreen(),
   ProfileScreen(),
   StayInTouchScreen(),
-
+  LoginScreen()
 ];
