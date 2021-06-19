@@ -27,19 +27,19 @@ class CustomTextField extends StatelessWidget {
   static AppTheme appTheme;
   CustomTextField(
       {@required this.controller,
-        @required this.label,
-        @required this.selectedIcon,
-        @required this.selectedColor,
-        @required this.borderColor,
-        @required this.obscureText,
-        @required this.keyboardType,
-        @required this.hint,
-        @required this.error,
-        @required this.width,
-        @required this.onChanged,
-        @required this.onSubmitted,
-        @required this.rightInfo,
-        @required this.enableFormatters,
+      @required this.label,
+      @required this.selectedIcon,
+      @required this.selectedColor,
+      @required this.borderColor,
+      @required this.obscureText,
+      @required this.keyboardType,
+      @required this.hint,
+      @required this.error,
+      @required this.width,
+      @required this.onChanged,
+      @required this.onSubmitted,
+      @required this.rightInfo,
+      @required this.enableFormatters,
       this.maxLength,
       this.maxLines,
       this.helperText,
@@ -50,7 +50,7 @@ class CustomTextField extends StatelessWidget {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: h / 100),
+        padding: EdgeInsets.symmetric(vertical: h / 200),
         child: SizedBox(
           width: width,
           child: TextField(
@@ -59,7 +59,7 @@ class CustomTextField extends StatelessWidget {
             textDirection: TextDirection.ltr,
             maxLines: maxLines,
             textAlign: TextAlign.center,
-            style: appTheme.themeData.primaryTextTheme.subtitle1,
+            style: appTheme.themeData.primaryTextTheme.bodyText1,
             textInputAction: TextInputAction.done,
             onChanged: onChanged,
             onSubmitted: onSubmitted,
@@ -84,11 +84,11 @@ class CustomTextField extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.circular(15.0)),
               errorText: error,
-              errorStyle: appTheme.themeData.primaryTextTheme.headline2
+              errorStyle: appTheme.themeData.primaryTextTheme.subtitle2
                   .apply(color: Colors.red),
               errorMaxLines: 2,
               labelStyle: appTheme.themeData.primaryTextTheme.bodyText1,
-              hintStyle: appTheme.themeData.primaryTextTheme.headline2,
+              hintStyle: appTheme.themeData.primaryTextTheme.subtitle2,
               helperText: helperText,
               helperStyle: helperStyle,
               suffix: rightInfo
