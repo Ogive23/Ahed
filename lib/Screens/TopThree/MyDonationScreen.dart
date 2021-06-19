@@ -1,5 +1,7 @@
 import 'package:ahed/Custom%20Widgets/CustomLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
+import 'package:ahed/GeneralInfo.dart';
+import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
@@ -25,6 +27,8 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   AppTheme appTheme;
   List<Transaction> transactions;
   TabController tabController;
+
+  SessionManager sessionManager = new SessionManager();
   @override
   initState() {
     super.initState();
@@ -62,7 +66,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                   34,
                   DateTime(2020, 11, 17),
                   'OfflineTransaction',
-                  'Finding Living',
+                  'إيجاد مسكن مناسب',
                   'El gesr Elbrany St',
                   DateTime(2020, 11, 17),
                   DateTime(2020, 11, 21),
@@ -75,7 +79,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                   35,
                   DateTime(2021, 03, 03),
                   'OfflineTransaction',
-                  'Bride Preparation',
+                  'تجهيز العرائس',
                   'El gesr Elbrany St',
                   DateTime(2021, 03, 03),
                   DateTime(2021, 03, 07),
@@ -143,99 +147,136 @@ class _MyDonationScreenState extends State<MyDonationScreen>
     appTheme = Provider.of<AppTheme>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
-    return Material(
-      child: SafeArea(
-        child: Container(
-          height: double.infinity,
-          decoration: BoxDecoration(color: Colors.white),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios_sharp,
-                    color: Colors.black,
-                  ),
-                  onPressed: () => commonData.back(),
-                ),
-              ],
-            ),
-            CustomSpacing(),
-            Padding(
-              padding: EdgeInsets.only(left: w / 10),
-              child: Text(
-                'My Donations',
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        title: Padding(
+          padding: EdgeInsets.only(top: h / 20),
+          child: Text(
+            'تبرعاتي',
+            style: appTheme.nonStaticGetTextStyle(
+                1.0,
+                Colors.black,
+                appTheme.getTextTheme(context) * 1.5,
+                FontWeight.w600,
+                1.0,
+                TextDecoration.none,
+                'Delius'),
+          ),
+        ),
+      ),
+      body: Container(
+        height: double.infinity,
+        decoration: BoxDecoration(color: Colors.white),
+        child: Column(children: [
+          CustomSpacing(),
+          CustomSpacing(),
+          CustomSpacing(),
+          TabBar(
+            tabs: [
+              Tab(
+                  child: Text(
+                'الدفع الإلكتروني',
                 style: appTheme.nonStaticGetTextStyle(
                     1.0,
                     Colors.black,
-                    appTheme.getTextTheme(context) * 1.5,
+                    appTheme.getSemiBodyTextTheme(context),
                     FontWeight.w600,
                     1.0,
                     TextDecoration.none,
                     'Delius'),
-              ),
-            ),
-            CustomSpacing(),
-            TabBar(
-              tabs: [
-                Tab(
-                    child: Text(
-                  'Online Transactions',
-                  style: appTheme.nonStaticGetTextStyle(
-                      1.0,
-                      Colors.black,
-                      appTheme.getBodyTextTheme(context),
-                      FontWeight.w600,
-                      1.0,
-                      TextDecoration.none,
-                      'Delius'),
-                )),
-                Tab(
-                    child: Text(
-                  'Offline Transactions',
-                  style: appTheme.nonStaticGetTextStyle(
-                      1.0,
-                      Colors.black,
-                      appTheme.getBodyTextTheme(context),
-                      FontWeight.w600,
-                      1.0,
-                      TextDecoration.none,
-                      'Delius'),
-                ))
+              )),
+              Tab(
+                  child: Text(
+                'الدفع النقدي',
+                style: appTheme.nonStaticGetTextStyle(
+                    1.0,
+                    Colors.black,
+                    appTheme.getSemiBodyTextTheme(context),
+                    FontWeight.w600,
+                    1.0,
+                    TextDecoration.none,
+                    'Delius'),
+              ))
+            ],
+            controller: tabController,
+            indicatorColor: Colors.amber,
+            unselectedLabelColor: Colors.grey.withOpacity(0.5),
+            unselectedLabelStyle: appTheme.nonStaticGetTextStyle(
+                1.0,
+                Colors.grey.withOpacity(0.4),
+                appTheme.getBodyTextTheme(context),
+                FontWeight.w600,
+                1.0,
+                TextDecoration.none,
+                'Delius'),
+            labelStyle: appTheme.nonStaticGetTextStyle(
+                1.0,
+                Colors.black,
+                appTheme.getBodyTextTheme(context),
+                FontWeight.w600,
+                1.0,
+                TextDecoration.none,
+                'Delius'),
+          ),
+          CustomSpacing(),
+          Expanded(
+            child: TabBarView(
+              children: [
+                sessionManager.isLoggedIn()
+                    ? getTransactionsBody(context, 'Online')
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('عليك تسجيل الدخول للمتابعة'),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, "LoginScreen");
+                            },
+                            child: Text(
+                              'تسجيل الدخول',
+                              style: appTheme.nonStaticGetTextStyle(
+                                  1.0,
+                                  Colors.blue,
+                                  appTheme.getSemiBodyTextTheme(context),
+                                  FontWeight.w400,
+                                  1.0,
+                                  TextDecoration.underline,
+                                  'Delius'),
+                            ),
+                          )
+                        ],
+                      ),
+                sessionManager.isLoggedIn()
+                    ? getTransactionsBody(context, 'Offline')
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('عليك تسجيل الدخول للمتابعة'),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, "LoginScreen");
+                            },
+                            child: Text(
+                              'تسجيل الدخول',
+                              style: appTheme.nonStaticGetTextStyle(
+                                  1.0,
+                                  Colors.blue,
+                                  appTheme.getSemiBodyTextTheme(context),
+                                  FontWeight.w400,
+                                  1.0,
+                                  TextDecoration.underline,
+                                  'Delius'),
+                            ),
+                          )
+                        ],
+                      ),
               ],
               controller: tabController,
-              indicatorColor: Colors.amber,
-              unselectedLabelColor: Colors.grey.withOpacity(0.5),
-              unselectedLabelStyle: appTheme.nonStaticGetTextStyle(
-                  1.0,
-                  Colors.grey.withOpacity(0.4),
-                  appTheme.getBodyTextTheme(context),
-                  FontWeight.w600,
-                  1.0,
-                  TextDecoration.none,
-                  'Delius'),
-              labelStyle: appTheme.nonStaticGetTextStyle(
-                  1.0,
-                  Colors.black,
-                  appTheme.getBodyTextTheme(context),
-                  FontWeight.w600,
-                  1.0,
-                  TextDecoration.none,
-                  'Delius'),
             ),
-            CustomSpacing(),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  getTransactionsBody(context, 'Online'),
-                  getTransactionsBody(context, 'Offline'),
-                ],
-                controller: tabController,
-              ),
-            )
-          ]),
-        ),
+          )
+        ]),
       ),
     );
   }
@@ -247,11 +288,9 @@ class _MyDonationScreenState extends State<MyDonationScreen>
           done: true,
           time: transaction.createdAt,
           amount: transaction.amount,
-          type: transaction.type,
           text: transaction.type == 'OfflineTransaction'
-              ? 'Your Money went to ' +
-                  (transaction as OfflineTransaction).preferredSection +
-                  ' Section'
+              ? 'تبرعك ذهب إلي جهة ' +
+                  (transaction as OfflineTransaction).preferredSection
               : ''));
     });
     print(transactionWidgets.length);
