@@ -209,5 +209,318 @@ class HomeScreen extends StatelessWidget {
                     ),
               ),
             )));
+  Widget getAchievementCenterBody(Map<String, dynamic> data, context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('إنجازاتك', style: appTheme.themeData.primaryTextTheme.headline3),
+        CustomSpacing(),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: w / 35),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                HomeScreenAchievementContainer(
+                  w: w / 2 - w / 15,
+                  count: helper.notNull(data['NumberOfNeediesUserHelped'])
+                      ? double.parse(
+                          data['NumberOfNeediesUserHelped'].toString())
+                      : null,
+                  countTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.black,
+                      appTheme.getTextTheme(context) * 1.5,
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                  text: 'حالة قدرت تغير حياتهم للأحسن',
+                  achievementTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.grey[500],
+                      appTheme.getSemiBodyTextTheme(context),
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                ),
+                SizedBox(
+                  child: VerticalDivider(
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                  height: h / 20,
+                ),
+                HomeScreenAchievementContainer(
+                  w: w / 2 - w / 15,
+                  count: helper.notNull(data['ValueOfDonation'])
+                      ? double.parse(data['ValueOfDonation'].toString())
+                      : null,
+                  precision: 2,
+                  suffix: 'جنيه',
+                  countTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.black,
+                      appTheme.getTextTheme(context) * 1.5,
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                  text: 'هي حجم مساعدتك لينا',
+                  achievementTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.grey[500],
+                      appTheme.getSemiBodyTextTheme(context),
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                ),
+              ],
+            ),
+          ),
+        ),
+        CustomSpacing(),
+        CustomSpacing(),
+        Text('إنجازتنا', style: appTheme.themeData.primaryTextTheme.headline3),
+        CustomSpacing(),
+        Container(
+          padding: EdgeInsets.only(right: w / 35),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                HomeScreenAchievementContainer(
+                  w: w / 3,
+                  count: double.parse(data['NeediesSatisfied'].toString()),
+                  countTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getTextTheme(context) * 2,
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                  text: 'حالة قدرنا نخلصهم بتبرعاتكم',
+                  achievementTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getSemiBodyTextTheme(context),
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                ),
+                SizedBox(
+                  child: VerticalDivider(
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                  height: h / 20,
+                ),
+                HomeScreenAchievementContainer(
+                  w: w / 3,
+                  count:
+                      double.parse(data['NeediesFoundTheirNewHome'].toString()),
+                  countTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getTextTheme(context) * 2,
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                  text: 'حالة لقينا لهم مسكن مناسب',
+                  achievementTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getSemiBodyTextTheme(context),
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                ),
+                SizedBox(
+                  child: VerticalDivider(
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                  height: h / 20,
+                ),
+                HomeScreenAchievementContainer(
+                  w: w / 3,
+                  count: double.parse(
+                      data['NeediesUpgradedTheirStandardOfLiving'].toString()),
+                  countTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getTextTheme(context) * 2,
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                  text: 'حالة تم تحسيين أوضاع معيشتهم',
+                  achievementTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getSemiBodyTextTheme(context),
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                ),
+                SizedBox(
+                  child: VerticalDivider(
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                  height: h / 20,
+                ),
+                HomeScreenAchievementContainer(
+                  w: w / 3,
+                  count: double.parse(
+                      data['NeediesHelpedToPrepareForPride'].toString()),
+                  countTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getTextTheme(context) * 2,
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                  text: 'ساعدناهم يكملوا فرحتهم',
+                  achievementTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getSemiBodyTextTheme(context),
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                ),
+                SizedBox(
+                  child: VerticalDivider(
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                  height: h / 20,
+                ),
+                HomeScreenAchievementContainer(
+                  w: w / 3,
+                  count:
+                      double.parse(data['NeediesHelpedToPayDept'].toString()),
+                  countTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getTextTheme(context) * 2,
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                  text: 'ساعدناهم يسددوا ديونهم',
+                  achievementTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getSemiBodyTextTheme(context),
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                ),
+                SizedBox(
+                  child: VerticalDivider(
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                  height: h / 20,
+                ),
+                HomeScreenAchievementContainer(
+                  w: w / 3,
+                  count: double.parse(data['NeediesHelpedToCure'].toString()),
+                  countTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getTextTheme(context) * 2,
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                  text: 'ساعدناهم يلاقوا العلاج المناسب',
+                  achievementTextStyle: appTheme.nonStaticGetTextStyle(
+                      1.0,
+                      Colors.green,
+                      appTheme.getSemiBodyTextTheme(context),
+                      FontWeight.w200,
+                      1.0,
+                      TextDecoration.none,
+                      'Delius'),
+                ),
+              ],
+            ),
+          ),
+        ),
+        CustomSpacing(),
+        HomeScreenAchievementContainer(
+          w: w,
+          count: double.parse(data['NeediesNotSatisfied'].toString()),
+          countTextStyle: appTheme.nonStaticGetTextStyle(
+              1.0,
+              Colors.red,
+              appTheme.getSemiBodyTextTheme(context),
+              FontWeight.w200,
+              1.0,
+              TextDecoration.none,
+              'Delius'),
+          prefix: 'و لسه في ',
+          suffix: ' حالات مستنين مساعدتك',
+          text: '',
+          achievementTextStyle: appTheme.nonStaticGetTextStyle(
+              1.0,
+              Colors.red,
+              appTheme.getSemiBodyTextTheme(context),
+              FontWeight.w200,
+              1.0,
+              TextDecoration.none,
+              'Delius'),
+        ),
+      ],
+    );
+  }
+
+  Widget getAchievementCenter(context) {
+    return FutureBuilder<Map<String, dynamic>>(
+      future: getAchievements(),
+      builder:
+          (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null) {
+          print(snapshot.data);
+          return getAchievementCenterBody(snapshot.data, context);
+        } else if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data == null) {
+          return Container(
+            alignment: Alignment.center,
+            child: Text(
+                'حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
+          );
+        } else if (snapshot.error != null) {
+          return Container(
+            alignment: Alignment.center,
+            child: Text(
+                'حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
+          );
+        } else {
+          return Container(
+              alignment: Alignment.center,
+              child: CustomLoadingText(text: 'جاري تحميل الإنجازات'));
+        }
+      },
+    );
+  }
+
+  Future<Map<String, dynamic>> getAchievements() async {
+    UserApiCaller userApiCaller = new UserApiCaller();
+    Map<String, dynamic> status = await userApiCaller.getAchievements(
+        sessionManager.user != null ? sessionManager.user.id : null);
+    if (status['Err_Flag']) return null;
+    print('here');
+    return status['Values'];
   }
 }
