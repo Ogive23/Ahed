@@ -199,10 +199,11 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                    padding: EdgeInsets.symmetric(vertical: h / 30),
-                    child: Text('Payment Info',
+                    padding: EdgeInsets.symmetric(vertical: h / 100),
+                    child:
+                    Text('Payment Info',
                         style: appTheme.themeData.primaryTextTheme.headline1)),
-                CustomSpacing(),
+                // CustomSpacing(),
                 CustomTextField(
                     controller: cardNumber,
                     label: 'Card Number',
@@ -279,8 +280,8 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                   ],
                 ),
                 CustomSpacing(),
-                CustomSpacing(),
-                CustomSpacing(),
+                // CustomSpacing(),
+                // CustomSpacing(),
                 Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

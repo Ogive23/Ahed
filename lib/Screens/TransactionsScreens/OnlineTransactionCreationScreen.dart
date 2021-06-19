@@ -1,9 +1,11 @@
+import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:ahed/Shared%20Data/NeedyData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'FawryPaymentScreen.dart';
 
@@ -98,6 +100,87 @@ class _OnlineTransactionCreationScreenState
                   1.0,
                   TextDecoration.none,
                   'Delius'),
+            ),
+            Container(
+              padding:
+                  EdgeInsets.symmetric(horizontal: w / 10, vertical: h / 200),
+              width: w,
+              // height: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(child: Text('Needy: ')),
+                      Container(child: Text('${needyData.selectedNeedy.name}')),
+                    ],
+                  ),
+                  CustomSpacing(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(child: Text('Section: ')),
+                      Container(child: Text('${needyData.selectedNeedy.type}')),
+                    ],
+                  ),
+                  CustomSpacing(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(child: Text('Severity: ')),
+                      Container(
+                          child:
+                              Text('${needyData.selectedNeedy.severityClass}')),
+                    ],
+                  ),
+                  CustomSpacing(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(child: Text('Details: ')),
+                      Container(
+                          child: Text('${needyData.selectedNeedy.details}')),
+                    ],
+                  ),
+                  CustomSpacing(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(child: Text('Money Left: ')),
+                      LinearPercentIndicator(
+                        width: 170.0,
+                        alignment: MainAxisAlignment.center,
+                        animation: true,
+                        padding: EdgeInsets.zero,
+                        animationDuration: 1000,
+                        lineHeight: h / 40,
+                        linearGradient: LinearGradient(
+                            colors: [Colors.green, Colors.greenAccent]),
+                        percent: needyData.selectedNeedy.collected /
+                            needyData.selectedNeedy.need,
+                        center: Text(
+                          (needyData.selectedNeedy.need -
+                                      needyData.selectedNeedy.collected)
+                                  .toStringAsFixed(0) +
+                              ' EGP Left',
+                          style: appTheme.nonStaticGetTextStyle(
+                              1.0,
+                              Colors.white,
+                              appTheme.getBodyTextTheme(context),
+                              FontWeight.bold,
+                              1.0,
+                              TextDecoration.none,
+                              'OpenSans'),
+                        ),
+                        linearStrokeCap: LinearStrokeCap.butt,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: TabBarView(
