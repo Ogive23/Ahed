@@ -1,13 +1,17 @@
 import 'dart:ui';
-import 'package:ahed/Custom%20Widgets/CustomHomeOption.dart';
+import 'package:ahed/ApiCallers/UserApiCaller.dart';
+import 'package:ahed/Custom%20Widgets/CustomLoading.dart';
+import 'package:ahed/Custom%20Widgets/CustomLoadingText.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
+import 'package:ahed/Custom%20Widgets/HomeScreenAchievementContainer.dart';
+import 'package:ahed/Helpers/Helper.dart';
+import 'package:ahed/Screens/NeediesScreens/NeediesScreen.dart';
 import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../GeneralInfo.dart';
 
 extension on TimeOfDay {
@@ -46,15 +50,15 @@ String getGreetingText() {
       TimeOfDay(hour: 1, minute: 0) <= TimeOfDay(hour: 17, minute: 0));
   if (TimeOfDay.now() > TimeOfDay(hour: 0, minute: 0) &&
       TimeOfDay.now() <= TimeOfDay(hour: 11, minute: 0)) {
-    return 'Good Morning🌅';
+    return 'صباح الخير🌅';
   }
   if (TimeOfDay.now() > TimeOfDay(hour: 11, minute: 0) &&
       TimeOfDay.now() <= TimeOfDay(hour: 17, minute: 0)) {
-    return 'Good Afternoon☀';
+    return 'نتمنالك يوم سعيد☀';
   }
   if (TimeOfDay.now() > TimeOfDay(hour: 17, minute: 0) &&
       TimeOfDay.now() <= TimeOfDay(hour: 24, minute: 0)) {
-    return 'Good Evening🌙';
+    return 'مساء الخير🌙';
   }
   return 'Hello';
 }
@@ -65,150 +69,200 @@ class HomeScreen extends StatelessWidget {
   CommonData commonData;
   AppLanguage appLanguage;
   AppTheme appTheme;
-  final homeOptions = [
-    {
-      'title': 'Cases',
-      'image': 'assets/images/2018_12_05_4268-Edit.jpg',
-      'page': Pages.NeediesScreen.index
-    },
-    {
-      'title': 'My Donations',
-      'image': 'assets/images/donations.jpg',
-      'page': Pages.MyDonationScreen.index
-    },
-    {
-      'title': 'Settings',
-      'image': 'assets/images/101610144-.jpg',
-      'page': Pages.SettingsScreen.index
-    },
-    {
-      'title': '',
-      'image':
-          'assets/images/depositphotos_79100916-stock-photo-stay-in-touch.jpg',
-      'page': Pages.StayInTouchScreen.index
-    },
-  ];
+  Helper helper = new Helper();
 
   @override
   Widget build(BuildContext context) {
+    // print('profileImage : ${sessionManager.user.profileImage}');
     commonData = Provider.of<CommonData>(context);
     appTheme = Provider.of<AppTheme>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Scaffold(
-        backgroundColor: Color.fromRGBO(246, 246, 252, 1.0),
+        backgroundColor: appTheme.themeData.primaryColor,
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: Color.fromRGBO(246, 246, 252, 1.0),
+          leadingWidth: 0.0,
+          backgroundColor: appTheme.themeData.primaryColor,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '${pageTitles[commonData.step]}',
-                style: appTheme.nonStaticGetTextStyle(
-                    1.0,
-                    Color.fromRGBO(41, 187, 137, 1.0),
-                    appTheme.getTextTheme(context),
-                    FontWeight.bold,
-                    2.0,
-                    TextDecoration.none,
-                    'OpenSans'),
-              ),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: w / 100),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white, width: 3),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 1), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.transparent,
-                      child: ClipOval(
-                        child: Image.network(
-                          sessionManager.user.image,
-                          fit: BoxFit.fill,
-                          width: 120,
-                          height: 120,
-                        ),
+              Text('عهد', style: appTheme.themeData.primaryTextTheme.headline1),
+              sessionManager.isLoggedIn()
+                  ? GestureDetector(
+                      onTap: () =>
+                          commonData.changeStep(Pages.ProfileScreen.index),
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: w / 100),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 3),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(
+                                      0, 1), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: PopupMenuButton(
+                              child: CircleAvatar(
+                                radius: h / 40,
+                                backgroundColor: Colors.transparent,
+                                child: ClipOval(
+                                  child: Image.network(
+                                    sessionManager.user.profileImage != 'N/A'
+                                        ? sessionManager.user.profileImage
+                                        : 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
+                                    fit: BoxFit.cover,
+                                    width: w / 5,
+                                    height: h / 10,
+                                  ),
+                                ),
+                              ),
+                              onSelected: (value) {
+                                if (value == 'Profile')
+                                  return commonData
+                                      .changeStep(Pages.ProfileScreen.index);
+                                else if (value == 'Logout') {
+                                  sessionManager.logout();
+                                  Navigator.popUntil(context, (route) => false);
+                                  Navigator.pushNamed(context, "MainScreen");
+                                  return;
+                                }
+                              },
+                              itemBuilder: (context) {
+                                return [
+                                  PopupMenuItem(
+                                    child: Text(
+                                      'الملف الشخصي',
+                                      style: appTheme
+                                          .themeData.primaryTextTheme.headline4,
+                                    ),
+                                    value: 'Profile',
+                                  ),
+                                  PopupMenuItem(
+                                    child: Text(
+                                      'تسجيل الخروج',
+                                      style: appTheme
+                                          .themeData.primaryTextTheme.headline4,
+                                    ),
+                                    value: 'Logout',
+                                  ),
+                                ];
+                              },
+                            ),
+                          )),
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, "LoginScreen");
+                      },
+                      child: Text(
+                        'تسجيل الدخول',
+                        style: appTheme.nonStaticGetTextStyle(
+                            1.0,
+                            Colors.blue,
+                            appTheme.getSemiBodyTextTheme(context),
+                            FontWeight.w400,
+                            1.0,
+                            TextDecoration.none,
+                            'Delius'),
                       ),
-                    ),
-                  ))
+                    )
             ],
           ),
-          leading: commonData.step != Pages.HomeScreen.index
-              ? IconButton(
-                  icon: Icon(Icons.arrow_back_ios_sharp),
-                  onPressed: () => commonData.back(),
-                  color: Colors.black,
-                )
-              : SizedBox(),
-          leadingWidth: commonData.step == Pages.HomeScreen.index ? 0 : null,
         ),
         body: Container(
-            height: h,
-            // decoration: BoxDecoration(
-            //   gradient: LinearGradient(
-            //       colors: [
-            //         Color.fromRGBO(41, 187, 137, 1.0),
-            //         Color.fromRGBO(40, 150, 114, 1.0),
-            //         Color.fromRGBO(30, 111, 92, 1.0),
-            //       ]
-            //   ),
-            //   boxShadow: [
-            //     BoxShadow(
-            //       color: appTheme.themeData.shadowColor,
-            //       spreadRadius: 10,
-            //       blurRadius: 70,
-            //       offset: Offset(0, 3),
-            //     )
-            //   ],
-            // ),
-            child: Container(
-              width: w,
-              // decoration: BoxDecoration(color: Color.fromRGBO(246, 246, 252, 1.0)),
-              child: SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                          CustomSpacing(),
-                          Center(
-                            child: Text(
-                              '${getGreetingText()}, Mahmoued.',
-                              style: appTheme.nonStaticGetTextStyle(
-                                  1.0,
-                                  Color.fromRGBO(41, 187, 137, 1.0),
-                                  appTheme.getTextTheme(context),
-                                  FontWeight.w200,
-                                  1.0,
-                                  TextDecoration.none,
-                                  'OpenSans'),
-                            ),
-                          ),
-                          CustomSpacing(),
-                        ] +
-                        [
-                          GridView.count(
-                              crossAxisCount: 2,
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              children: homeOptions
-                                  .map((homeOption) =>
-                                      CustomHomeOption(homeOption: homeOption))
-                                  .toList()),
-                        ]
-                    // NeediesScreen()
-                    ),
+          child: Column(
+            children: [
+              Center(
+                child: Text('${getGreetingText()}',
+                    style: appTheme.themeData.primaryTextTheme.headline3),
               ),
-            )));
+              CustomSpacing(),
+              Expanded(
+                child: SingleChildScrollView(
+                    // controller: scrollController,
+                    child: Padding(
+                  padding: EdgeInsets.only(right: w / 30),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        getAchievementCenter(context),
+                        Visibility(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('الحالات المحفوظة',
+                                  style: appTheme
+                                      .themeData.primaryTextTheme.headline3),
+                              NeediesScreen(
+                                type: "Bookmarked",
+                              ),
+                            ],
+                          ),
+                          visible: sessionManager.hasAnyBookmarked(),
+                        ),
+                        Text('الحالات الحرجة',
+                            style:
+                                appTheme.themeData.primaryTextTheme.headline3),
+                        NeediesScreen(
+                          type: "Urgent",
+                        ),
+                        Text('الحالات',
+                            style:
+                                appTheme.themeData.primaryTextTheme.headline3),
+                        NeediesScreen(
+                          type: "Not Urgent",
+                        ),
+                      ]),
+                )),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  String getCaseSupportMessage(int casesNumber) {
+    if (casesNumber < 5) {
+      return 'We are waiting more from you!';
+    } else if (casesNumber < 20) {
+      return 'You are really a human with big heart\nWe love you!';
+    }
+    return 'What kind of angels you are!';
+  }
+
+  Color getCaseSupportMessageColor(int casesNumber) {
+    if (casesNumber < 5) {
+      return Colors.blue[300];
+    } else if (casesNumber < 20) {
+      return Colors.green;
+    }
+    return Colors.orange;
+  }
+
+  Color getSupportCasesColor(int support) {
+    if (support < 5) {
+      return Colors.red[300];
+    } else if (support < 20) {
+      return Colors.amberAccent;
+    }
+    return Colors.green;
+  }
+
+  Color getSupportMoneyColor(double support) {
+    if (support < 50) {
+      return Colors.red[300];
+    } else if (support < 200) {
+      return Colors.amberAccent;
+    }
+    return Colors.green;
+  }
+
   Widget getAchievementCenterBody(Map<String, dynamic> data, context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
