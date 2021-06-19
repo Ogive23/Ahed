@@ -1,23 +1,28 @@
 import 'dart:math';
 
+import 'package:ahed/Helpers/Helper.dart';
+import 'package:ahed/Models/User.dart';
+
 import '../Models/Needy.dart';
 import '../Models/NeedyMedia.dart';
 
 class DataMapper {
+  Helper helper = new Helper();
+
   String getSeverityClass(int severity) {
     if (severity > 0 && severity < 4) return 'Low';
     if (severity > 4 && severity < 7) return 'Medium';
     return 'High';
   }
 
-  List<NeedyMedia> getNeediesMediaFromJson(String baseURL,List<dynamic> list) {
+  List<NeedyMedia> getNeediesMediaFromJson(String baseURL, List<dynamic> list) {
     List<NeedyMedia> returnedNeediesMedia = [];
     list.forEach((element) {
       print(element);
       print(element['id'].toString());
       print(element['path']);
-      returnedNeediesMedia
-          .add(new NeedyMedia(element['id'].toString(), baseURL + element['path']));
+      returnedNeediesMedia.add(
+          new NeedyMedia(element['id'].toString(), baseURL + element['path']));
     });
     return returnedNeediesMedia;
   }
@@ -83,5 +88,22 @@ class DataMapper {
           getRandomCharityImage(random)));
     });
     return returnedNeedies;
+  }
+
+  User getUserFromJson(Map<String, dynamic> info) {
+    print(helper.getAppropriateText(info['profile']['image'].toString()));
+    return User(
+        helper.getAppropriateText(info['user']['id']),
+        helper.getAppropriateText(info['user']['name'].toString()),
+        helper.getAppropriateText(info['user']['user_name'].toString()),
+        helper.getAppropriateText(info['user']['email'].toString()),
+        helper.getAppropriateText(info['user']['gender'].toString()),
+        helper.getAppropriateText(info['user']['phone_number'].toString()),
+        helper.getAppropriateText(info['user']['address'].toString()),
+        info['user']['email_verified_at'] != null ? true : false,
+        info['token'],
+        helper.getAppropriateText(info['profile']['image'].toString()),
+        helper.getAppropriateText(info['profile']['cover'].toString()),
+        helper.getAppropriateText(info['profile']['bio'].toString()));
   }
 }
