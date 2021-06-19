@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CommonData extends ChangeNotifier {
-  int step = 0;
-  List<int> previousSteps = [0];
+  int step = 1;
+  List<int> previousSteps = [1];
   bool scaled = false;
   double xOffset = 0;
   double yOffset = 0;
@@ -42,8 +42,12 @@ class CommonData extends ChangeNotifier {
   // }
 
   goHome() {
-      this.previousSteps = [0];
-      this.step = previousSteps.last;
-      notifyListeners();
+    this.previousSteps = [1];
+    this.step = previousSteps.last;
+    notifyListeners();
+  }
+
+  void refreshPage() {
+    notifyListeners();
   }
 }

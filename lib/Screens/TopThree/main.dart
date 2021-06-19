@@ -48,21 +48,24 @@ class MainScreen extends StatelessWidget {
   final CommonData commonData = new CommonData();
   @override
   Widget build(BuildContext context) {
-    appTheme = new AppTheme(sessionManager.loadPreferredTheme());
+    appTheme = new AppTheme(sessionManager.loadPreferredTheme(),context);
     appLanguage = new AppLanguage(sessionManager.loadPreferredLanguage());
-    return MultiProvider(providers: [
-      ChangeNotifierProvider<AppTheme>(
-        create: (context) => appTheme,
-      ),
-      ChangeNotifierProvider<AppLanguage>(
-        create: (context) => appLanguage,
-      ),
-      ChangeNotifierProvider<CommonData>(
-        create: (context) => commonData,
-      ),
-      ChangeNotifierProvider<NeedyData>(
-        create: (context) => needyData,
-      )
-    ], child: BackgroundScreen());
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<AppTheme>(
+            create: (context) => appTheme,
+          ),
+          ChangeNotifierProvider<AppLanguage>(
+            create: (context) => appLanguage,
+          ),
+          ChangeNotifierProvider<CommonData>(
+            create: (context) => commonData,
+          ),
+          ChangeNotifierProvider<NeedyData>(
+            create: (context) => needyData,
+          )
+        ],
+        child: Directionality(
+            textDirection: TextDirection.rtl, child: BackgroundScreen()));
   }
 }
