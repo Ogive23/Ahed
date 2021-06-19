@@ -6,11 +6,15 @@ class User{
   String gender;
   String phoneNumber;
   String address;
-  String image;
   bool verified;
-  User(this.id,this.name,this.username,this.email,this.gender,this.phoneNumber,this.address,this.image,this.verified);
+  String accessToken;
+  String profileImage;
+  String profileCover;
+  String profileBio;
+
+  User(this.id,this.name,this.username,this.email,this.gender,this.phoneNumber,this.address,this.verified,this.accessToken,this.profileImage,this.profileCover,this.profileBio);
 
   List<String> toList() {
-    return [this.id,this.name,this.username,this.email,this.gender,this.phoneNumber,this.address,this.image,this.verified.toString()];
+    return [this.id,this.name,this.username,this.email,this.gender,this.phoneNumber,this.address,this.verified.toString(),this.accessToken.toString(),this.profileImage,this.profileCover,this.profileBio];
   }
 }
