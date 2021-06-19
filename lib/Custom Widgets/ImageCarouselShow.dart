@@ -46,6 +46,7 @@ class ImageCarouselShow extends StatelessWidget {
         return needyMedias.isEmpty
             ? Container(
                 height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(color: Colors.blueGrey),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +63,7 @@ class ImageCarouselShow extends StatelessWidget {
                       margin: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width / 50),
                       child: Text(
-                        'We are currently working on the change, Expect us soon and never forget to Pray for us!',
+                        '.نحن الآن في طريقنا للتغيير، أنتظرونا و أدعوا لنا بالتوفيق',
                         textAlign: TextAlign.center,
                         style: appTheme.nonStaticGetTextStyle(
                             1.5,
