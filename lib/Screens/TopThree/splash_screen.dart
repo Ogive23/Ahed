@@ -49,11 +49,9 @@ class _SplashScreen extends State<SplashScreen>
 
   getHomePage() {
     //ToDo:Remove Comments
-    // if (sessionManager.notFirstTime() && sessionManager.isLoggedIn())
-      return 'MainScreen';
-    // else if(sessionManager.notFirstTime() && !sessionManager.isLoggedIn())
-    //   return 'LoginScreen';
-    // return 'WelcomeScreen';
+    // if (!sessionManager.notFirstTime()) return 'WelcomeScreen';
+    if (sessionManager.isLoggedIn()) sessionManager.loadSession();
+    return 'MainScreen';
   }
 
   @override
@@ -66,26 +64,26 @@ class _SplashScreen extends State<SplashScreen>
     if (value < 1.0) {
       Timer.periodic(
           Duration(seconds: 1),
-              (timer) => {
-            if (mounted)
-              {
-                setState(() {
-                  // value += 0.02;
-                  value+=0.2;
-                })
-              }
-          });
+          (timer) => {
+                if (mounted)
+                  {
+                    setState(() {
+                      // value += 0.02;
+                      value += 0.2;
+                    })
+                  }
+              });
       Timer.periodic(
           Duration(seconds: 3),
-              (timer) => {
-            if (mounted)
-              {
-                setState(() {
-                  opacity = 1 - opacity;
-                  changeOpacity();
-                })
-              }
-          });
+          (timer) => {
+                if (mounted)
+                  {
+                    setState(() {
+                      opacity = 1 - opacity;
+                      changeOpacity();
+                    })
+                  }
+              });
     } else {
       opacity = 1.0;
       navigate();
@@ -94,7 +92,7 @@ class _SplashScreen extends State<SplashScreen>
 
   navigate() {
     sessionManager.sharedPreferences == null
-        ? Future.delayed(Duration(seconds: 5),navigate())
+        ? Future.delayed(Duration(seconds: 5), navigate())
         : Navigator.popAndPushNamed(context, getHomePage());
   }
 
@@ -137,11 +135,10 @@ class _SplashScreen extends State<SplashScreen>
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Text(
-                          value < 1.0
-                              ? '${(value * 100).toStringAsPrecision(3)}%'
-                              : 'Welcome',
-                          style: TextStyle(color: Colors.white)
-                        ),
+                            value < 1.0
+                                ? '${(value * 100).toStringAsPrecision(3)}%'
+                                : 'Welcome',
+                            style: TextStyle(color: Colors.white)),
                         LinearProgressIndicator(
                           value: value,
                           valueColor: _colorAnimation,

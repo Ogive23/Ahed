@@ -6,7 +6,6 @@ import '../Models/User.dart';
 class SessionManager {
   SharedPreferences sharedPreferences;
   User user;
-  String oauthToken;
   DateTime accessTokenExpireDate;
 
   SessionManager._privateConstructor();
@@ -16,18 +15,16 @@ class SessionManager {
   factory SessionManager() {
     return _instance;
   }
+
   getSessionManager() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    addDummyData();
   }
 
-  createSession(User user, String oauthToken, DateTime accessTokenExpiryDate) {
+  createSession(User user, DateTime accessTokenExpiryDate) {
     this.user = user;
-    this.oauthToken = oauthToken;
     sharedPreferences.setStringList('user', user.toList());
     sharedPreferences.setString(
         'accessTokenExpireDate', accessTokenExpiryDate.toString());
-    sharedPreferences.setString('oauthToken', oauthToken);
   }
 
   loadSession() {
@@ -45,10 +42,12 @@ class SessionManager {
         userData[4],
         userData[5],
         userData[6],
-        userData[7],
         //ToDo: Review
-        userData[8] == "true" ? true : false);
-    oauthToken = sharedPreferences.getString('oauthToken');
+        userData[8] == "true" ? true : false,
+      userData[9],
+      userData[10],
+      userData[11],
+      userData[12]);
   }
 
   bool notFirstTime() {
@@ -78,24 +77,28 @@ class SessionManager {
   String loadPreferredLanguage() {
     return sharedPreferences.get('lang');
   }
-  bool accessTokenExpired(){
+
+  bool accessTokenExpired() {
     return accessTokenExpireDate.isBefore(DateTime.now());
   }
+
   logout() {
     sharedPreferences.remove('user');
   }
 
-  void addDummyData() {
-    this.user = new User(
-        '1234',
-        'Mahmoued Mohamed',
-        'Mahmoued',
-        'mahmouedmartin222@yahoo.com',
-        'male',
-        '+201146284953',
-        '26 El Gesr elbrany St, Dar Elsalam, Cairo - Egypt',
-        // 'https://adventure.com/wp-content/uploads/2018/10/Rehahn-and-giving-back-in-travel-photography-Hmong-in-Bac-Ha-Photo-credit-Rehahn.jpg',
-        'https://m.economictimes.com/thumb/msid-72360263,width-1200,height-900,resizemode-4,imgsize-436664/joaquin-phoenix-recently-appeared-in-petas-we-are-all-animals-billboards-in-times-square-and-on-sunset-billboard-as-he-promoted-legislation-to-ban-travelling-wild-animal-circuses-.jpg',
-        true);
+  User getDummyData() {
+    // return User(
+    //     '1234',
+    //     'Mahmoued Mohamed',
+    //     'Mahmoued',
+    //     'mahmouedmartin222@yahoo.com',
+    //     'male',
+    //     '+201146284953',
+    //     '26 El Gesr elbrany St, Dar Elsalam, Cairo - Egypt',
+    //     // 'https://adventure.com/wp-content/uploads/2018/10/Rehahn-and-giving-back-in-travel-photography-Hmong-in-Bac-Ha-Photo-credit-Rehahn.jpg',
+    //     'https://content.thriveglobal.com/wp-content/uploads/2018/01/Happy_guy.jpg?w=1550',
+    //     true);
+  }
+
   }
 }
