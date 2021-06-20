@@ -18,9 +18,6 @@ class DataMapper {
   List<NeedyMedia> getNeediesMediaFromJson(String baseURL, List<dynamic> list) {
     List<NeedyMedia> returnedNeediesMedia = [];
     list.forEach((element) {
-      print(element);
-      print(element['id'].toString());
-      print(element['path']);
       returnedNeediesMedia.add(
           new NeedyMedia(element['id'].toString(), baseURL + element['path']));
     });
@@ -90,8 +87,7 @@ class DataMapper {
     return returnedNeedies;
   }
 
-  User getUserFromJson(Map<String, dynamic> info) {
-    print(helper.getAppropriateText(info['profile']['image'].toString()));
+  User getUserFromJson(String url, Map<String, dynamic> info) {
     return User(
         helper.getAppropriateText(info['user']['id']),
         helper.getAppropriateText(info['user']['name'].toString()),
@@ -102,8 +98,8 @@ class DataMapper {
         helper.getAppropriateText(info['user']['address'].toString()),
         info['user']['email_verified_at'] != null ? true : false,
         info['token'],
-        helper.getAppropriateText(info['profile']['image'].toString()),
-        helper.getAppropriateText(info['profile']['cover'].toString()),
+        info['profile']['image'] != null? url + info['profile']['image'] : 'N/A',
+        info['profile']['cover'] != null? url + info['profile']['cover'] : 'N/A',
         helper.getAppropriateText(info['profile']['bio'].toString()));
   }
 }

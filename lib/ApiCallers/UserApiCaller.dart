@@ -29,35 +29,31 @@ class UserApiCaller {
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
     var body = {"email": email, "password": password};
-    print('url = $url');
     try {
       var response = await http
           .post(Uri.parse(url + "/api/login"),
               headers: headers, body: jsonEncode(body))
           .catchError((error) {
         print(error);
-        throw responseHandler.errorPrinter("networkError");
+        throw responseHandler.errorPrinter("Kindly check your internet connection then try again.");
       }).timeout(Duration(seconds: 120));
-      print('reposonse body ${response.body}');
       var responseToJson = jsonDecode(response.body);
       if (responseToJson['Err_Flag']) return responseToJson;
       //ToDo:move this "/storage/" to backend and make it full link
       return {
         "Err_Flag": responseToJson['Err_Flag'],
-        "Values": dataMapper.getUserFromJson(responseToJson['data'])
+        "Values": dataMapper.getUserFromJson(url,responseToJson['data'])
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
     } catch (e) {
       print('e $e');
-      return responseHandler.errorPrinter(
-          "Kindly check your internet connection then try again.");
+      return e;
     }
     // }
   }
 
   Future<Map<String, dynamic>> getAchievements(String id) async {
-    print('id = $id');
     // QuerySnapshot snapshot = await urls.get();
     // for(int index = 0; index < snapshot.size; index++){
     //   String url = snapshot.docs[index]['url'];
@@ -68,16 +64,13 @@ class UserApiCaller {
       "Content-Type": "application/json",
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
-    print('url = $url');
     try {
       var response = await http
           .get(Uri.parse(url + "/api/ahed/ahedachievement/$id"),
               headers: headers)
           .catchError((error) {
-        print(error);
         throw responseHandler.errorPrinter("networkError");
       }).timeout(Duration(seconds: 120));
-      print('reposonse body ${response.body}');
       var responseToJson = jsonDecode(response.body);
       if (responseToJson['Err_Flag']) return responseToJson;
       return {

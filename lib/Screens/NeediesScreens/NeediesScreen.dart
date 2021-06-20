@@ -30,6 +30,11 @@ class _NeediesScreenState extends State<NeediesScreen> {
   int current = 0;
   SessionManager sessionManager = new SessionManager();
   TabController tabController;
+
+  int currentPage = 1;
+  // int lastPage;
+  int total;
+
   @override
   initState() {
     super.initState();
@@ -38,10 +43,13 @@ class _NeediesScreenState extends State<NeediesScreen> {
 
   initNeedies() async {
     List<Needy> addedNeedies;
-    if(widget.type == "Bookmarked")
-        addedNeedies = await getGeneratedNeedies(sessionManager.getBookmarkedNeedies());
-    else
-      addedNeedies = await getGeneratedNeedies();
+
+    //ToDo: Future V2
+    // if (widget.type == "Bookmarked" && sessionManager.hasAnyBookmarked())
+    //   addedNeedies = await getGeneratedNeedies(
+    //       "Bookmarked", sessionManager.getBookmarkedNeedies());
+    // else
+    addedNeedies = await getGeneratedNeedies(widget.type);
     setState(() {
       needies = [];
       needies.addAll(addedNeedies);
@@ -49,7 +57,6 @@ class _NeediesScreenState extends State<NeediesScreen> {
   }
 
   Widget getNeediesBody(context) {
-    print('im here ${needies}');
     if (needies == null)
       return Container(alignment: Alignment.center, child: CustomLoading());
     if (needies.isEmpty)
@@ -69,12 +76,13 @@ class _NeediesScreenState extends State<NeediesScreen> {
               enableInfiniteScroll: false,
               onPageChanged: (index, reason) async {
                 current = index;
-                if (current == needies.length) {
-                  List<Needy> addedNeedies = await getGeneratedNeedies();
+                if (current == needies.length && current < total) {
+                  currentPage++;
+                  List<Needy> addedNeedies =
+                      await getGeneratedNeedies(widget.type);
                   setState(() {
                     needies.addAll(addedNeedies);
                   });
-                  print(current);
                 }
               },
             ),
@@ -82,105 +90,32 @@ class _NeediesScreenState extends State<NeediesScreen> {
                 needies
                     .map((needy) => CustomNeedyContainer(needy: needy))
                     .toList() +
-                [
-                  Visibility(
-                    child: LoadingNeedyContainer(),
-                    visible: needies.isEmpty || current <= needies.length,
-                  )
-                ]));
+                getLoadingContainerIfExists()));
   }
 
-  getRandomType(int randomNumber) {
-    switch (randomNumber) {
-      case 0:
-        return 'إيجاد مسكن';
-      case 1:
-        return 'تحسين مستوي المعيشة';
-      case 2:
-        return 'تجهيز عروس';
-      case 3:
-        return 'ديون';
-      case 4:
-        return 'علاج';
-    }
+  List<Widget> getLoadingContainerIfExists() {
+    //ToDo: Future V2
+    // if (widget.type == "Bookmarked") return <Widget>[];
+    return needies.isEmpty || needies.length < total
+        ? <Widget>[LoadingNeedyContainer()]
+        : <Widget>[];
   }
 
-  String getRandomImage(int randomNumber) {
-    print(randomNumber);
-    switch (randomNumber) {
-      case 0:
-        return 'assets/images/2018_12_05_4268-Edit.jpg';
-      case 1:
-        return 'assets/images/319028.jpg';
-      case 2:
-        return 'assets/images/images.jpg';
-      case 3:
-        return 'assets/images/dept.jpg';
-      case 4:
-        return 'assets/images/child-hospital-002.jpg';
-    }
-  }
-
-  String getRandomCharity(int randomNumber) {
-    print(randomNumber);
-    switch (randomNumber) {
-      case 0:
-        return 'رسالة';
-      case 1:
-        return 'جمعية البر';
-      case 2:
-        return 'الجليلة';
-      case 3:
-        return 'خلف أحمد الهبتور';
-      case 4:
-        return 'مجدي يعقوب';
-    }
-  }
-
-  String getRandomCharityImage(int randomNumber) {
-    print(randomNumber);
-    switch (randomNumber) {
-      case 0:
-        return 'assets/images/bSOfYXcD_400x400.png';
-      case 1:
-        return 'assets/images/dar-al-ber-society.jpg';
-      case 2:
-        return 'assets/images/1519881695999.png';
-      case 3:
-        return 'assets/images/khalaf-al-habtoor.jpg';
-      case 4:
-        return 'assets/images/1519887944403.png';
-    }
-  }
-
-  Future<List<Needy>> getGeneratedNeedies([List<String> bookmarkedNeediesIDs]) async {
-    int random = Random().nextInt(4);
-    int severity = Random().nextInt(10);
-    return [
-      Needy(
-          '1',
-          '1',
-          Random().nextInt(5) < 2 ? null : Random().nextDouble() * 100,
-          widget.type == "Urgent" ? 7 : 1,
-          getSeverityClass(severity),
-          getRandomType(random),
-          'التفاصيل',
-          (Random().nextDouble() * 1000).abs(),
-          (Random().nextDouble() * 10).abs(),
-          Random().nextInt(255).toString(),
-          Random().nextBool(),
-          Random().nextBool(),
-          DateTime.now(),
-          [NeedyMedia('id', getRandomImage(random))],
-          [],
-          Random().nextInt(255).toString(),
-          getRandomCharity(random),
-          getRandomCharityImage(random)),
-    ];
-    //ToDo: Remove Comments
+  Future<List<Needy>> getGeneratedNeedies(String type,
+      [List<String> bookmarkedNeediesIDs]) async {
     NeedyApiCaller needyApiCaller = new NeedyApiCaller();
-    Map<String, dynamic> status = await needyApiCaller.getAllUrgent();
-    print(status);
+    Map<String, dynamic> status;
+    if (type == 'Urgent')
+      status = await needyApiCaller.getAllUrgent(currentPage);
+    if (type == 'Not Urgent') status = await needyApiCaller.getAll(currentPage);
+
+    //ToDo: Future V2
+    // if (type == 'Bookmarked')
+    //   status = await needyApiCaller.getAllBookmarked(bookmarkedNeediesIDs);
+    setState(() {
+      // this.lastPage = status['lastPage'];
+      this.total = status['total'];
+    });
     if (!status['Err_Flag']) return status['Values'];
     //ToDo: Handle Error
     print(status['Err_Flag']);

@@ -44,10 +44,10 @@ class SessionManager {
         userData[6],
         //ToDo: Review
         userData[8] == "true" ? true : false,
-      userData[9],
-      userData[10],
-      userData[11],
-      userData[12]);
+        userData[9],
+        userData[10],
+        userData[11],
+        userData[12]);
   }
 
   bool notFirstTime() {
@@ -83,6 +83,9 @@ class SessionManager {
   }
 
   logout() {
+    this.user = null;
+    this.accessTokenExpireDate = null;
+    sharedPreferences.remove('accessTokenExpireDate');
     sharedPreferences.remove('user');
   }
 
