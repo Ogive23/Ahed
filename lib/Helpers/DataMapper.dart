@@ -27,27 +27,8 @@ class DataMapper {
   List<Needy> getNeediesFromJson(String baseURL, List<dynamic> list) {
     List<Needy> returnedNeedies = [];
     list.forEach((element) {
+      print(element['createdBy']['image']);
       returnedNeedies.add(Needy(
-          element['id'].toString(),
-          element['name'].toString(),
-          double.parse(element['age'].toString()),
-          int.parse(element['severity'].toString()),
-          getSeverityClass(element['severity']),
-          element['type'],
-          element['details'],
-          double.parse(element['need'].toString()),
-          double.parse(element['collected'].toString()),
-          element['address'],
-          element['satisfied'] == 1 ? true : false,
-          element['approved'] == 1 ? true : false,
-          DateTime.parse(element['created_at']),
-          this.getNeediesMediaFromJson(baseURL, element['medias_before']),
-          this.getNeediesMediaFromJson(baseURL, element['medias_after']),
-          element['url'],
-          //ToDo:Remove
-          getRandomCharity(random),
-          //ToDo:Remove
-          getRandomCharityImage(random)));
         element['id'].toString(),
         element['name'].toString(),
         double.parse(element['age'].toString()),

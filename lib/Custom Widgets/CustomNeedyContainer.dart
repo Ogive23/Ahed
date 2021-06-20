@@ -83,8 +83,7 @@ class CustomNeedyContainer extends StatelessWidget {
                                                   appTheme: appTheme,
                                                 )));
                                   },
-                                  //ToDo: Change it to network
-                                  child: Image.asset(
+                                  child: Image.network(
                                     image.url,
                                     fit: BoxFit.cover,
                                     height: h / 3,
@@ -172,40 +171,53 @@ class CustomNeedyContainer extends StatelessWidget {
                   ),
                   Positioned(
                       bottom: 0,
-                      right: 10,
+                      right: w / 20,
                       child: Stack(
                         children: [
                           CircleAvatar(
                             radius: 25,
+                            radius: 15,
                             backgroundColor: Colors.transparent,
-                            child: ClipOval(
-                              child: Image.asset(
-                                needy.createdByImage,
-                                fit: BoxFit.fill,
-                                width: 120,
-                                height: 120,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: Colors.black.withOpacity(0.5),
+                                      width: 1)),
+                              child: ClipOval(
+                                child: Image.network(
+                                  needy.createdByImage != 'N/A'
+                                      ? needy.createdByImage
+                                      : 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
+                                  fit: BoxFit.cover,
+                                  width: w / 5,
+                                  height: h / 10,
+                                ),
                               ),
                             ),
                           ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: Tooltip(
-                              message: 'موثق \'${needy.createdBy}\'',
-                              preferBelow: false,
-                              decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.8)),
-                              textStyle: appTheme.nonStaticGetTextStyle(
-                                  1.0,
-                                  Color.fromRGBO(30, 111, 92, 1.0),
-                                  appTheme.getBodyTextTheme(context),
-                                  FontWeight.bold,
-                                  1.0,
-                                  TextDecoration.none,
-                                  'OpenSans'),
-                              child: Image.asset(
-                                'assets/images/verified.png',
-                                width: 20,
+                          Visibility(
+                            visible: needy.createdByVerified,
+                            child: Positioned(
+                              bottom: 0,
+                              left: 0,
+                              child: Tooltip(
+                                message: 'موثق \'${needy.createdByName}\'',
+                                preferBelow: false,
+                                decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.8)),
+                                textStyle: appTheme.nonStaticGetTextStyle(
+                                    1.0,
+                                    Color.fromRGBO(30, 111, 92, 1.0),
+                                    appTheme.getBodyTextTheme(context),
+                                    FontWeight.bold,
+                                    1.0,
+                                    TextDecoration.none,
+                                    'OpenSans'),
+                                child: Image.asset(
+                                  'assets/images/verified.png',
+                                  width: 20,
+                                ),
                               ),
                             ),
                           ),

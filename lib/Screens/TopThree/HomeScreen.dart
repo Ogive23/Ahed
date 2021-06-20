@@ -113,14 +113,20 @@ class HomeScreen extends StatelessWidget {
                                 radius: h / 40,
                                 backgroundColor: Colors.transparent,
                                 child: ClipOval(
-                                  child: Image.network(
-                                    sessionManager.user.profileImage != 'N/A'
-                                        ? sessionManager.user.profileImage
-                                        : 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
-                                    fit: BoxFit.cover,
-                                    width: w / 5,
-                                    height: h / 10,
-                                  ),
+                                  child:
+                                      sessionManager.user.profileImage != 'N/A'
+                                          ? Image.network(
+                                              sessionManager.user.profileImage,
+                                              fit: BoxFit.contain,
+                                              width: w / 5,
+                                              height: h / 10,
+                                            )
+                                          : Image.asset(
+                                              'assets/images/user.png',
+                                              fit: BoxFit.cover,
+                                              width: w / 5,
+                                              height: h / 10,
+                                            ),
                                 ),
                               ),
                               onSelected: (value) {

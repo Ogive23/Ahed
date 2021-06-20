@@ -15,6 +15,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
+  double w, h;
   SessionManager sessionManager = new SessionManager();
   AppTheme appTheme;
   CommonData commonData;
@@ -44,119 +45,287 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
+    w = MediaQuery.of(context).size.width;
+    h = MediaQuery.of(context).size.height;
     appTheme = Provider.of<AppTheme>(context);
     commonData = Provider.of<CommonData>(context);
     return Material(
         child: SafeArea(
-        child: Container(
-        height: double.infinity, child: Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage(sessionManager.user.profileImage),
-              colorFilter: ColorFilter.mode(
-                  appTheme.themeData.primaryColor, BlendMode.softLight),
-              fit: BoxFit.cover)),
-      child: ClipRRect(
-          child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Directionality(
-                          textDirection: TextDirection.ltr,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.arrow_back_ios_sharp,
-                              color: Colors.black,
-                            ),
-                            onPressed: () => commonData.back(),
+            child: Container(
+                height: double.infinity,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: sessionManager.user.profileImage != 'N/A'
+                        ? NetworkImage(
+                            sessionManager.user.profileImage,
+                          )
+                        : AssetImage(
+                            'assets/images/user.png',
                           ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          Container(
+                    colorFilter: ColorFilter.mode(
+                        appTheme.themeData.primaryColor, BlendMode.softLight),
+                    fit: BoxFit.cover,
+                  )),
+                  child: ClipRRect(
+                      child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
+                          child: Container(
                             width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height / 5),
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height / 10,
-                            ),
-                            decoration:
-                                BoxDecoration(color: Colors.white.withOpacity(0.5)),
                             child: Column(
                               children: [
-                                Text(
-                                  sessionManager.user.name,
-                                  style: appTheme.nonStaticGetTextStyle(
-                                      1.0,
-                                      appTheme
-                                          .themeData.primaryTextTheme.bodyText1.color,
-                                      appTheme.getTextTheme(context),
-                                      FontWeight.w500,
-                                      1.0,
-                                      TextDecoration.none,
-                                      "OpenSans",
-                                      [
-                                        Shadow(
-                                            // bottomLeft
-                                            offset: Offset(-1.0, -1.0),
-                                            color: Colors.white),
-                                        Shadow(
-                                            // bottomRight
-                                            offset: Offset(1.0, -1.0),
-                                            color: Colors.white),
-                                        Shadow(
-                                            // topRight
-                                            offset: Offset(1.0, 1.0),
-                                            color: Colors.white),
-                                        Shadow(
-                                            // topLeft
-                                            offset: Offset(-1.0, 1.0),
-                                            color: Colors.white),
-                                      ]),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Directionality(
+                                      textDirection: TextDirection.ltr,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.arrow_back_ios_sharp,
+                                          color: Colors.black,
+                                        ),
+                                        onPressed: () => commonData.back(),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height / 100,
-                                ),
-                                Text('London, UK',
-                                    style: appTheme.nonStaticGetTextStyle(
-                                        1.0,
-                                        appTheme.themeData.primaryTextTheme.bodyText1
-                                            .color,
-                                        appTheme.getSemiBodyTextTheme(context),
-                                        FontWeight.w500,
-                                        1.0,
-                                        TextDecoration.none,
-                                        "OpenSans")),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height / 50,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      right: MediaQuery.of(context).size.width / 10,
-                                      left: MediaQuery.of(context).size.width / 10),
-                                  child: Column(
+                                Expanded(
+                                  child: Stack(
+                                    alignment: Alignment.topCenter,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text.rich(
-                                            TextSpan(
-                                                text: 'Profile',
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        margin: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                5),
+                                        padding: EdgeInsets.only(
+                                          top: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color:
+                                                Colors.white.withOpacity(0.5)),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              sessionManager.user.name,
+                                              style: appTheme
+                                                  .nonStaticGetTextStyle(
+                                                      1.0,
+                                                      appTheme
+                                                          .themeData
+                                                          .primaryTextTheme
+                                                          .bodyText1
+                                                          .color,
+                                                      appTheme.getTextTheme(
+                                                          context),
+                                                      FontWeight.w500,
+                                                      1.0,
+                                                      TextDecoration.none,
+                                                      "OpenSans",
+                                                      [
+                                                    Shadow(
+                                                        // bottomLeft
+                                                        offset:
+                                                            Offset(-1.0, -1.0),
+                                                        color: Colors.white),
+                                                    Shadow(
+                                                        // bottomRight
+                                                        offset:
+                                                            Offset(1.0, -1.0),
+                                                        color: Colors.white),
+                                                    Shadow(
+                                                        // topRight
+                                                        offset:
+                                                            Offset(1.0, 1.0),
+                                                        color: Colors.white),
+                                                    Shadow(
+                                                        // topLeft
+                                                        offset:
+                                                            Offset(-1.0, 1.0),
+                                                        color: Colors.white),
+                                                  ]),
+                                            ),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  100,
+                                            ),
+                                            Text('London, UK',
+                                                style: appTheme
+                                                    .nonStaticGetTextStyle(
+                                                        1.0,
+                                                        appTheme
+                                                            .themeData
+                                                            .primaryTextTheme
+                                                            .bodyText1
+                                                            .color,
+                                                        appTheme
+                                                            .getSemiBodyTextTheme(
+                                                                context),
+                                                        FontWeight.w500,
+                                                        1.0,
+                                                        TextDecoration.none,
+                                                        "OpenSans")),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  50,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      10,
+                                                  left: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      10),
+                                              child: Column(
                                                 children: [
-                                                  TextSpan(
-                                                      text: ' 70%',
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text.rich(
+                                                        TextSpan(
+                                                            text: 'Profile',
+                                                            children: [
+                                                              TextSpan(
+                                                                  text: ' 70%',
+                                                                  style: appTheme.nonStaticGetTextStyle(
+                                                                      1.0,
+                                                                      appTheme
+                                                                          .themeData
+                                                                          .primaryTextTheme
+                                                                          .bodyText1
+                                                                          .color,
+                                                                      appTheme.getSemiBodyTextTheme(
+                                                                          context),
+                                                                      FontWeight
+                                                                          .w500,
+                                                                      1.0,
+                                                                      TextDecoration
+                                                                          .none,
+                                                                      "OpenSans"))
+                                                            ],
+                                                            style: appTheme.nonStaticGetTextStyle(
+                                                                1.0,
+                                                                Colors.black
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                                appTheme
+                                                                    .getSemiBodyTextTheme(
+                                                                        context),
+                                                                FontWeight.w500,
+                                                                1.0,
+                                                                TextDecoration
+                                                                    .none,
+                                                                "OpenSans")),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                      ),
+                                                      GestureDetector(
+                                                          onTap: () {
+                                                            final dynamic
+                                                                tooltip =
+                                                                toolTipKey
+                                                                    .currentState;
+                                                            tooltip
+                                                                .ensureTooltipVisible();
+                                                          },
+                                                          child: Tooltip(
+                                                            key: toolTipKey,
+                                                            showDuration:
+                                                                Duration(
+                                                                    seconds: 5),
+                                                            message:
+                                                                'You Have to\nYou Have to',
+                                                            child: Icon(
+                                                              Icons
+                                                                  .info_outline,
+                                                              size: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width /
+                                                                  20,
+                                                              color: appTheme
+                                                                  .themeData
+                                                                  .iconTheme
+                                                                  .color,
+                                                            ),
+                                                          )),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            100,
+                                                  ),
+                                                  LinearProgressIndicator(
+                                                    value: 0.7,
+                                                    backgroundColor:
+                                                        Colors.black,
+                                                    valueColor: colorAnimation,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  80,
+                                            ),
+                                            Divider(),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  80,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      10,
+                                                  left: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text('Current Title',
+                                                      style: appTheme
+                                                          .nonStaticGetTextStyle(
+                                                              1.0,
+                                                              Colors.black,
+                                                              appTheme
+                                                                  .getSemiBodyTextTheme(
+                                                                      context),
+                                                              FontWeight.w500,
+                                                              1.0,
+                                                              TextDecoration
+                                                                  .none,
+                                                              "OpenSans")),
+                                                  Text('Something',
                                                       style: appTheme
                                                           .nonStaticGetTextStyle(
                                                               1.0,
@@ -166,158 +335,106 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                   .bodyText1
                                                                   .color,
                                                               appTheme
-                                                                  .getSemiBodyTextTheme(
+                                                                  .getTextTheme(
                                                                       context),
                                                               FontWeight.w500,
                                                               1.0,
-                                                              TextDecoration.none,
+                                                              TextDecoration
+                                                                  .none,
                                                               "OpenSans"))
                                                 ],
-                                                style: appTheme.nonStaticGetTextStyle(
-                                                    1.0,
-                                                    Colors.black.withOpacity(0.5),
-                                                    appTheme.getSemiBodyTextTheme(
-                                                        context),
-                                                    FontWeight.w500,
-                                                    1.0,
-                                                    TextDecoration.none,
-                                                    "OpenSans")),
-                                            textAlign: TextAlign.left,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  80,
+                                            ),
+                                            Divider(),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                10),
+                                        decoration: BoxDecoration(boxShadow: [
+                                          BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.7),
+                                              blurRadius: 60,
+                                              offset: Offset(0, 4))
+                                        ]),
+                                        child: GestureDetector(
+                                          child: CircleAvatar(
+                                            radius: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                10,
+                                            backgroundColor: Colors.transparent,
+                                            child: ClipOval(
+                                              child: sessionManager
+                                                          .user.profileImage !=
+                                                      'N/A'
+                                                  ? Image.network(
+                                                      sessionManager
+                                                          .user.profileImage,
+                                                      fit: BoxFit.fill,
+                                                      width: w / 5,
+                                                      height: h / 10,
+                                                    )
+                                                  : Image.asset(
+                                                      'assets/images/user.png',
+                                                      fit: BoxFit.cover,
+                                                      width: w / 5,
+                                                      height: h / 10,
+                                                    ),
+                                            ),
                                           ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                final dynamic tooltip =
-                                                    toolTipKey.currentState;
-                                                tooltip.ensureTooltipVisible();
-                                              },
-                                              child: Tooltip(
-                                                key: toolTipKey,
-                                                showDuration: Duration(seconds: 5),
-                                                message: 'You Have to\nYou Have to',
-                                                child: Icon(
-                                                  Icons.info_outline,
-                                                  size: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      20,
-                                                  color: appTheme
-                                                      .themeData.iconTheme.color,
-                                                ),
-                                              )),
-                                        ],
+                                          onTap: () {
+                                            onImagePressed(context);
+                                          },
+                                        ),
                                       ),
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height / 100,
-                                      ),
-                                      LinearProgressIndicator(
-                                        value: 0.7,
-                                        backgroundColor: Colors.black,
-                                        valueColor: colorAnimation,
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                5),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.auto_fix_high,
+                                                color: appTheme
+                                                    .themeData.primaryColor,
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.build,
+                                                color: appTheme
+                                                    .themeData.primaryColor,
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height / 80,
-                                ),
-                                Divider(),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height / 80,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      right: MediaQuery.of(context).size.width / 10,
-                                      left: MediaQuery.of(context).size.width / 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('Current Title',
-                                          style: appTheme.nonStaticGetTextStyle(
-                                              1.0,
-                                              Colors.black,
-                                              appTheme.getSemiBodyTextTheme(context),
-                                              FontWeight.w500,
-                                              1.0,
-                                              TextDecoration.none,
-                                              "OpenSans")),
-                                      Text('Something',
-                                          style: appTheme.nonStaticGetTextStyle(
-                                              1.0,
-                                              appTheme.themeData.primaryTextTheme
-                                                  .bodyText1.color,
-                                              appTheme.getTextTheme(context),
-                                              FontWeight.w500,
-                                              1.0,
-                                              TextDecoration.none,
-                                              "OpenSans"))
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height / 80,
-                                ),
-                                Divider(),
                               ],
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height / 10),
-                            decoration: BoxDecoration(boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.7),
-                                  blurRadius: 60,
-                                  offset: Offset(0, 4))
-                            ]),
-                            child: GestureDetector(
-                              child: CircleAvatar(
-                                radius: MediaQuery.of(context).size.height / 10,
-                                backgroundColor: Colors.transparent,
-                                child: ClipOval(
-                                  child: Image.network(
-                                    sessionManager.user.profileImage,
-                                    fit: BoxFit.fill,
-                                    width: 120,
-                                    height: 120,
-                                  ),
-                                ),
-                              ),
-                              onTap: () {
-                                onImagePressed(context);
-                              },
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height / 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.auto_fix_high,
-                                    color: appTheme.themeData.primaryColor,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.build,
-                                    color: appTheme.themeData.primaryColor,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ))),
-    ))));
+                          ))),
+                ))));
   }
 
   Color getColor(int number) {
@@ -420,6 +537,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
 class CustomImageShower extends StatelessWidget {
   final url;
+  SessionManager sessionManager = new SessionManager();
   CustomImageShower({this.url});
 
   @override
@@ -433,7 +551,11 @@ class CustomImageShower extends StatelessWidget {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Image.network(this.url),
+        child: sessionManager.user.profileImage != 'N/A'
+            ? Image.network(this.url)
+            : Image.asset(
+                'assets/images/user.png',
+              ),
       ),
     );
   }
