@@ -24,42 +24,7 @@ class DataMapper {
     return returnedNeediesMedia;
   }
 
-  //ToDo:Remove
-  String getRandomCharity(int randomNumber) {
-    print(randomNumber);
-    switch (randomNumber) {
-      case 0:
-        return 'Resala';
-      case 1:
-        return 'Gamiet El-Br';
-      case 2:
-        return 'El Jalila';
-      case 3:
-        return 'Khalaf Ahmad Al Habtoor';
-      case 4:
-        return 'Magdi Yacoub';
-    }
-  }
-
-  //ToDo:Remove
-  String getRandomCharityImage(int randomNumber) {
-    print(randomNumber);
-    switch (randomNumber) {
-      case 0:
-        return 'assets/images/bSOfYXcD_400x400.png';
-      case 1:
-        return 'assets/images/dar-al-ber-society.jpg';
-      case 2:
-        return 'assets/images/1519881695999.png';
-      case 3:
-        return 'assets/images/khalaf-al-habtoor.jpg';
-      case 4:
-        return 'assets/images/1519887944403.png';
-    }
-  }
-
   List<Needy> getNeediesFromJson(String baseURL, List<dynamic> list) {
-    int random = Random().nextInt(4);
     List<Needy> returnedNeedies = [];
     list.forEach((element) {
       returnedNeedies.add(Needy(

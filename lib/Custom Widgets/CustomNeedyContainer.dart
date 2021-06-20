@@ -35,8 +35,6 @@ class CustomNeedyContainer extends StatelessWidget {
     appTheme = Provider.of<AppTheme>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
-    print('need =  ${needy.need}');
-    print('collected = ${needy.collected}');
     return Container(
         height: double.infinity,
         margin: EdgeInsets.only(top: h / 50, bottom: h / 50),
