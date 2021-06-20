@@ -199,20 +199,21 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         getAchievementCenter(context),
-                        Visibility(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('الحالات المحفوظة',
-                                  style: appTheme
-                                      .themeData.primaryTextTheme.headline3),
-                              NeediesScreen(
-                                type: "Bookmarked",
-                              ),
-                            ],
-                          ),
-                          visible: sessionManager.hasAnyBookmarked(),
-                        ),
+                        //ToDo: Future V2
+                        // Visibility(
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text('الحالات المحفوظة',
+                        //           style: appTheme
+                        //               .themeData.primaryTextTheme.headline3),
+                        //       NeediesScreen(
+                        //         type: "Bookmarked",
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   visible: sessionManager.hasAnyBookmarked(),
+                        // ),
                         Text('الحالات الحرجة',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline3),

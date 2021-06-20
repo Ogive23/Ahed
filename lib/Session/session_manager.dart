@@ -103,35 +103,38 @@ class SessionManager {
     //     true);
   }
 
-  bool needyIsBookmarked(String id) {
-    if (sharedPreferences.containsKey('Bookmarks')) {
-      List<String> bookmarks = sharedPreferences.getStringList('Bookmarks');
-      return bookmarks.contains(id);
-    }
-    return false;
-  }
+  //ToDo: Future V2
+  // bool needyIsBookmarked(String id) {
+  //   if (sharedPreferences.containsKey('Bookmarks')) {
+  //     List<String> bookmarks = sharedPreferences.getStringList('Bookmarks');
+  //     return bookmarks.contains(id);
+  //   }
+  //   return false;
+  // }
 
-  void addNeedyToBookmarks(String id) {
-    if (sharedPreferences.containsKey('Bookmarks')) {
-      List<String> bookmarks = sharedPreferences.getStringList('Bookmarks');
-      if (bookmarks.contains(id))
-        bookmarks.remove(id);
-      else
-        bookmarks.add(id);
-      print(bookmarks);
-      sharedPreferences.setStringList('Bookmarks', bookmarks);
-      return;
-    }
-    sharedPreferences.setStringList('Bookmarks', [id]);
-  }
+  //ToDo: Future V2
+  // void addNeedyToBookmarks(String id) {
+  //   if (sharedPreferences.containsKey('Bookmarks')) {
+  //     List<String> bookmarks = sharedPreferences.getStringList('Bookmarks');
+  //     if (bookmarks.contains(id))
+  //       bookmarks.remove(id);
+  //     else
+  //       bookmarks.add(id);
+  //     print(bookmarks);
+  //     sharedPreferences.setStringList('Bookmarks', bookmarks);
+  //     return;
+  //   }
+  //   sharedPreferences.setStringList('Bookmarks', [id]);
+  // }
 
-  bool hasAnyBookmarked() {
-    print('bookMarks ${sharedPreferences.getStringList('Bookmarks')}');
-    if (sharedPreferences.getStringList('Bookmarks') == null) return false;
-    return sharedPreferences.getStringList('Bookmarks').isNotEmpty;
-  }
-
-  List<String> getBookmarkedNeedies() {
-    return [];
-  }
+  //ToDo: Future V2
+  // bool hasAnyBookmarked() {
+  //   print('bookMarks ${sharedPreferences.getStringList('Bookmarks')}');
+  //   if (sharedPreferences.getStringList('Bookmarks') == null) return false;
+  //   return sharedPreferences.getStringList('Bookmarks').isNotEmpty;
+  // }
+  //
+  // List<String> getBookmarkedNeedies() {
+  //   return sharedPreferences.getStringList('Bookmarks');
+  // }
 }

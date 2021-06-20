@@ -119,32 +119,33 @@ class CustomNeedyContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: Container(
-                        // padding: EdgeInsets.symmetric(
-                        //     vertical: h / 100, horizontal: w / 20),
-                        decoration: BoxDecoration(
-                          color: Colors.amber[50].withOpacity(0.2),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
-                        child: IconButton(
-                          padding: EdgeInsets.zero,
-                          icon: Icon(
-                            sessionManager.needyIsBookmarked(needy.id)
-                                ? Icons.bookmark
-                                : Icons.bookmark_border,
-                            color: Colors.green,
-                          ),
-                          onPressed: () {
-                            sessionManager.addNeedyToBookmarks(needy.id);
-                            commonData.refreshPage();
-                          },
-                        )),
-                  ),
+                  //ToDo: Future V2
+                  // Positioned(
+                  //   top: 0,
+                  //   right: 0,
+                  //   child: Container(
+                  //       // padding: EdgeInsets.symmetric(
+                  //       //     vertical: h / 100, horizontal: w / 20),
+                  //       decoration: BoxDecoration(
+                  //         color: Colors.amber[50].withOpacity(0.2),
+                  //         borderRadius: BorderRadius.all(
+                  //           Radius.circular(30),
+                  //         ),
+                  //       ),
+                  //       child: IconButton(
+                  //         padding: EdgeInsets.zero,
+                  //         icon: Icon(
+                  //           sessionManager.needyIsBookmarked(needy.id)
+                  //               ? Icons.bookmark
+                  //               : Icons.bookmark_border,
+                  //           color: Colors.green,
+                  //         ),
+                  //         onPressed: () {
+                  //           sessionManager.addNeedyToBookmarks(needy.id);
+                  //           commonData.refreshPage();
+                  //         },
+                  //       )),
+                  // ),
                   Positioned(
                     bottom: 0,
                     left: 0,
