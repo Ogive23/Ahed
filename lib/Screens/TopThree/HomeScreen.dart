@@ -297,7 +297,7 @@ class HomeScreen extends StatelessWidget {
                       1.0,
                       TextDecoration.none,
                       'Delius'),
-                  text: 'حالة قدرت تغير حياتهم للأحسن',
+                  text: 'حالات قدرت تغير حياتهم للأحسن',
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.grey[500],
@@ -552,20 +552,19 @@ class HomeScreen extends StatelessWidget {
           (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
-          print(snapshot.data);
           return getAchievementCenterBody(snapshot.data, context);
         } else if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data == null) {
           return Container(
             alignment: Alignment.center,
-            child: Text(
-                'حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
+            child:
+                Text('حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
           );
         } else if (snapshot.error != null) {
           return Container(
             alignment: Alignment.center,
-            child: Text(
-                'حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
+            child:
+                Text('حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
           );
         } else {
           return Container(
@@ -581,7 +580,6 @@ class HomeScreen extends StatelessWidget {
     Map<String, dynamic> status = await userApiCaller.getAchievements(
         sessionManager.user != null ? sessionManager.user.id : null);
     if (status['Err_Flag']) return null;
-    print('here');
     return status['Values'];
   }
 }

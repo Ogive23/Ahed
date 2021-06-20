@@ -176,7 +176,6 @@ class CustomNeedyContainer extends StatelessWidget {
                       child: Stack(
                         children: [
                           CircleAvatar(
-                            radius: 25,
                             radius: 15,
                             backgroundColor: Colors.transparent,
                             child: Container(
@@ -245,8 +244,7 @@ class CustomNeedyContainer extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: w / 25, right: w / 50),
                 // padding: const EdgeInsets.all(8.0),
-                child: Text(
-                    'تبرع لمساعدة ${needy.name} ل${getNeedySentence(needy.type)}',
+                child: Text('تبرع لمساعدة ${needy.name} ل${needy.type}',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: appTheme.themeData.primaryTextTheme.headline4
@@ -391,7 +389,7 @@ class CustomNeedyContainer extends StatelessWidget {
                       //ToDo: Add application url
                       needy.satisfied
                           ? 'Check out what Ahed made to change these people\'s life ${needy.url}, You can start to be part of it by downloading Ahed Application from ${'Application URL'}.'
-                          : 'Only ${needy.need - needy.collected} EGP Left, Help ${needy.name} To ${getNeedySentence(needy.type)}!\n ${needy.url}',
+                          : 'Only ${needy.need - needy.collected} EGP Left, Help ${needy.name} To ${needy.type}!\n ${needy.url}',
                     );
                   },
                   style: ButtonStyle(
@@ -404,25 +402,9 @@ class CustomNeedyContainer extends StatelessWidget {
         ));
   }
 
-  getNeedySentence(String type) {
-    switch (type) {
-      case 'إيجاد مسكن':
-        return 'إيجاد حياة أفضل';
-      case 'تحسين مستوي المعيشة':
-        return 'تحسين مستوي المعيشة';
-      case 'تجهيز عروس':
-        return 'لإستعداد لفرحة كبيرة';
-      case 'ديون':
-        return 'إنهاء الدين';
-      case 'علاج':
-        return 'إيجاد علاج';
-    }
-  }
-
   getTime(String createdAtString) {
     DateTime createdAt = DateTime.parse(createdAtString);
     Duration difference = DateTime.now().difference(createdAt);
-    print(difference);
     if (difference.inDays > 0)
       return "منذ " + difference.inDays.toString() + " يوم";
     if (difference.inHours > 0)
