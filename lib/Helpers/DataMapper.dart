@@ -83,6 +83,29 @@ class DataMapper {
           getRandomCharity(random),
           //ToDo:Remove
           getRandomCharityImage(random)));
+        element['id'].toString(),
+        element['name'].toString(),
+        double.parse(element['age'].toString()),
+        int.parse(element['severity'].toString()),
+        getSeverityClass(element['severity']),
+        element['type'],
+        element['details'],
+        double.parse(element['need'].toString()),
+        double.parse(element['collected'].toString()),
+        element['address'],
+        element['satisfied'] == 1 ? true : false,
+        element['approved'] == 1 ? true : false,
+        DateTime.parse(element['created_at']),
+        this.getNeediesMediaFromJson(baseURL, element['medias_before']),
+        this.getNeediesMediaFromJson(baseURL, element['medias_after']),
+        element['url'],
+        element['createdBy']['id'].toString(),
+        element['createdBy']['name'].toString(),
+        element['createdBy']['image'] != null
+            ? baseURL + element['createdBy']['image']
+            : 'N/A',
+        element['createdBy']['email_verified_at'] != null ? true : false,
+      ));
     });
     return returnedNeedies;
   }

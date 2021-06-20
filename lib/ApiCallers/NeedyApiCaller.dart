@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import '../Session/session_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class NeedyApiCaller{
+class NeedyApiCaller {
   ResponseHandler responseHandler = new ResponseHandler();
   SessionManager sessionManager = new SessionManager();
   DataMapper dataMapper = new DataMapper();

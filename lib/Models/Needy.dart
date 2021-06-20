@@ -17,8 +17,10 @@ class Needy {
   List<NeedyMedia> imagesBefore;
   List<NeedyMedia> imagesAfter;
   String url;
-  String createdBy;
+  String createdById;
+  String createdByName;
   String createdByImage;
+  bool createdByVerified;
 
   Needy(
       this.id,
@@ -37,6 +39,8 @@ class Needy {
       this.imagesBefore,
       this.imagesAfter,
       this.url,
-      this.createdBy,
-      this.createdByImage);
+      this.createdById,
+      this.createdByName,
+      this.createdByImage,
+      this.createdByVerified);
 }
