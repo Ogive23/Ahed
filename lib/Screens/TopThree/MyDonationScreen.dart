@@ -27,6 +27,8 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   AppTheme appTheme;
   List<Transaction> transactions;
   TabController tabController;
+  late UserApiCaller userApiCaller = new UserApiCaller();
+  final DataMapper dataMapper = new DataMapper();
 
   SessionManager sessionManager = new SessionManager();
   @override
@@ -39,94 +41,122 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   // double remainingUntilPrize;
   // String prize;
   // String prizeImage;
-  Future<Map<String, dynamic>> getTransactions(type) async {
-    // await Future.delayed(Duration(seconds: 4));
-    return {
-      //ToDo: Ahed V2 When adding Prize
-      // "remainingUntilPrize": 900.5,
-      // "prize": "Vivo Y73",
-      "transactions": type == "Online"
-          ? [
-              OnlineTransaction('4', '1', '4', 64, DateTime(2020, 8, 27),
-                  'OnlineTransaction', 0),
-              OnlineTransaction('4', '1', '4', 64, DateTime(2020, 8, 27),
-                  'OnlineTransaction', 0),
-              OnlineTransaction('3', '1', '3', 312, DateTime(2021, 01, 07),
-                  'OnlineTransaction', 0),
-              OnlineTransaction('2', '1', '2', 157, DateTime(2021, 2, 24),
-                  'OnlineTransaction', 0),
-              OnlineTransaction('1', '1', '1', 133, DateTime(2021, 04, 09),
-                  'OnlineTransaction', 0),
-            ]
-          : [
-              OfflineTransaction(
-                  '2',
-                  '1',
-                  null,
-                  34,
-                  DateTime(2020, 11, 17),
-                  'OfflineTransaction',
-                  'إيجاد مسكن مناسب',
-                  'El gesr Elbrany St',
-                  DateTime(2020, 11, 17),
-                  DateTime(2020, 11, 21),
-                  DateTime(2020, 11, 20),
-                  true),
-              OfflineTransaction(
-                  '1',
-                  '1',
-                  '1',
-                  35,
-                  DateTime(2021, 03, 03),
-                  'OfflineTransaction',
-                  'تجهيز العرائس',
-                  'El gesr Elbrany St',
-                  DateTime(2021, 03, 03),
-                  DateTime(2021, 03, 07),
-                  DateTime(2021, 03, 03),
-                  true),
-            ]
-    };
+  Future<Map<String, dynamic>> getOnlineTransactions() async {
+    return await userApiCaller.getOnlineTransactions(sessionManager.user!.id);
   }
 
-  Widget getTransactionsBody(context, String type) {
+  Future<Map<String, dynamic>> getOfflineTransactions() async {
+    return await userApiCaller.getOfflineTransactions(sessionManager.user!.id);
+  }
+
+  Widget getOnlineTransactionsBody(context) {
     return FutureBuilder<Map<String, dynamic>>(
-      future: getTransactions(type),
+      future: getOnlineTransactions(),
       builder:
           (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.data != null) {
-          print(snapshot.data);
-          transactions = snapshot.data['transactions'];
+            snapshot.data != null &&
+            !snapshot.data!['Err_Flag']) {
           // return Expanded(
           return SingleChildScrollView(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                      //ToDo: Ahed V2 When adding Prize
-                      // TimelineTile(
-                      //   alignment: TimelineAlign.manual,
-                      //   lineXY: 0.3,
-                      //   isFirst: true,
-                      //   indicatorStyle: IndicatorStyle(
-                      //     width: 70,
-                      //     height: 70,
-                      //     indicator:
-                      //         Image.asset('assets/images/gift-png.png'),
-                      //   ),
-                      //   beforeLineStyle:
-                      //       LineStyle(color: Colors.black.withOpacity(0.7)),
-                      //   endChild: ContainerHeader(
-                      //     prize: snapshot.data['prize'],
-                      //     prizeImage: prizeImage,
-                      //     remainingUntilPrize: snapshot.data['remainingUntilPrize'],
-                      //   ),
-                      // ),
-                    ] +
-                    getTimeLine(transactions)
+                children:
+                    //ToDo: Ahed V2 When adding Prize
+                    // <Widget>[
+                    // TimelineTile(
+                    //   alignment: TimelineAlign.manual,
+                    //   lineXY: 0.3,
+                    //   isFirst: true,
+                    //   indicatorStyle: IndicatorStyle(
+                    //     width: 70,
+                    //     height: 70,
+                    //     indicator:
+                    //         Image.asset('assets/images/gift-png.png'),
+                    //   ),
+                    //   beforeLineStyle:
+                    //       LineStyle(color: Colors.black.withOpacity(0.7)),
+                    //   endChild: ContainerHeader(
+                    //     prize: snapshot.data['prize'],
+                    //     prizeImage: prizeImage,
+                    //     remainingUntilPrize: snapshot.data['remainingUntilPrize'],
+                    //   ),
+                    // ),
+                    // ] +
+                    getOnlineTimeLine(snapshot.data!['Values'])
                 //   ),
                 ),
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null &&
+            snapshot.data!['Err_Flag']) {
+          print(snapshot.data);
+          return Container(
+            alignment: Alignment.center,
+            child: Text('${snapshot.data!['Err_Desc']}'),
+          );
+        } else if (snapshot.error != null) {
+          return Container(
+            alignment: Alignment.center,
+            child: Text(
+                'Error Showing Transactions, Please Restart ${snapshot.error}'),
+          );
+        } else {
+          return Container(alignment: Alignment.center, child: CustomLoading());
+        }
+      },
+    );
+  }
+
+  Widget getOfflineTransactionsBody(context) {
+    return FutureBuilder<Map<String, dynamic>>(
+      future: getOfflineTransactions(),
+      builder:
+          (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null &&
+            !snapshot.data!['Err_Flag']) {
+          // return Expanded(
+          return SingleChildScrollView(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:
+                    //ToDo: Ahed V2 When adding Prize
+                    // <Widget>[
+                    // TimelineTile(
+                    //   alignment: TimelineAlign.manual,
+                    //   lineXY: 0.3,
+                    //   isFirst: true,
+                    //   indicatorStyle: IndicatorStyle(
+                    //     width: 70,
+                    //     height: 70,
+                    //     indicator:
+                    //         Image.asset('assets/images/gift-png.png'),
+                    //   ),
+                    //   beforeLineStyle:
+                    //       LineStyle(color: Colors.black.withOpacity(0.7)),
+                    //   endChild: ContainerHeader(
+                    //     prize: snapshot.data['prize'],
+                    //     prizeImage: prizeImage,
+                    //     remainingUntilPrize: snapshot.data['remainingUntilPrize'],
+                    //   ),
+                    // ),
+                    // ] +
+                    getOfflineTimeLine(snapshot.data!['Values'])
+                //   ),
+                ),
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null &&
+            snapshot.data!['Err_Flag']) {
+          print(snapshot.data);
+          return Container(
+            alignment: Alignment.center,
+            child: Text('${snapshot.data!['Err_Desc']}'),
           );
         } else if (snapshot.error != null) {
           return Container(
@@ -225,7 +255,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
             child: TabBarView(
               children: [
                 sessionManager.isLoggedIn()
-                    ? getTransactionsBody(context, 'Online')
+                    ? getOnlineTransactionsBody(context)
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -249,7 +279,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                         ],
                       ),
                 sessionManager.isLoggedIn()
-                    ? getTransactionsBody(context, 'Offline')
+                    ? getOfflineTransactionsBody(context)
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

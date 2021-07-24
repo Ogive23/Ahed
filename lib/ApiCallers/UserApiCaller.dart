@@ -91,10 +91,77 @@ class UserApiCaller {
     // }
   }
 
+  Future<Map<String, dynamic>> getOnlineTransactions(String userId) async {
+    // QuerySnapshot snapshot = await urls.get();
+    // for(int index = 0; index < snapshot.size; index++){
+    //   String url = snapshot.docs[index]['url'];
+    // if (sessionManager.accessTokenExpired()) {
+    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
+    // }
+    var headers = {
+      "Content-Type": "application/json",
+      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+    };
+    try {
+      print(url + "/api/ahed/onlinetransactions?userId=$userId");
+      var response = await http
+          .get(Uri.parse(url + "/api/ahed/onlinetransactions?userId=$userId"),
+              headers: headers)
+          .catchError((error) {
+        throw error;
+      }).timeout(Duration(seconds: 120));
+      var responseToJson = jsonDecode(response.body);
+      if (responseToJson['Err_Flag']) return responseToJson;
+      return {
+        "Err_Flag": responseToJson['Err_Flag'],
+        "Values":
+            dataMapper.getOnlineTransactionsFromJson(responseToJson['data'])
+      };
+    } on TimeoutException {
+      return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
     } catch (e) {
-      print('e $e');
-      return responseHandler.errorPrinter(
-          "Kindly check your internet connection then try again.");
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما.');
+    }
+    // }
+  }
+  Future<Map<String, dynamic>> getOfflineTransactions(String userId) async {
+    // QuerySnapshot snapshot = await urls.get();
+    // for(int index = 0; index < snapshot.size; index++){
+    //   String url = snapshot.docs[index]['url'];
+    // if (sessionManager.accessTokenExpired()) {
+    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
+    // }
+    var headers = {
+      "Content-Type": "application/json",
+      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+    };
+    try {
+      print(url + "/api/ahed/offlinetransactions?userId=$userId");
+      var response = await http
+          .get(Uri.parse(url + "/api/ahed/offlinetransactions?userId=$userId"),
+          headers: headers)
+          .catchError((error) {
+        throw error;
+      }).timeout(Duration(seconds: 120));
+      var responseToJson = jsonDecode(response.body);
+      if (responseToJson['Err_Flag']) return responseToJson;
+      return {
+        "Err_Flag": responseToJson['Err_Flag'],
+        "Values":
+        dataMapper.getOfflineTransactionsFromJson(responseToJson['data'])
+      };
+    } on TimeoutException {
+      return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+    } catch (e) {
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما.');
     }
     // }
   }

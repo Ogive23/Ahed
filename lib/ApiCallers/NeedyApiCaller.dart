@@ -169,9 +169,37 @@ class NeedyApiCaller {
     }
     // }
   }
+  getById(String id) async {
+    // QuerySnapshot snapshot = await urls.get();
+    // for(int index = 0; index < snapshot.size; index++){
+    //   String url = snapshot.docs[index]['url'];
+    // if (sessionManager.accessTokenExpired()) {
+    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
+    // }
+    var headers = {
+      "Content-Type": "application/json",
+      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+    };
+    try {
+      var response = await http
+          .get(Uri.parse(url + "/api/ahed/needies/$id"),
+          headers: headers)
+          .catchError((error) {
+        throw error;
+      }).timeout(Duration(seconds: 120));
+      return {
+        "Err_Flag": false,
+        "Values": dataMapper.getNeedyFromJson(
+            url , jsonDecode(response.body)['data'])
+      };
+    } on TimeoutException {
+      return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
     } catch (e) {
-      print(e);
-      return responseHandler.errorPrinter("networkError");
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما.');
     }
     // }
   }
