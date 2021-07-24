@@ -18,6 +18,7 @@ class DataMapper {
   }
 
   List<NeedyMedia> getNeediesMediaFromJson(String baseURL, List<dynamic> list) {
+    print('here');
     List<NeedyMedia> returnedNeediesMedia = [];
     list.forEach((element) {
       returnedNeediesMedia.add(
@@ -115,8 +116,8 @@ class DataMapper {
     return returnedOfflineTransactions;
   }
 
-  getNeedyFromJson(String baseURL, json) {
-    print(json['createdBy']['image']);
+  getNeedyFromJson(String baseURL,Map<String,dynamic> json) {
+    print(json);
     return Needy(
         json['id'].toString(),
         json['name'].toString(),

@@ -189,7 +189,7 @@ class NeedyApiCaller {
       }).timeout(Duration(seconds: 120));
       return {
         "Err_Flag": false,
-        "Values": dataMapper.getNeedyFromJson(
+        "Value": dataMapper.getNeedyFromJson(
             url , jsonDecode(response.body)['data'])
       };
     } on TimeoutException {
