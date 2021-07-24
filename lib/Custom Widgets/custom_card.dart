@@ -9,17 +9,17 @@ class CustomCard extends StatelessWidget {
   final String title, subtitle, url, kind;
   final IconData icon;
   final TextDirection textDirection;
-  static AppTheme appTheme;
+  static late AppTheme appTheme;
   CustomCard(
-      {@required this.title,
-      @required this.subtitle,
-      @required this.url,
-      @required this.icon,
-      @required this.iconColor,
-      @required this.kind,
-      @required this.textDirection});
+      {required this.title,
+      required this.subtitle,
+      required this.url,
+      required this.icon,
+      required this.iconColor,
+      required this.kind,
+      required this.textDirection});
   Future<void> launchURL(String url, kind) async {
-    String protocolURL;
+    late String protocolURL;
     if (kind == 'fb')
       protocolURL = "fb://page/716275428808273";
     else if (kind == 'twitter')

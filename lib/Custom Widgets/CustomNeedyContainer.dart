@@ -3,17 +3,14 @@ import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:ahed/Shared%20Data/NeedyData.dart';
-import 'package:animations/animations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:intl/intl.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-
 import '../GeneralInfo.dart';
 import 'CustomSpacing.dart';
 import 'ImageCarouselShow.dart';
@@ -21,13 +18,13 @@ import 'ImageCarouselShow.dart';
 class CustomNeedyContainer extends StatelessWidget {
   final Needy needy;
 
-  int currentIndex = 0;
-  CustomNeedyContainer({@required this.needy});
-  AppTheme appTheme;
-  CommonData commonData;
-  NeedyData needyData;
-  double w, h;
-  SessionManager sessionManager = new SessionManager();
+  static int currentIndex = 0;
+  CustomNeedyContainer({required this.needy});
+  static late AppTheme appTheme;
+  static late CommonData commonData;
+  static late NeedyData needyData;
+  static late double w, h;
+  final SessionManager sessionManager = new SessionManager();
   @override
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
@@ -68,7 +65,7 @@ class CustomNeedyContainer extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             enableInfiniteScroll: true,
                             viewportFraction: 0.8),
-                        items: needy.imagesBefore
+                        items: needy.imagesBefore!
                             .map((image) => GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -77,7 +74,7 @@ class CustomNeedyContainer extends StatelessWidget {
                                             builder: (context) =>
                                                 ImageCarouselShow(
                                                   needyMedias:
-                                                      needy.imagesBefore,
+                                                      needy.imagesBefore!,
                                                   currentIndex: currentIndex,
                                                   type: 'Before',
                                                   appTheme: appTheme,
@@ -92,7 +89,7 @@ class CustomNeedyContainer extends StatelessWidget {
                             .toList(),
                       )),
                   Visibility(
-                    visible: needy.severity >= 7,
+                    visible: needy.severity! >= 7,
                     child: Positioned(
                       top: 0,
                       left: 0,
@@ -187,7 +184,7 @@ class CustomNeedyContainer extends StatelessWidget {
                               child: ClipOval(
                                 child: Image.network(
                                   needy.createdByImage != 'N/A'
-                                      ? needy.createdByImage
+                                      ? needy.createdByImage!
                                       : 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
                                   fit: BoxFit.cover,
                                   width: w / 5,
@@ -197,7 +194,7 @@ class CustomNeedyContainer extends StatelessWidget {
                             ),
                           ),
                           Visibility(
-                            visible: needy.createdByVerified,
+                            visible: needy.createdByVerified!,
                             child: Positioned(
                               bottom: 0,
                               left: 0,
@@ -247,7 +244,7 @@ class CustomNeedyContainer extends StatelessWidget {
                 child: Text('تبرع لمساعدة ${needy.name} ل${needy.type}',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: appTheme.themeData.primaryTextTheme.headline4
+                    style: appTheme.themeData.primaryTextTheme.headline4!
                         .apply(fontWeightDelta: 4)),
               ),
               CustomSpacing(),
@@ -262,7 +259,7 @@ class CustomNeedyContainer extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.3),
                           ),
                           child: Text(
-                            'السن: ${needy.age.toStringAsFixed(0)}',
+                            'السن: ${needy.age!.toStringAsFixed(0)}',
                             style: appTheme.nonStaticGetTextStyle(
                                 1.0,
                                 Colors.grey,
@@ -285,12 +282,12 @@ class CustomNeedyContainer extends StatelessWidget {
                 lineHeight: 20.0,
                 linearGradient:
                     LinearGradient(colors: [Colors.green, Colors.greenAccent]),
-                percent: needy.satisfied ? 1 : needy.collected / needy.need,
+                percent: needy.satisfied! ? 1 : needy.collected! / needy.need!,
                 center: Text(
-                  needy.satisfied
+                  needy.satisfied!
                       ? 'تمت'
                       : 'تبقي ' +
-                          (needy.need - needy.collected).toStringAsFixed(0) +
+                          (needy.need! - needy.collected!).toStringAsFixed(0) +
                           ' جنيه',
                   style: appTheme.nonStaticGetTextStyle(
                       1.0,
@@ -304,7 +301,7 @@ class CustomNeedyContainer extends StatelessWidget {
                 linearStrokeCap: LinearStrokeCap.roundAll,
               ),
               CustomSpacing(),
-              needy.satisfied
+              needy.satisfied!
                   ? Center(
                       child: ElevatedButton(
                         onPressed: () {
@@ -312,7 +309,7 @@ class CustomNeedyContainer extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ImageCarouselShow(
-                                        needyMedias: needy.imagesAfter,
+                                        needyMedias: needy.imagesAfter!,
                                         type: 'After',
                                         currentIndex: currentIndex,
                                         appTheme: appTheme,
@@ -324,7 +321,7 @@ class CustomNeedyContainer extends StatelessWidget {
                         ),
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.green[500].withOpacity(0.7))),
+                                Colors.green[500]!.withOpacity(0.7))),
                       ),
                     )
                   : Row(
@@ -346,13 +343,13 @@ class CustomNeedyContainer extends StatelessWidget {
                                   MaterialStateProperty.resolveWith<Color>(
                                       (Set<MaterialState> states) {
                                 if (states.contains(MaterialState.disabled))
-                                  return Colors.grey[300];
+                                  return Colors.grey[300]!;
                                 return Colors.green[
-                                    400]; // Defer to the widget's default.
+                                    400]!; // Defer to the widget's default.
                               }),
                               textStyle: MaterialStateProperty.all<TextStyle>(
                                   appTheme
-                                      .themeData.primaryTextTheme.subtitle2)),
+                                      .themeData.primaryTextTheme.subtitle2!)),
                         ),
                         ElevatedButton(
                           onPressed: () {
@@ -365,7 +362,7 @@ class CustomNeedyContainer extends StatelessWidget {
                                   .themeData.primaryTextTheme.bodyText2),
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.green[400])),
+                                  Colors.green[400]!)),
                         ),
                       ],
                     ),
@@ -378,7 +375,7 @@ class CustomNeedyContainer extends StatelessWidget {
                           style: appTheme.themeData.primaryTextTheme.bodyText2),
                       Icon(
                         // Icons.share,
-                        EvilIcons.share_google,
+                        FontAwesomeIcons.share,
                         color: Colors.white,
                         size: appTheme.getTextTheme(context),
                       ),
@@ -387,14 +384,14 @@ class CustomNeedyContainer extends StatelessWidget {
                   onPressed: () {
                     Share.share(
                       //ToDo: Add application url
-                      needy.satisfied
-                          ? 'Check out what Ahed made to change these people\'s life ${needy.url}, You can start to be part of it by downloading Ahed Application from ${'Application URL'}.'
-                          : 'Only ${needy.need - needy.collected} EGP Left, Help ${needy.name} To ${needy.type}!\n ${needy.url}',
+                      needy.satisfied!
+                          ? 'Check out what Ahed made to change these people\'s life ${needy.url!}, You can start to be part of it by downloading Ahed Application from ${'Application URL'}.'
+                          : 'Only ${needy.need! - needy.collected!} EGP Left, Help ${needy.name!} To ${needy.type!}!\n ${needy.url!}',
                     );
                   },
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blue[400])),
+                          MaterialStateProperty.all<Color>(Colors.blue[400]!)),
                 ),
               ),
             ],

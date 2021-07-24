@@ -11,9 +11,9 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreen extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  SessionManager sessionManager;
-  AnimationController _animationController;
-  Animation<Color> _colorAnimation;
+  late SessionManager sessionManager;
+  late AnimationController _animationController;
+  late Animation<Color> _colorAnimation;
   double value = 0.0;
   double opacity = 0;
   String quote = "";

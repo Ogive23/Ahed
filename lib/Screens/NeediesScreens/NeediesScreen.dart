@@ -1,39 +1,32 @@
-import 'dart:math';
 import 'package:ahed/ApiCallers/NeedyApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomNeedyContainer.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/LoadingNeedyContainer.dart';
 import 'package:ahed/Models/Needy.dart';
-import 'package:ahed/Models/NeedyMedia.dart';
 import 'package:ahed/Session/session_manager.dart';
-import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
-import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NeediesScreen extends StatefulWidget {
   final String type;
-  NeediesScreen({@required this.type});
+  NeediesScreen({required this.type});
   @override
   _NeediesScreenState createState() => _NeediesScreenState();
 }
 
 class _NeediesScreenState extends State<NeediesScreen> {
-  double w, h;
-  CommonData commonData;
-  AppLanguage appLanguage;
-  AppTheme appTheme;
-  List<Needy> needies;
+  static late double w, h;
+  static late AppTheme appTheme;
+  List<Needy>? needies;
   int current = 0;
   SessionManager sessionManager = new SessionManager();
-  TabController tabController;
 
   int currentPage = 1;
   // int lastPage;
-  int total;
+  static late int total;
 
   @override
   initState() {
@@ -52,14 +45,14 @@ class _NeediesScreenState extends State<NeediesScreen> {
     addedNeedies = await getGeneratedNeedies(widget.type);
     setState(() {
       needies = [];
-      needies.addAll(addedNeedies);
+      needies!.addAll(addedNeedies);
     });
   }
 
   Widget getNeediesBody(context) {
     if (needies == null)
       return Container(alignment: Alignment.center, child: CustomLoading());
-    if (needies.isEmpty)
+    if (needies!.isEmpty)
       return Center(
         child: Text(
           'لا توجد حالات متاحة',
@@ -76,18 +69,18 @@ class _NeediesScreenState extends State<NeediesScreen> {
               enableInfiniteScroll: false,
               onPageChanged: (index, reason) async {
                 current = index;
-                if (current == needies.length && current < total) {
+                if (current == needies!.length && current < total) {
                   currentPage++;
                   List<Needy> addedNeedies =
                       await getGeneratedNeedies(widget.type);
                   setState(() {
-                    needies.addAll(addedNeedies);
+                    needies!.addAll(addedNeedies);
                   });
                 }
               },
             ),
             items: <Widget>[] +
-                needies
+                needies!
                     .map((needy) => CustomNeedyContainer(needy: needy))
                     .toList() +
                 getLoadingContainerIfExists()));
@@ -96,15 +89,15 @@ class _NeediesScreenState extends State<NeediesScreen> {
   List<Widget> getLoadingContainerIfExists() {
     //ToDo: Future V2
     // if (widget.type == "Bookmarked") return <Widget>[];
-    return needies.isEmpty || needies.length < total
+    return needies!.isEmpty || needies!.length < total
         ? <Widget>[LoadingNeedyContainer()]
         : <Widget>[];
   }
 
   Future<List<Needy>> getGeneratedNeedies(String type,
-      [List<String> bookmarkedNeediesIDs]) async {
+      [List<String>? bookmarkedNeediesIDs]) async {
     NeedyApiCaller needyApiCaller = new NeedyApiCaller();
-    Map<String, dynamic> status;
+    late Map<String, dynamic> status;
     if (type == 'Urgent')
       status = await needyApiCaller.getAllUrgent(currentPage);
     if (type == 'Not Urgent') status = await needyApiCaller.getAll(currentPage);
@@ -114,22 +107,32 @@ class _NeediesScreenState extends State<NeediesScreen> {
     //   status = await needyApiCaller.getAllBookmarked(bookmarkedNeediesIDs);
     setState(() {
       // this.lastPage = status['lastPage'];
-      this.total = status['total'];
+      total = status['total'];
     });
     if (!status['Err_Flag']) return status['Values'];
-    //ToDo: Handle Error
-    print(status['Err_Flag']);
+    return [];
   }
 
   @override
   Widget build(BuildContext context) {
-    commonData = Provider.of<CommonData>(context);
     appTheme = Provider.of<AppTheme>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(this.widget.type == 'Urgent' ? 'الحالات الحرجة' : 'الحالات',
+                style: appTheme.themeData.primaryTextTheme.headline3),
+            IconButton(
+                onPressed: () {
+                  setState(() {});
+                },
+                icon: Icon(Icons.refresh))
+          ],
+        ),
         CustomSpacing(),
         getNeediesBody(context),
       ],

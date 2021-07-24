@@ -4,9 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/User.dart';
 
 class SessionManager {
-  SharedPreferences sharedPreferences;
-  User user;
-  DateTime accessTokenExpireDate;
+  late SharedPreferences sharedPreferences;
+  User? user;
+  DateTime? accessTokenExpireDate;
 
   SessionManager._privateConstructor();
 
@@ -29,11 +29,11 @@ class SessionManager {
 
   loadSession() {
     accessTokenExpireDate =
-        DateTime.parse(sharedPreferences.getString('accessTokenExpireDate'));
-    if (accessTokenExpireDate.isBefore(DateTime.now())) {
+        DateTime.parse(sharedPreferences.getString('accessTokenExpireDate')!);
+    if (accessTokenExpireDate!.isBefore(DateTime.now())) {
       logout();
     }
-    List<String> userData = sharedPreferences.getStringList('user');
+    List<String> userData = sharedPreferences.getStringList('user')!;
     user = new User(
         userData[0],
         userData[1],
@@ -67,19 +67,19 @@ class SessionManager {
   }
 
   bool loadPreferredTheme() {
-    return sharedPreferences.get('theme') == 'true' ?? false;
+    return sharedPreferences.get('theme') == 'true';
   }
 
   createPreferredLanguage(String lang) {
     sharedPreferences.setString('lang', lang);
   }
 
-  String loadPreferredLanguage() {
-    return sharedPreferences.get('lang');
+  String? loadPreferredLanguage() {
+    return sharedPreferences.getString('lang');
   }
 
   bool accessTokenExpired() {
-    return accessTokenExpireDate.isBefore(DateTime.now());
+    return accessTokenExpireDate!.isBefore(DateTime.now());
   }
 
   logout() {
@@ -89,7 +89,8 @@ class SessionManager {
     sharedPreferences.remove('user');
   }
 
-  User getDummyData() {
+  User? getDummyData() {
+    return null;
     // return User(
     //     '1234',
     //     'Mahmoued Mohamed',

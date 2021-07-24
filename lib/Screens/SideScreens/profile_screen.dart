@@ -15,14 +15,14 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
-  double w, h;
-  SessionManager sessionManager = new SessionManager();
-  AppTheme appTheme;
-  CommonData commonData;
-  AnimationController animationController;
-  Animation<Color> colorAnimation;
-  GlobalKey toolTipKey = GlobalKey();
-  File image;
+  static late double w, h;
+  final SessionManager sessionManager = new SessionManager();
+  static late AppTheme appTheme;
+  static late CommonData commonData;
+  static late AnimationController animationController;
+  static late Animation<Color> colorAnimation;
+  final GlobalKey toolTipKey = GlobalKey();
+  static late File image;
   List<String> contributions = [
     'My Pets',
     'Pets Acquired',
@@ -56,18 +56,25 @@ class _ProfileScreenState extends State<ProfileScreen>
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: sessionManager.user.profileImage != 'N/A'
-                        ? NetworkImage(
-                            sessionManager.user.profileImage,
-                          )
-                        : AssetImage(
-                            'assets/images/user.png',
-                          ),
-                    colorFilter: ColorFilter.mode(
-                        appTheme.themeData.primaryColor, BlendMode.softLight),
-                    fit: BoxFit.cover,
-                  )),
+                      image: sessionManager.user!.profileImage != 'N/A'
+                          ? DecorationImage(
+                              image: NetworkImage(
+                                sessionManager.user!.profileImage!,
+                              ),
+                              colorFilter: ColorFilter.mode(
+                                  appTheme.themeData.primaryColor,
+                                  BlendMode.softLight),
+                              fit: BoxFit.cover,
+                            )
+                          : DecorationImage(
+                              image: AssetImage(
+                                'assets/images/user.png',
+                              ),
+                              colorFilter: ColorFilter.mode(
+                                  appTheme.themeData.primaryColor,
+                                  BlendMode.softLight),
+                              fit: BoxFit.cover,
+                            )),
                   child: ClipRRect(
                       child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
@@ -115,14 +122,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         child: Column(
                                           children: [
                                             Text(
-                                              sessionManager.user.name,
+                                              sessionManager.user!.name,
                                               style: appTheme
                                                   .nonStaticGetTextStyle(
                                                       1.0,
                                                       appTheme
                                                           .themeData
                                                           .primaryTextTheme
-                                                          .bodyText1
+                                                          .bodyText1!
                                                           .color,
                                                       appTheme.getTextTheme(
                                                           context),
@@ -166,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                         appTheme
                                                             .themeData
                                                             .primaryTextTheme
-                                                            .bodyText1
+                                                            .bodyText1!
                                                             .color,
                                                         appTheme
                                                             .getSemiBodyTextTheme(
@@ -209,7 +216,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                       appTheme
                                                                           .themeData
                                                                           .primaryTextTheme
-                                                                          .bodyText1
+                                                                          .bodyText1!
                                                                           .color,
                                                                       appTheme.getSemiBodyTextTheme(
                                                                           context),
@@ -332,7 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                               appTheme
                                                                   .themeData
                                                                   .primaryTextTheme
-                                                                  .bodyText1
+                                                                  .bodyText1!
                                                                   .color,
                                                               appTheme
                                                                   .getTextTheme(
@@ -377,11 +384,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             backgroundColor: Colors.transparent,
                                             child: ClipOval(
                                               child: sessionManager
-                                                          .user.profileImage !=
+                                                          .user!.profileImage !=
                                                       'N/A'
                                                   ? Image.network(
                                                       sessionManager
-                                                          .user.profileImage,
+                                                          .user!.profileImage!,
                                                       fit: BoxFit.fill,
                                                       width: w / 5,
                                                       height: h / 10,
@@ -453,8 +460,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   Future<File> pickImageFromGallery(ImageSource source) async {
-    PickedFile pickedFile = await new ImagePicker().getImage(source: source);
-    return File(pickedFile.path);
+    PickedFile? pickedFile = await new ImagePicker().getImage(source: source);
+    return File(pickedFile!.path);
   }
 
   uploadImage(ImageSource source) async {
@@ -503,7 +510,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         context,
                         MaterialPageRoute(
                             builder: (context) => CustomImageShower(
-                                url: sessionManager.user.profileImage)));
+                                url: sessionManager.user!.profileImage)));
                   },
                   child: Text('Show profile picture'),
                 ),
@@ -551,7 +558,7 @@ class CustomImageShower extends StatelessWidget {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: sessionManager.user.profileImage != 'N/A'
+        child: sessionManager.user!.profileImage != 'N/A'
             ? Image.network(this.url)
             : Image.asset(
                 'assets/images/user.png',

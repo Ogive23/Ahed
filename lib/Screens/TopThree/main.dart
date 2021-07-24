@@ -42,8 +42,8 @@ class MyApp extends StatelessWidget {
 
 class MainScreen extends StatelessWidget {
   final SessionManager sessionManager = new SessionManager();
-  static AppTheme appTheme;
-  static AppLanguage appLanguage;
+  static late AppTheme appTheme;
+  static late AppLanguage appLanguage;
   final NeedyData needyData = new NeedyData();
   final CommonData commonData = new CommonData();
   @override

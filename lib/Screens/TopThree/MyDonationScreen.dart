@@ -1,18 +1,18 @@
+import 'package:ahed/ApiCallers/UserApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomLoading.dart';
+import 'package:ahed/Custom%20Widgets/CustomOfflineTransactionTimelineTile.dart';
+import 'package:ahed/Custom%20Widgets/CustomOnlineTransactionTimelineTile.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
-import 'package:ahed/GeneralInfo.dart';
+import 'package:ahed/Helpers/DataMapper.dart';
 import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 import 'package:ahed/Models/Transaction.dart';
 import 'package:ahed/Models/OnlineTransaction.dart';
 import 'package:ahed/Models/OfflineTransaction.dart';
-import 'package:ahed/Custom Widgets/CustomTimelineTile.dart';
 
 class MyDonationScreen extends StatefulWidget {
   @override
@@ -21,12 +21,12 @@ class MyDonationScreen extends StatefulWidget {
 
 class _MyDonationScreenState extends State<MyDonationScreen>
     with TickerProviderStateMixin {
-  double w, h;
-  CommonData commonData;
-  AppLanguage appLanguage;
-  AppTheme appTheme;
-  List<Transaction> transactions;
-  TabController tabController;
+  late double w, h;
+  late CommonData commonData;
+  late AppLanguage appLanguage;
+  late AppTheme appTheme;
+  late List<Transaction> transactions;
+  late TabController tabController;
   late UserApiCaller userApiCaller = new UserApiCaller();
   final DataMapper dataMapper = new DataMapper();
 
@@ -311,17 +311,26 @@ class _MyDonationScreenState extends State<MyDonationScreen>
     );
   }
 
-  List<Widget> getTimeLine(List<Transaction> transactions) {
+  List<Widget> getOnlineTimeLine(List<Transaction> transactions) {
     List<Widget> transactionWidgets = [];
+    print(transactions);
     transactions.forEach((transaction) {
-      transactionWidgets.add(CustomTimelineTile(
-          done: true,
-          time: transaction.createdAt,
-          amount: transaction.amount,
-          text: transaction.type == 'OfflineTransaction'
-              ? 'تبرعك ذهب إلي جهة ' +
-                  (transaction as OfflineTransaction).preferredSection
-              : ''));
+      transactionWidgets.add(CustomOnlineTransactionTimelineTile(
+          done: true, transaction: transaction as OnlineTransaction));
+    });
+    print(transactionWidgets.length);
+    // if (remainingUntilPrize != 0) {
+    //   transactionWidgets.add(CustomTimelineTile(done: false));
+    // }
+    return transactionWidgets.reversed.toList();
+  }
+
+  List<Widget> getOfflineTimeLine(List<Transaction> transactions) {
+    List<Widget> transactionWidgets = [];
+    print(transactions);
+    transactions.forEach((transaction) {
+      transactionWidgets.add(CustomOfflineTransactionTimelineTile(
+          done: true, transaction: transaction as OfflineTransaction));
     });
     print(transactionWidgets.length);
     // if (remainingUntilPrize != 0) {

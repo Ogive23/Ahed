@@ -5,7 +5,7 @@ import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:ahed/Shared%20Data/NeedyData.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -18,24 +18,24 @@ class OfflineTransactionCreationScreen extends StatefulWidget {
 
 class _OfflineTransactionCreationScreenState
     extends State<OfflineTransactionCreationScreen> {
-  double w, h;
-  CommonData commonData;
-  NeedyData needyData;
-  AppLanguage appLanguage;
-  AppTheme appTheme;
-  TextEditingController amount = new TextEditingController();
-  String preferredSection;
-  TextEditingController address = new TextEditingController();
-  TextEditingController mobileNumber = new TextEditingController();
-  String amountError;
-  String addressError;
-  String mobileNumberError;
-  String dateError = '';
-  DateTime startCollectDate = DateTime.now();
-  DateTime endCollectDate = DateTime.now();
+  late double w, h;
+  late CommonData commonData;
+  late NeedyData needyData;
+  late AppLanguage appLanguage;
+  late AppTheme appTheme;
+  final TextEditingController amount = new TextEditingController();
+  late String preferredSection;
+  final TextEditingController address = new TextEditingController();
+  final TextEditingController mobileNumber = new TextEditingController();
+  String? amountError;
+  String? addressError;
+  String? mobileNumberError;
+  String? dateError;
+  static DateTime startCollectDate = DateTime.now();
+  static DateTime endCollectDate = DateTime.now();
   // DateTime from = new DateTime.now();
   // DateTime to = new DateTime.now();
-  bool assignPermanently = false;
+  static bool assignPermanently = false;
 
   bool fullValidator() {
     return amountValidator() &&
@@ -122,7 +122,7 @@ class _OfflineTransactionCreationScreenState
   }
 
   Future<void> selectFromDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: startCollectDate,
         firstDate: DateTime(2015, 8),
@@ -134,7 +134,7 @@ class _OfflineTransactionCreationScreenState
   }
 
   Future<void> selectToDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: endCollectDate,
         firstDate: DateTime(2015, 8),
@@ -169,7 +169,7 @@ class _OfflineTransactionCreationScreenState
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios_sharp,
-                color: appTheme.themeData.appBarTheme.iconTheme.color,
+                color: appTheme.themeData.appBarTheme.iconTheme!.color,
               ),
               onPressed: () => commonData.back(),
             ),
@@ -204,7 +204,7 @@ class _OfflineTransactionCreationScreenState
                         Text('أسم الحالة: ',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline4),
-                        Text('${needyData.selectedNeedy.name}',
+                        Text('${needyData.selectedNeedy!.name}',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline4),
                       ],
@@ -216,7 +216,7 @@ class _OfflineTransactionCreationScreenState
                         Text('نوع الحالة: ',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline4),
-                        Text('${needyData.selectedNeedy.type}',
+                        Text('${needyData.selectedNeedy!.type}',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline4),
                       ],
@@ -228,7 +228,7 @@ class _OfflineTransactionCreationScreenState
                         Text('الخطورة: ',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline4),
-                        Text('${needyData.selectedNeedy.severityClass}',
+                        Text('${needyData.selectedNeedy!.severityClass}',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline4),
                       ],
@@ -240,7 +240,7 @@ class _OfflineTransactionCreationScreenState
                         Text('التفاصيل: ',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline4),
-                        Text('${needyData.selectedNeedy.details}',
+                        Text('${needyData.selectedNeedy!.details}',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline4),
                       ],
@@ -261,11 +261,11 @@ class _OfflineTransactionCreationScreenState
                           lineHeight: h / 25,
                           linearGradient: LinearGradient(
                               colors: [Colors.green, Colors.greenAccent]),
-                          percent: needyData.selectedNeedy.collected /
-                              needyData.selectedNeedy.need,
+                          percent: needyData.selectedNeedy!.collected! /
+                              needyData.selectedNeedy!.need!,
                           center: Text(
-                            (needyData.selectedNeedy.need -
-                                        needyData.selectedNeedy.collected)
+                            (needyData.selectedNeedy!.need! -
+                                        needyData.selectedNeedy!.collected!)
                                     .toStringAsFixed(0) +
                                 ' جنيه متبقي',
                             style:
@@ -295,7 +295,7 @@ class _OfflineTransactionCreationScreenState
                         CustomTextField(
                             controller: amount,
                             label: 'المبلغ',
-                            selectedIcon: FontAwesome.money,
+                            selectedIcon: FontAwesomeIcons.moneyBill,
                             selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
                             borderColor: Colors.grey,
                             obscureText: false,
@@ -325,7 +325,7 @@ class _OfflineTransactionCreationScreenState
                     CustomTextField(
                         controller: address,
                         label: 'العنوان',
-                        selectedIcon: Entypo.address,
+                        selectedIcon: FontAwesomeIcons.addressCard,
                         selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
                         borderColor: Colors.grey,
                         obscureText: false,
@@ -341,7 +341,7 @@ class _OfflineTransactionCreationScreenState
                     CustomTextField(
                         controller: mobileNumber,
                         label: 'رقم الهاتف',
-                        selectedIcon: Entypo.mobile,
+                        selectedIcon: FontAwesomeIcons.mobile,
                         selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
                         borderColor: Colors.grey,
                         obscureText: false,
@@ -371,8 +371,8 @@ class _OfflineTransactionCreationScreenState
                                       MaterialStateProperty.all<Color>(appTheme
                                           .themeData
                                           .primaryTextTheme
-                                          .bodyText1
-                                          .color)),
+                                          .bodyText1!
+                                          .color!)),
                               child: Text(
                                 '${intl.DateFormat('y-MM-dd').format(startCollectDate)}',
                                 style: appTheme
@@ -396,8 +396,8 @@ class _OfflineTransactionCreationScreenState
                                       MaterialStateProperty.all<Color>(appTheme
                                           .themeData
                                           .primaryTextTheme
-                                          .bodyText1
-                                          .color)),
+                                          .bodyText1!
+                                          .color!)),
                               child: Text(
                                 '${intl.DateFormat('y-MM-dd').format(endCollectDate)}',
                                 style: appTheme
@@ -410,8 +410,8 @@ class _OfflineTransactionCreationScreenState
                     ),
                     Center(
                       child: Text(
-                        dateError,
-                        style: appTheme.themeData.primaryTextTheme.subtitle2
+                        dateError!,
+                        style: appTheme.themeData.primaryTextTheme.subtitle2!
                             .apply(color: Colors.red),
                       ),
                     )

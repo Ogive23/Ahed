@@ -18,12 +18,12 @@ class OnlineTransactionCreationScreen extends StatefulWidget {
 class _OnlineTransactionCreationScreenState
     extends State<OnlineTransactionCreationScreen>
     with TickerProviderStateMixin {
-  double w, h;
-  CommonData commonData;
-  NeedyData needyData;
-  AppLanguage appLanguage;
-  AppTheme appTheme;
-  TabController tabController;
+  late double w, h;
+  late CommonData commonData;
+  late NeedyData needyData;
+  late AppLanguage appLanguage;
+  late AppTheme appTheme;
+  late TabController tabController;
 
   @override
   initState() {
@@ -115,7 +115,7 @@ class _OnlineTransactionCreationScreenState
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(child: Text('Needy: ')),
-                      Container(child: Text('${needyData.selectedNeedy.name}')),
+                      Container(child: Text('${needyData.selectedNeedy!.name}')),
                     ],
                   ),
                   CustomSpacing(),
@@ -123,7 +123,7 @@ class _OnlineTransactionCreationScreenState
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(child: Text('Section: ')),
-                      Container(child: Text('${needyData.selectedNeedy.type}')),
+                      Container(child: Text('${needyData.selectedNeedy!.type}')),
                     ],
                   ),
                   CustomSpacing(),
@@ -133,7 +133,7 @@ class _OnlineTransactionCreationScreenState
                       Container(child: Text('Severity: ')),
                       Container(
                           child:
-                              Text('${needyData.selectedNeedy.severityClass}')),
+                              Text('${needyData.selectedNeedy!.severityClass}')),
                     ],
                   ),
                   CustomSpacing(),
@@ -142,7 +142,7 @@ class _OnlineTransactionCreationScreenState
                     children: [
                       Container(child: Text('Details: ')),
                       Container(
-                          child: Text('${needyData.selectedNeedy.details}')),
+                          child: Text('${needyData.selectedNeedy!.details}')),
                     ],
                   ),
                   CustomSpacing(),
@@ -159,11 +159,11 @@ class _OnlineTransactionCreationScreenState
                         lineHeight: h / 40,
                         linearGradient: LinearGradient(
                             colors: [Colors.green, Colors.greenAccent]),
-                        percent: needyData.selectedNeedy.collected /
-                            needyData.selectedNeedy.need,
+                        percent: needyData.selectedNeedy!.collected! /
+                            needyData.selectedNeedy!.need!,
                         center: Text(
-                          (needyData.selectedNeedy.need -
-                                      needyData.selectedNeedy.collected)
+                          (needyData.selectedNeedy!.need! -
+                                      needyData.selectedNeedy!.collected!)
                                   .toStringAsFixed(0) +
                               ' EGP Left',
                           style: appTheme.nonStaticGetTextStyle(

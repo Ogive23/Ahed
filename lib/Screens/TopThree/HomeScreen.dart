@@ -65,11 +65,11 @@ String getGreetingText() {
 
 class HomeScreen extends StatelessWidget {
   SessionManager sessionManager = new SessionManager();
-  double w, h;
-  CommonData commonData;
-  AppLanguage appLanguage;
-  AppTheme appTheme;
-  Helper helper = new Helper();
+  static late double w, h;
+  static late CommonData commonData;
+  static late AppLanguage appLanguage;
+  static late AppTheme appTheme;
+  final Helper helper = new Helper();
 
   @override
   Widget build(BuildContext context) {
@@ -114,9 +114,9 @@ class HomeScreen extends StatelessWidget {
                                 backgroundColor: Colors.transparent,
                                 child: ClipOval(
                                   child:
-                                      sessionManager.user.profileImage != 'N/A'
+                                      sessionManager.user!.profileImage != 'N/A'
                                           ? Image.network(
-                                              sessionManager.user.profileImage,
+                                              sessionManager.user!.profileImage!,
                                               fit: BoxFit.contain,
                                               width: w / 5,
                                               height: h / 10,
@@ -214,15 +214,11 @@ class HomeScreen extends StatelessWidget {
                         //   ),
                         //   visible: sessionManager.hasAnyBookmarked(),
                         // ),
-                        Text('الحالات الحرجة',
-                            style:
-                                appTheme.themeData.primaryTextTheme.headline3),
+
                         NeediesScreen(
                           type: "Urgent",
                         ),
-                        Text('الحالات',
-                            style:
-                                appTheme.themeData.primaryTextTheme.headline3),
+
                         NeediesScreen(
                           type: "Not Urgent",
                         ),
@@ -232,42 +228,6 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ));
-  }
-
-  String getCaseSupportMessage(int casesNumber) {
-    if (casesNumber < 5) {
-      return 'We are waiting more from you!';
-    } else if (casesNumber < 20) {
-      return 'You are really a human with big heart\nWe love you!';
-    }
-    return 'What kind of angels you are!';
-  }
-
-  Color getCaseSupportMessageColor(int casesNumber) {
-    if (casesNumber < 5) {
-      return Colors.blue[300];
-    } else if (casesNumber < 20) {
-      return Colors.green;
-    }
-    return Colors.orange;
-  }
-
-  Color getSupportCasesColor(int support) {
-    if (support < 5) {
-      return Colors.red[300];
-    } else if (support < 20) {
-      return Colors.amberAccent;
-    }
-    return Colors.green;
-  }
-
-  Color getSupportMoneyColor(double support) {
-    if (support < 50) {
-      return Colors.red[300];
-    } else if (support < 200) {
-      return Colors.amberAccent;
-    }
-    return Colors.green;
   }
 
   Widget getAchievementCenterBody(Map<String, dynamic> data, context) {
@@ -546,13 +506,13 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget getAchievementCenter(context) {
-    return FutureBuilder<Map<String, dynamic>>(
+    return FutureBuilder<Map<String, dynamic>?>(
       future: getAchievements(),
       builder:
-          (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+          (BuildContext context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
-          return getAchievementCenterBody(snapshot.data, context);
+          return getAchievementCenterBody(snapshot.data!, context);
         } else if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data == null) {
           return Container(
@@ -575,10 +535,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Future<Map<String, dynamic>> getAchievements() async {
+  Future<Map<String, dynamic>?> getAchievements() async {
     UserApiCaller userApiCaller = new UserApiCaller();
-    Map<String, dynamic> status = await userApiCaller.getAchievements(
-        sessionManager.user != null ? sessionManager.user.id : null);
+    Map<String, dynamic> status =
+        await userApiCaller.getAchievements(sessionManager.user?.id);
     if (status['Err_Flag']) return null;
     return status['Values'];
   }

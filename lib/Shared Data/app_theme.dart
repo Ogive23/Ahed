@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppTheme extends ChangeNotifier {
-  bool isDark;
-  ThemeData themeData;
+  late bool isDark;
+  late ThemeData themeData;
   AppTheme(bool isDark, context) {
     this.isDark = isDark;
     themeData = getCurrentTheme(context);

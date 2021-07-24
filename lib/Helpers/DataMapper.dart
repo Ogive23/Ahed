@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:ahed/Helpers/Helper.dart';
+import 'package:ahed/Models/OfflineTransaction.dart';
+import 'package:ahed/Models/OnlineTransaction.dart';
 import 'package:ahed/Models/User.dart';
 
 import '../Models/Needy.dart';
@@ -67,8 +69,76 @@ class DataMapper {
         helper.getAppropriateText(info['user']['address'].toString()),
         info['user']['email_verified_at'] != null ? true : false,
         info['token'],
-        info['profile']['image'] != null? url + info['profile']['image'] : 'N/A',
-        info['profile']['cover'] != null? url + info['profile']['cover'] : 'N/A',
+        info['profile']['image'] != null
+            ? url + info['profile']['image']
+            : 'N/A',
+        info['profile']['cover'] != null
+            ? url + info['profile']['cover']
+            : 'N/A',
         helper.getAppropriateText(info['profile']['bio'].toString()));
+  }
+
+  List<OnlineTransaction> getOnlineTransactionsFromJson(List<dynamic> data) {
+    List<OnlineTransaction> returnedOnlineTransactions = [];
+    data.forEach((onlineTransaction) {
+      returnedOnlineTransactions.add(OnlineTransaction(
+          onlineTransaction['id'].toString(),
+          onlineTransaction['giver'].toString(),
+          onlineTransaction['needy'].toString(),
+          double.parse(onlineTransaction['amount'].toString()),
+          DateTime.parse(onlineTransaction['created_at']),
+          'OnlineTransaction',
+          double.parse(onlineTransaction['remaining'].toString())));
+    });
+    return returnedOnlineTransactions;
+  }
+
+  List<OfflineTransaction> getOfflineTransactionsFromJson(List<dynamic> data) {
+    List<OfflineTransaction> returnedOfflineTransactions = [];
+    data.forEach((offlineTransaction) {
+      returnedOfflineTransactions.add(OfflineTransaction(
+          offlineTransaction['id'].toString(),
+          offlineTransaction['giver'].toString(),
+          offlineTransaction['needy'].toString(),
+          double.parse(offlineTransaction['amount'].toString()),
+          DateTime.parse(offlineTransaction['created_at']),
+          'OfflineTransaction',
+          offlineTransaction['preferredSection'].toString(),
+          offlineTransaction['address'].toString(),
+          DateTime.parse(offlineTransaction['startCollectDate']),
+          DateTime.parse(offlineTransaction['endCollectDate']),
+          offlineTransaction['selectedDate'] != null
+              ? DateTime.parse(offlineTransaction['selectedDate'])
+              : null,
+          offlineTransaction['collected'] == 1 ? true : false));
+    });
+    return returnedOfflineTransactions;
+  }
+
+  getNeedyFromJson(String baseURL, json) {
+    print(json['createdBy']['image']);
+    return Needy(
+        json['id'].toString(),
+        json['name'].toString(),
+        double.parse(json['age'].toString()),
+        int.parse(json['severity'].toString()),
+        getSeverityClass(json['severity']),
+        json['type'],
+        json['details'],
+        double.parse(json['need'].toString()),
+        double.parse(json['collected'].toString()),
+        json['address'],
+        json['satisfied'] == 1 ? true : false,
+        json['approved'] == 1 ? true : false,
+        DateTime.parse(json['created_at']),
+        this.getNeediesMediaFromJson(baseURL, json['medias_before']),
+        this.getNeediesMediaFromJson(baseURL, json['medias_after']),
+        json['url'],
+        json['createdBy']['id'].toString(),
+        json['createdBy']['name'].toString(),
+        json['createdBy']['image'] != null
+            ? baseURL + json['createdBy']['image']
+            : 'N/A',
+        json['createdBy']['email_verified_at'] != null ? true : false);
   }
 }

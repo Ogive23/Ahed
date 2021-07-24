@@ -1,7 +1,7 @@
 class Transaction{
   String id;
   String giver;
-  String needy;
+  String? needy;
   double amount;
   DateTime createdAt;
   String type;

@@ -14,8 +14,8 @@ class _LoginScreenState extends State<LoginScreen> {
       new TextEditingController();
   static final TextEditingController passwordController =
       new TextEditingController();
-  double w, h;
-  AppTheme appTheme;
+  static late double w, h;
+  static late AppTheme appTheme;
   String error = '';
   String get email => emailController.text;
   String get password => passwordController.text;

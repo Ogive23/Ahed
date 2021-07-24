@@ -4,7 +4,7 @@ import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class FawryPaymentScreen extends StatefulWidget {
@@ -13,18 +13,18 @@ class FawryPaymentScreen extends StatefulWidget {
 }
 
 class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
-  double w, h;
-  CommonData commonData;
-  AppLanguage appLanguage;
-  AppTheme appTheme;
-  TextEditingController cardNumber = new TextEditingController();
-  String cardNumberError;
-  TextEditingController expiryDate = new TextEditingController();
-  String expiryDateError;
-  TextEditingController cvv = new TextEditingController();
-  String cvvError;
-  TextEditingController amount = new TextEditingController();
-  String amountError;
+  late double w, h;
+  late CommonData commonData;
+  late AppLanguage appLanguage;
+  late AppTheme appTheme;
+  final TextEditingController cardNumber = new TextEditingController();
+  String? cardNumberError;
+  final TextEditingController expiryDate = new TextEditingController();
+  String? expiryDateError;
+  final TextEditingController cvv = new TextEditingController();
+  String? cvvError;
+  final TextEditingController amount = new TextEditingController();
+  String? amountError;
 
   bool fullValidator() {
     return onSubmittedCardNumber(cardNumber.text) &&
@@ -207,7 +207,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                 CustomTextField(
                     controller: cardNumber,
                     label: 'Card Number',
-                    selectedIcon: Entypo.credit_card,
+                    selectedIcon: FontAwesomeIcons.creditCard,
                     selectedColor: Colors.grey,
                     borderColor: Colors.grey,
                     obscureText: false,
@@ -224,7 +224,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                 CustomTextField(
                     controller: expiryDate,
                     label: 'Expiry Date',
-                    selectedIcon: AntDesign.calendar,
+                    selectedIcon: FontAwesomeIcons.calendar,
                     selectedColor: Colors.grey,
                     borderColor: Colors.grey,
                     obscureText: false,
@@ -241,7 +241,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                 CustomTextField(
                     controller: cvv,
                     label: 'CVV',
-                    selectedIcon: Entypo.credit_card,
+                    selectedIcon: FontAwesomeIcons.creditCard,
                     selectedColor: Colors.grey,
                     borderColor: Colors.grey,
                     obscureText: false,
@@ -260,7 +260,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                     CustomTextField(
                         controller: amount,
                         label: 'Amount',
-                        selectedIcon: FontAwesome.money,
+                        selectedIcon: FontAwesomeIcons.moneyBill,
                         selectedColor: Colors.grey,
                         borderColor: Colors.grey,
                         obscureText: false,

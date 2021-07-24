@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 
 class UserLocation {
-  Position currentLocation;
-  double lat;
-  double long;
+  Position? currentLocation;
+  double? lat;
+  double? long;
   timeOutPrinter() {
     return {'Err_Flag': true, 'Err_Desc': 'Server Timeout!'};
   }
 
-  Future<Position> locateUser() async {
+  Future<Position?> locateUser() async {
     try {
       Position position = await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.high)
@@ -28,14 +28,14 @@ class UserLocation {
   getUserLocation() async {
     currentLocation = await locateUser();
     print('thing $currentLocation');
-    if (currentLocation == null) return null;
-    lat = currentLocation.latitude;
-    long = currentLocation.longitude;
+    // if (currentLocation == null) return null;
+    lat = currentLocation!.latitude;
+    long = currentLocation!.longitude;
     return true;
   }
 
   List<double> getLatLng() {
-    return [lat, long];
+    return [lat!, long!];
   }
 
   Future<bool> isLocationEnabled() async {

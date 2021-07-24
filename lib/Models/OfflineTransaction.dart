@@ -5,7 +5,7 @@ class OfflineTransaction extends Transaction {
   String address;
   DateTime startCollectDate;
   DateTime endCollectDate;
-  DateTime selectedDate;
+  DateTime? selectedDate;
   bool collected;
 
   OfflineTransaction(

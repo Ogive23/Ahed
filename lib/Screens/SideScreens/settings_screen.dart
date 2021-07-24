@@ -9,11 +9,11 @@ import '../../GeneralInfo.dart';
 import '../../Session/session_manager.dart';
 
 class SettingsScreen extends StatelessWidget {
-  double w, h;
+  static late double w, h;
   final SessionManager sessionManager = new SessionManager();
-  static CommonData commonData;
-  static AppTheme appTheme;
-  static AppLanguage appLanguage;
+  static late CommonData commonData;
+  static late  AppTheme appTheme;
+  static late  AppLanguage appLanguage;
   @override
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
@@ -63,7 +63,7 @@ class SettingsScreen extends StatelessWidget {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(appLanguage.words['SettingsDarkMode'],
+                            Text(appLanguage.words['SettingsDarkMode']!,
                                 style: appTheme
                                     .themeData.primaryTextTheme.subtitle1),
                             Switch(
@@ -85,7 +85,7 @@ class SettingsScreen extends StatelessWidget {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(appLanguage.words['SettingsLanguage'],
+                            Text(appLanguage.words['SettingsLanguage']!,
                                 style: appTheme
                                     .themeData.primaryTextTheme.subtitle1),
                             DropdownButton(
@@ -111,8 +111,8 @@ class SettingsScreen extends StatelessWidget {
                                 dropdownColor: Colors.grey,
                                 icon: Icon(Icons.language),
                                 // style: appTheme.themeData.textTheme.body1,
-                                onChanged: (value) {
-                                  sessionManager.createPreferredLanguage(value);
+                                onChanged: (String? value) {
+                                  sessionManager.createPreferredLanguage(value!);
                                   appLanguage.changeLanguage(value);
                                 }),
                           ]),

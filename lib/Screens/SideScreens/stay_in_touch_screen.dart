@@ -1,6 +1,6 @@
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../Custom Widgets/custom_card.dart';
 import '../../Session/session_manager.dart';
@@ -9,11 +9,11 @@ import '../../Shared Data/app_theme.dart';
 import '../../Shared Data/common_data.dart';
 
 class StayInTouchScreen extends StatelessWidget {
-  double w, h;
+  static late double w, h;
   final SessionManager sessionManager = new SessionManager();
-  static CommonData commonData;
-  static AppTheme appTheme;
-  static AppLanguage appLanguage;
+  static late CommonData commonData;
+  static late AppTheme appTheme;
+  static late AppLanguage appLanguage;
   @override
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
@@ -93,11 +93,11 @@ class StayInTouchScreen extends StatelessWidget {
                               //         //     )),
                               CustomCard(
                                   title: appLanguage
-                                      .words['StayInTouchFacebookTitle'],
+                                      .words['StayInTouchFacebookTitle']!,
                                   subtitle: appLanguage
-                                      .words['StayInTouchFacebookSubtitle'],
+                                      .words['StayInTouchFacebookSubtitle']!,
                                   url: 'https://www.facebook.com/ogive23/',
-                                  icon: Entypo.facebook,
+                                  icon: FontAwesomeIcons.facebook,
                                   iconColor: Colors.blue,
                                   kind: 'fb',
                                   textDirection: appLanguage.textDirection),
@@ -106,12 +106,12 @@ class StayInTouchScreen extends StatelessWidget {
                               ),
                               CustomCard(
                                   title: appLanguage
-                                      .words['StayInTouchInstagramTitle'],
+                                      .words['StayInTouchInstagramTitle']!,
                                   subtitle: appLanguage
-                                      .words['StayInTouchInstagramSubtitle'],
+                                      .words['StayInTouchInstagramSubtitle']!,
                                   url:
                                       'https://www.instagram.com/mahmoued.martin/',
-                                  icon: MaterialCommunityIcons.instagram,
+                                  icon: FontAwesomeIcons.instagram,
                                   iconColor: Colors.black,
                                   kind: 'insta',
                                   textDirection: appLanguage.textDirection),
@@ -120,12 +120,12 @@ class StayInTouchScreen extends StatelessWidget {
                               ),
                               CustomCard(
                                   title: appLanguage
-                                      .words['StayInTouchYoutubeTitle'],
+                                      .words['StayInTouchYoutubeTitle']!,
                                   subtitle: appLanguage
-                                      .words['StayInTouchYoutubeSubtitle'],
+                                      .words['StayInTouchYoutubeSubtitle']!,
                                   url:
                                       'https://www.youtube.com/channel/UCedueKqOIz38zog0alc7_eg',
-                                  icon: Entypo.youtube,
+                                  icon: FontAwesomeIcons.youtube,
                                   iconColor: Colors.red,
                                   kind: 'youtube',
                                   textDirection: appLanguage.textDirection),
@@ -135,11 +135,11 @@ class StayInTouchScreen extends StatelessWidget {
                               ),
                               CustomCard(
                                   title: appLanguage
-                                      .words['StayInTouchTwitterTitle'],
+                                      .words['StayInTouchTwitterTitle']!,
                                   subtitle: appLanguage
-                                      .words['StayInTouchTwitterSubtitle'],
+                                      .words['StayInTouchTwitterSubtitle']!,
                                   url: 'https://twitter.com/MahmouedMartin2',
-                                  icon: Entypo.twitter,
+                                  icon: FontAwesomeIcons.twitter,
                                   iconColor: Colors.blue,
                                   kind: 'twitter',
                                   textDirection: appLanguage.textDirection),

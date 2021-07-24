@@ -5,31 +5,32 @@ import 'package:provider/provider.dart';
 
 class CustomLoadingText extends StatelessWidget {
   final String text;
-  static AppTheme appTheme;
-  CustomLoadingText({@required this.text});
+  static late AppTheme appTheme;
+  CustomLoadingText({required this.text});
   @override
   Widget build(BuildContext context) {
     appTheme = Provider.of<AppTheme>(context);
-    return ColorizeAnimatedTextKit(
-        text: [
+    return AnimatedTextKit(
+      animatedTexts: [
+        ColorizeAnimatedText(
           text,
-        ],
-        textStyle: appTheme.nonStaticGetTextStyle(
-            1.0,
-            Colors.blueAccent,
-            appTheme.getTextTheme(context),
-            FontWeight.normal,
-            1.0,
-            TextDecoration.underline,
-            'Delius'),
-        colors: [
-          Colors.purple,
-          Colors.blue,
-          Colors.yellow,
-          Colors.red,
-        ],
-        textAlign: TextAlign.start,
-        alignment: AlignmentDirectional.topStart // or Alignment.topLeft
-        );
+          textStyle: appTheme.nonStaticGetTextStyle(
+              1.0,
+              Colors.blueAccent,
+              appTheme.getTextTheme(context),
+              FontWeight.normal,
+              1.0,
+              TextDecoration.underline,
+              'Delius'),
+          colors: [
+            Colors.purple,
+            Colors.blue,
+            Colors.yellow,
+            Colors.red,
+          ],
+          textAlign: TextAlign.start,
+        )
+      ],
+    );
   }
 }

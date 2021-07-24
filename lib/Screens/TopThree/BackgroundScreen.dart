@@ -14,11 +14,11 @@ class BackgroundScreen extends StatefulWidget {
 }
 
 class _BackgroundScreenState extends State<BackgroundScreen> {
-  double w, h;
-  CommonData commonData;
-  AppLanguage appLanguage;
-  AppTheme appTheme;
-  TabController tabController;
+  static late double w, h;
+  static late CommonData commonData;
+  static late AppLanguage appLanguage;
+  static late AppTheme appTheme;
+  static late TabController tabController;
 
   Future<bool> _onWillPop(context) async {
     return commonData.lastStep()
@@ -51,43 +51,35 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
     print(commonData.step);
     return WillPopScope(
       onWillPop: () => _onWillPop(context),
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 500),
-        transform: Matrix4.translationValues(
-            this.commonData.xOffset, this.commonData.yOffset, 0)
-          ..scale(this.commonData.scaleFactor),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
-        child: Scaffold(
-            body: pageOptions[commonData.step],
-            bottomNavigationBar: new Theme(
-              data: Theme.of(context).copyWith(
-                canvasColor: Colors.white,
-              ),
-              child: commonData.step > 3
-                  ? SizedBox()
-                  : BottomNavigationBar(
-                backgroundColor: appTheme.themeData.primaryColor,
-                      selectedItemColor:
-                          appTheme.themeData.toggleButtonsTheme.selectedColor,
-                      unselectedItemColor:
-                          appTheme.themeData.toggleButtonsTheme.disabledColor,
-                      onTap: (value) => commonData.changeStep(value),
-                      currentIndex: commonData.step,
-                      elevation: 0.0,
-                      items: [
-                          BottomNavigationBarItem(
-                              icon: Icon(Icons.attach_money), label: 'تبرعاتي'),
-                          BottomNavigationBarItem(
-                              icon: Icon(Icons.home), label: 'الرئيسية'),
-                          BottomNavigationBarItem(
-                            icon: Icon(Icons.settings),
-                            label: 'الإعدادات',
-                          ),
-                        ]),
-            )),
+      child: Scaffold(
+        body: pageOptions[commonData.step],
+        bottomNavigationBar: new Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: Colors.white,
+          ),
+          child: commonData.step > 3
+              ? SizedBox()
+              : BottomNavigationBar(
+                  backgroundColor: appTheme.themeData.primaryColor,
+                  selectedItemColor:
+                      appTheme.themeData.toggleButtonsTheme.selectedColor,
+                  unselectedItemColor:
+                      appTheme.themeData.toggleButtonsTheme.disabledColor,
+                  onTap: (value) => commonData.changeStep(value),
+                  currentIndex: commonData.step,
+                  elevation: 0.0,
+                  items: [
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.attach_money), label: 'تبرعاتي'),
+                      BottomNavigationBarItem(
+                          icon: Icon(Icons.home), label: 'الرئيسية'),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.settings),
+                        label: 'الإعدادات',
+                      ),
+                    ]),
+        ),
       ),
-      //   extendBody: true,
-      // ),
     );
   }
 }

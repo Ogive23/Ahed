@@ -1,30 +1,32 @@
 import 'package:ahed/Shared%20Data/app_theme.dart';
-import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenAchievementContainer extends StatelessWidget {
-  static AppTheme appTheme;
+  static late AppTheme appTheme;
   final double w;
-  final double count;
+  final double? count;
   final String text;
   final TextStyle countTextStyle;
-  final TextStyle achievementTextStyle;
-  final int precision;
-  final String suffix;
-  final String prefix;
+  TextStyle achievementTextStyle;
+  int? precision;
+  String? suffix;
+  String? prefix;
   HomeScreenAchievementContainer(
-      {@required this.w,
+      {required this.w,
       this.count,
-      @required this.text,
-      @required this.countTextStyle,
-      @required this.achievementTextStyle,
+      required this.text,
+      required this.countTextStyle,
+      required this.achievementTextStyle,
       this.precision,
       this.suffix,
       this.prefix});
   @override
   Widget build(BuildContext context) {
     appTheme = Provider.of<AppTheme>(context);
+    print(suffix);
+    // print(count!.toStringAsFixed(
+    //     precision != null ? precision! : 1));
     return SizedBox(
       width: w,
       child: Column(
@@ -32,14 +34,24 @@ class HomeScreenAchievementContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           this.count != null
-              ? Countup(
-                  begin: 0,
-                  end: count,
-                  suffix: suffix != null ? suffix : '',
-                  prefix: prefix != null ? prefix : '',
-                  precision: precision != null ? precision : 0,
-                  duration: Duration(seconds: 1),
-                  style: countTextStyle,
+              ? Row(
+                  children: [
+                    Text(
+                      prefix ?? '',
+                      style: countTextStyle,
+                    ),
+                    Flexible(
+                      child: Text(
+                        count!.toStringAsFixed(
+                            precision != null ? precision! : 0),
+                        style: countTextStyle,
+                      ),
+                    ),
+                    Text(
+                      suffix ?? '',
+                      style: countTextStyle,
+                    ),
+                  ],
                 )
               : Text(
                   '---',

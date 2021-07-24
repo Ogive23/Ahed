@@ -11,10 +11,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _userName = new TextEditingController();
   TextEditingController _email = new TextEditingController();
   TextEditingController _password = new TextEditingController();
-  String nameError;
-  String userNameError;
-  String emailError;
-  String passswordError;
+  static late String nameError;
+  static late String userNameError;
+  static late String emailError;
+  static late String passswordError;
   bool agree = false;
   bool errorAgree = false;
 

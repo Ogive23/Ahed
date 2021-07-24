@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppLanguage extends ChangeNotifier {
-  String language;
-  Map<String, String> words;
-  TextDirection textDirection;
-  AppLanguage(String language) {
+  String? language;
+  late Map<String, String> words;
+  late TextDirection textDirection;
+  AppLanguage(String? language) {
     this.language = language;
     textDirection = initTextDirection(this.language);
     words = initWords(this.language);
@@ -16,7 +16,7 @@ class AppLanguage extends ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, String> initWords(String language) {
+  Map<String, String> initWords(String? language) {
     return language == 'En'
         ? {
             'StayInTouchTitle': 'Our Society',
@@ -48,7 +48,7 @@ class AppLanguage extends ChangeNotifier {
           };
   }
 
-  TextDirection initTextDirection(String language) {
+  TextDirection initTextDirection(String? language) {
     return language == 'En' ? TextDirection.ltr : TextDirection.rtl;
   }
 }

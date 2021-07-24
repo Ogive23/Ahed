@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class CustomTextField extends StatelessWidget {
-  double w, h;
+  late double w, h;
   final TextEditingController controller;
   final String label;
   final IconData selectedIcon;
@@ -14,32 +14,32 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final String hint;
-  final String error;
+  final String? error;
   final double width;
-  final Function onChanged;
-  final Function onSubmitted;
+  final Function? onChanged;
+  final Function? onSubmitted;
   final bool rightInfo;
   final bool enableFormatters;
-  final int maxLines;
-  final int maxLength;
-  final String helperText;
-  final TextStyle helperStyle;
-  static AppTheme appTheme;
+  final int? maxLines;
+  final int? maxLength;
+  final String? helperText;
+  final TextStyle? helperStyle;
+  static late AppTheme appTheme;
   CustomTextField(
-      {@required this.controller,
-      @required this.label,
-      @required this.selectedIcon,
-      @required this.selectedColor,
-      @required this.borderColor,
-      @required this.obscureText,
-      @required this.keyboardType,
-      @required this.hint,
+      {required this.controller,
+      required this.label,
+      required this.selectedIcon,
+      required this.selectedColor,
+      required this.borderColor,
+      required this.obscureText,
+      required this.keyboardType,
+      required this.hint,
       @required this.error,
-      @required this.width,
-      @required this.onChanged,
-      @required this.onSubmitted,
-      @required this.rightInfo,
-      @required this.enableFormatters,
+      required this.width,
+      required this.onChanged,
+      required this.onSubmitted,
+      required this.rightInfo,
+      required this.enableFormatters,
       this.maxLength,
       this.maxLines,
       this.helperText,
@@ -61,8 +61,8 @@ class CustomTextField extends StatelessWidget {
             textAlign: TextAlign.center,
             style: appTheme.themeData.primaryTextTheme.bodyText1,
             textInputAction: TextInputAction.done,
-            onChanged: onChanged,
-            onSubmitted: onSubmitted,
+            onChanged:(value) =>  onChanged,
+            onSubmitted: (value) => onSubmitted,
             inputFormatters: enableFormatters
                 ? [FilteringTextInputFormatter.digitsOnly]
                 : null,
@@ -84,7 +84,7 @@ class CustomTextField extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.circular(15.0)),
               errorText: error,
-              errorStyle: appTheme.themeData.primaryTextTheme.subtitle2
+              errorStyle: appTheme.themeData.primaryTextTheme.subtitle2!
                   .apply(color: Colors.red),
               errorMaxLines: 2,
               labelStyle: appTheme.themeData.primaryTextTheme.bodyText1,
