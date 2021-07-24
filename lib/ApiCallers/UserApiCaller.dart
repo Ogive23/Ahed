@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ahed/ApiCallers/TokenApiCaller.dart';
 import 'package:ahed/Helpers/DataMapper.dart';
 import 'package:ahed/Helpers/ResponseHandler.dart';
@@ -15,12 +17,9 @@ class UserApiCaller {
   TokenApiCaller tokenApiCaller = new TokenApiCaller();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference urls = FirebaseFirestore.instance.collection('URLs');
-  String url = "http://192.168.1.2:8000";
+  String url = "http://192.168.1.6:8000";
 
-  Future<Map<String, dynamic>>login(String email, String password) async {
-    // QuerySnapshot snapshot = await urls.get();
-    // for(int index = 0; index < snapshot.size; index++){
-    //   String url = snapshot.docs[index]['url'];
+  Future<Map<String, dynamic>> login(String email, String password) async {
     // if (sessionManager.accessTokenExpired()) {
     //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
     // }
@@ -35,25 +34,27 @@ class UserApiCaller {
               headers: headers, body: jsonEncode(body))
           .catchError((error) {
         print(error);
-        throw responseHandler.errorPrinter("Kindly check your internet connection then try again.");
+        throw error;
       }).timeout(Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
       if (responseToJson['Err_Flag']) return responseToJson;
       //ToDo:move this "/storage/" to backend and make it full link
       return {
         "Err_Flag": responseToJson['Err_Flag'],
-        "Values": dataMapper.getUserFromJson(url,responseToJson['data'])
+        "Values": dataMapper.getUserFromJson(url, responseToJson['data'])
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
     } catch (e) {
-      print('e $e');
-      return e;
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما.');
     }
-    // }
   }
 
-  Future<Map<String, dynamic>> getAchievements(String id) async {
+  Future<Map<String, dynamic>> getAchievements(String? id) async {
     // QuerySnapshot snapshot = await urls.get();
     // for(int index = 0; index < snapshot.size; index++){
     //   String url = snapshot.docs[index]['url'];
@@ -65,11 +66,12 @@ class UserApiCaller {
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
     try {
+      print(url + "/api/ahed/ahedachievement/$id");
       var response = await http
           .get(Uri.parse(url + "/api/ahed/ahedachievement/$id"),
               headers: headers)
           .catchError((error) {
-        throw responseHandler.errorPrinter("networkError");
+        throw error;
       }).timeout(Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
       if (responseToJson['Err_Flag']) return responseToJson;
@@ -79,6 +81,16 @@ class UserApiCaller {
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+    } catch (e) {
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما.');
+    }
+    // }
+  }
+
     } catch (e) {
       print('e $e');
       return responseHandler.errorPrinter(

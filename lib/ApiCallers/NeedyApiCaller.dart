@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ahed/ApiCallers/TokenApiCaller.dart';
 import 'package:ahed/Helpers/DataMapper.dart';
 import 'package:ahed/Helpers/ResponseHandler.dart';
@@ -15,7 +17,7 @@ class NeedyApiCaller {
   TokenApiCaller tokenApiCaller = new TokenApiCaller();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference urls = FirebaseFirestore.instance.collection('URLs');
-  String url = "http://192.168.1.2:8000";
+  String url = "http://192.168.1.6:8000";
   getAllUrgent(int pageNumber) async {
     // QuerySnapshot snapshot = await urls.get();
     // for(int index = 0; index < snapshot.size; index++){
@@ -32,8 +34,7 @@ class NeedyApiCaller {
           .get(Uri.parse(url + "/api/ahed/urgentneedies?page=$pageNumber"),
               headers: headers)
           .catchError((error) {
-        throw responseHandler.errorPrinter(
-            "Kindly check your internet connection then try again.");
+        throw error;
       }).timeout(Duration(seconds: 120));
       return {
         "Err_Flag": false,
@@ -44,9 +45,12 @@ class NeedyApiCaller {
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
     } catch (e) {
-      print(e);
-      return e;
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما.');
     }
     // }
   }
@@ -67,8 +71,7 @@ class NeedyApiCaller {
           .get(Uri.parse(url + "/api/ahed/needies?page=$pageNumber"),
               headers: headers)
           .catchError((error) {
-        throw responseHandler.errorPrinter(
-            "Kindly check your internet connection then try again.");
+        throw error;
       }).timeout(Duration(seconds: 120));
       return {
         "Err_Flag": false,
@@ -79,9 +82,12 @@ class NeedyApiCaller {
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
     } catch (e) {
-      print(e);
-      return e;
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما.');
     }
     // }
   }
@@ -108,8 +114,7 @@ class NeedyApiCaller {
           .get(Uri.parse(url + "/api/ahed/neediesWithIDs?$params"),
           headers: headers)
           .catchError((error) {
-        throw responseHandler.errorPrinter(
-            "Kindly check your internet connection then try again.");
+        throw error;
       }).timeout(Duration(seconds: 120));
       print(jsonDecode(response.body)['data']);
       return {
@@ -119,9 +124,12 @@ class NeedyApiCaller {
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
     } catch (e) {
-      print(e);
-      return e;
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما.');
     }
     // }
   }
@@ -141,7 +149,7 @@ class NeedyApiCaller {
       var response = await http
           .get(Uri.parse(url + "/api/ahed/needies"), headers: headers)
           .catchError((error) {
-        return responseHandler.errorPrinter("networkError");
+        throw error;
       }).timeout(Duration(seconds: 120));
       print(response.body);
       //ToDo:move this "/storage/" to backend and make it full link
@@ -152,6 +160,15 @@ class NeedyApiCaller {
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+    } catch (e) {
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما.');
+    }
+    // }
+  }
     } catch (e) {
       print(e);
       return responseHandler.errorPrinter("networkError");
