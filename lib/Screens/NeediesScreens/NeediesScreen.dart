@@ -102,14 +102,18 @@ class _NeediesScreenState extends State<NeediesScreen> {
       status = await needyApiCaller.getAllUrgent(currentPage);
     if (type == 'Not Urgent') status = await needyApiCaller.getAll(currentPage);
 
+    print(status);
     //ToDo: Future V2
     // if (type == 'Bookmarked')
     //   status = await needyApiCaller.getAllBookmarked(bookmarkedNeediesIDs);
-    setState(() {
-      // this.lastPage = status['lastPage'];
-      total = status['total'];
-    });
-    if (!status['Err_Flag']) return status['Values'];
+
+    if (!status['Err_Flag']) {
+      setState(() {
+        // this.lastPage = status['lastPage'];
+        total = status['total'];
+      });
+      return status['Values'];
+    }
     return [];
   }
 

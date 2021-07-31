@@ -312,31 +312,27 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   }
 
   List<Widget> getOnlineTimeLine(List<Transaction> transactions) {
-    List<Widget> transactionWidgets = [];
-    print(transactions);
-    transactions.forEach((transaction) {
-      transactionWidgets.add(CustomOnlineTransactionTimelineTile(
-          done: true, transaction: transaction as OnlineTransaction));
-    });
-    print(transactionWidgets.length);
+    return transactions
+        .map((transaction) => CustomOnlineTransactionTimelineTile(
+            done: true, transaction: transaction as OnlineTransaction))
+        .toList()
+        .reversed
+        .toList();
     // if (remainingUntilPrize != 0) {
     //   transactionWidgets.add(CustomTimelineTile(done: false));
     // }
-    return transactionWidgets.reversed.toList();
   }
 
   List<Widget> getOfflineTimeLine(List<Transaction> transactions) {
-    List<Widget> transactionWidgets = [];
-    print(transactions);
-    transactions.forEach((transaction) {
-      transactionWidgets.add(CustomOfflineTransactionTimelineTile(
-          done: true, transaction: transaction as OfflineTransaction));
-    });
-    print(transactionWidgets.length);
+    return transactions
+        .map((transaction) => CustomOfflineTransactionTimelineTile(
+            done: true, transaction: transaction as OfflineTransaction))
+        .toList()
+        .reversed
+        .toList();
     // if (remainingUntilPrize != 0) {
     //   transactionWidgets.add(CustomTimelineTile(done: false));
     // }
-    return transactionWidgets.reversed.toList();
   }
 }
 
