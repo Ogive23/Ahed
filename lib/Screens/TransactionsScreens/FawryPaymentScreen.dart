@@ -78,7 +78,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
     }
     if (value.length > 16 || value.length < 15) {
       setState(() {
-        this.cardNumberError = "Card Number must be between 15 and 16 digits.";
+        this.cardNumberError = "يجب أن يكون بين 15-16 رقماً";
       });
       return false;
     }
@@ -97,7 +97,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
     }
     if (value.length < 5) {
       setState(() {
-        expiryDateError = 'Invalid Date Format';
+        expiryDateError = 'خطأ في التاريخ';
       });
       return false;
     }
@@ -107,7 +107,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
       int year = int.parse(value[3] + value[4]);
       if (month < 0 || month > 12) {
         setState(() {
-          expiryDateError = 'Invalid Month';
+          expiryDateError = 'خطأ في الشهر';
         });
         return false;
       }
@@ -115,13 +115,13 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
           DateTime.now().year.toString()[3]);
       if (year < currentYear || year > currentYear + 10) {
         setState(() {
-          expiryDateError = 'Invalid Year';
+          expiryDateError = 'خطأ في السنة';
         });
         return false;
       }
     } catch (e) {
       setState(() {
-        expiryDateError = 'Invalid Date Format';
+        expiryDateError = 'خطأ في إدخال التاريخ';
       });
       return false;
     }
@@ -140,7 +140,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
     }
     if (value.length < 3) {
       setState(() {
-        cvvError = 'Invalid CVV';
+        cvvError = 'رقم خاطئ';
       });
       return false;
     }
@@ -156,14 +156,14 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
       double amount = double.parse(value);
       if (amount < 1) {
         setState(() {
-          amountError = "Zero?";
+          amountError = "صفر؟";
         });
         return false;
       }
       print(amount);
     } catch (e) {
       setState(() {
-        amountError = "Invalid Amount";
+        amountError = "مبلغ خاطئ";
       });
       return false;
     }
@@ -198,21 +198,16 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                    padding: EdgeInsets.symmetric(vertical: h / 100),
-                    child:
-                    Text('Payment Info',
-                        style: appTheme.themeData.primaryTextTheme.headline1)),
                 // CustomSpacing(),
                 CustomTextField(
                     controller: cardNumber,
-                    label: 'Card Number',
+                    label: 'رقم بطاقة الدفع',
                     selectedIcon: FontAwesomeIcons.creditCard,
                     selectedColor: Colors.grey,
                     borderColor: Colors.grey,
                     obscureText: false,
                     keyboardType: TextInputType.number,
-                    hint: 'Enter Your Card Number',
+                    hint: 'أدخل رقم بطاقة الدفع',
                     error: cardNumberError,
                     width: w,
                     onChanged: onChangedCardNumber,
@@ -223,7 +218,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                     maxLines: 1),
                 CustomTextField(
                     controller: expiryDate,
-                    label: 'Expiry Date',
+                    label: 'تاريخ نهاية البطاقة',
                     selectedIcon: FontAwesomeIcons.calendar,
                     selectedColor: Colors.grey,
                     borderColor: Colors.grey,
@@ -259,13 +254,13 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                   children: [
                     CustomTextField(
                         controller: amount,
-                        label: 'Amount',
+                        label: 'المبلغ',
                         selectedIcon: FontAwesomeIcons.moneyBill,
                         selectedColor: Colors.grey,
                         borderColor: Colors.grey,
                         obscureText: false,
                         keyboardType: TextInputType.number,
-                        hint: 'Enter the amount of money you wanna donate',
+                        hint: 'أدخل المبلغ',
                         error: amountError,
                         width: w / 2,
                         onChanged: onChangedAmount,
@@ -276,7 +271,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                     SizedBox(
                       width: w / 100,
                     ),
-                    Text('EGP')
+                    Text('جنيه مصري')
                   ],
                 ),
                 CustomSpacing(),
@@ -291,7 +286,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                       //   padding: EdgeInsets.only(left: w / 10),
                       //   child:
                       Text(
-                        '-3LE\n-3% For Fawry Service',
+                        '-3جنيهات\n-3% لخدمات فوري',
                         style: appTheme.nonStaticGetTextStyle(
                             1.0,
                             Colors.red,
@@ -308,7 +303,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                             print('good');
                           }
                         },
-                        child: Text('Donate'),
+                        child: Text('تبرع'),
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Color.fromRGBO(38, 92, 126, 1.0))),

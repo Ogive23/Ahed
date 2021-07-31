@@ -164,16 +164,12 @@ class _OfflineTransactionCreationScreenState
           ),
         ),
         actions: [
-          Directionality(
-            textDirection: TextDirection.ltr,
-            child: IconButton(
+          IconButton(
+              onPressed: () => commonData.back(),
               icon: Icon(
                 Icons.arrow_back_ios_sharp,
                 color: appTheme.themeData.appBarTheme.iconTheme!.color,
-              ),
-              onPressed: () => commonData.back(),
-            ),
-          ),
+              ))
         ],
       ),
       body: Container(

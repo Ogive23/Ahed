@@ -40,14 +40,16 @@ class _OnlineTransactionCreationScreenState
     h = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-          leading: IconButton(
-              onPressed: () => commonData.back(),
-              icon: Icon(
-                Icons.arrow_back_ios_sharp,
-                color: Colors.white,
-              )),
+          actions: [
+            IconButton(
+                onPressed: () => commonData.back(),
+                icon: Icon(
+                  Icons.arrow_back_ios_sharp,
+                  color: appTheme.themeData.appBarTheme.iconTheme!.color,
+                ))
+          ],
           title: Text(
-            'Donate',
+            'التبرع',
             style: appTheme.nonStaticGetTextStyle(
                 1.0,
                 Colors.white,
@@ -114,33 +116,35 @@ class _OnlineTransactionCreationScreenState
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(child: Text('Needy: ')),
-                      Container(child: Text('${needyData.selectedNeedy!.name}')),
-                    ],
-                  ),
-                  CustomSpacing(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(child: Text('Section: ')),
-                      Container(child: Text('${needyData.selectedNeedy!.type}')),
-                    ],
-                  ),
-                  CustomSpacing(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(child: Text('Severity: ')),
+                      Container(child: Text('الحالة: ')),
                       Container(
-                          child:
-                              Text('${needyData.selectedNeedy!.severityClass}')),
+                          child: Text('${needyData.selectedNeedy!.name}')),
                     ],
                   ),
                   CustomSpacing(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(child: Text('Details: ')),
+                      Container(child: Text('نوع الحالة: ')),
+                      Container(
+                          child: Text('${needyData.selectedNeedy!.type}')),
+                    ],
+                  ),
+                  CustomSpacing(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(child: Text('الخطورة: ')),
+                      Container(
+                          child: Text(
+                              '${needyData.selectedNeedy!.severityClass}')),
+                    ],
+                  ),
+                  CustomSpacing(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(child: Text('التفاصيل: ')),
                       Container(
                           child: Text('${needyData.selectedNeedy!.details}')),
                     ],
@@ -149,7 +153,7 @@ class _OnlineTransactionCreationScreenState
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(child: Text('Money Left: ')),
+                      Container(child: Text('المبلغ المتبقي: ')),
                       LinearPercentIndicator(
                         width: 170.0,
                         alignment: MainAxisAlignment.center,
@@ -165,15 +169,8 @@ class _OnlineTransactionCreationScreenState
                           (needyData.selectedNeedy!.need! -
                                       needyData.selectedNeedy!.collected!)
                                   .toStringAsFixed(0) +
-                              ' EGP Left',
-                          style: appTheme.nonStaticGetTextStyle(
-                              1.0,
-                              Colors.white,
-                              appTheme.getBodyTextTheme(context),
-                              FontWeight.bold,
-                              1.0,
-                              TextDecoration.none,
-                              'OpenSans'),
+                              ' جنيه متبقي',
+                          style: appTheme.themeData.primaryTextTheme.bodyText2,
                         ),
                         linearStrokeCap: LinearStrokeCap.butt,
                       ),
