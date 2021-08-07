@@ -41,12 +41,15 @@ class _OnlineTransactionCreationScreenState
     return Scaffold(
       appBar: AppBar(
           actions: [
-            IconButton(
-                onPressed: () => commonData.back(),
-                icon: Icon(
-                  Icons.arrow_back_ios_sharp,
-                  color: appTheme.themeData.appBarTheme.iconTheme!.color,
-                ))
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: IconButton(
+                  onPressed: () => commonData.back(),
+                  icon: Icon(
+                    Icons.arrow_back_ios_sharp,
+                    color: appTheme.themeData.appBarTheme.iconTheme!.color,
+                  )),
+            )
           ],
           title: Text(
             'التبرع',
@@ -128,16 +131,6 @@ class _OnlineTransactionCreationScreenState
                       Container(child: Text('نوع الحالة: ')),
                       Container(
                           child: Text('${needyData.selectedNeedy!.type}')),
-                    ],
-                  ),
-                  CustomSpacing(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(child: Text('الخطورة: ')),
-                      Container(
-                          child: Text(
-                              '${needyData.selectedNeedy!.severityClass}')),
                     ],
                   ),
                   CustomSpacing(),
