@@ -11,13 +11,13 @@ import '../Session/session_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NeedyApiCaller {
+  String url = "http://192.168.1.2:8000";
   ResponseHandler responseHandler = new ResponseHandler();
   SessionManager sessionManager = new SessionManager();
   DataMapper dataMapper = new DataMapper();
   TokenApiCaller tokenApiCaller = new TokenApiCaller();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference urls = FirebaseFirestore.instance.collection('URLs');
-  String url = "http://192.168.1.6:8000";
   getAllUrgent(int pageNumber) async {
     // QuerySnapshot snapshot = await urls.get();
     // for(int index = 0; index < snapshot.size; index++){
@@ -133,7 +133,16 @@ class NeedyApiCaller {
     }
     // }
   }
-  create() async {
+
+  create(String userId,
+      String name,
+      int age,
+      int severity,
+      String type,
+      String details,
+      int need,
+      String address,
+      List<File> images) async {
     // QuerySnapshot snapshot = await urls.get();
     // for(int index = 0; index < snapshot.size; index++){
     //   String url = snapshot.docs[index]['url'];
@@ -144,20 +153,29 @@ class NeedyApiCaller {
       "Content-Type": "application/json",
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
+    var body = {
+      'name': name,
+      'age': age,
+      'severity': severity,
+      'type': type,
+      'details': details,
+      'need': need,
+      'address': address,
+      'createdBy': userId
+    };
+    for(int index = 0; index < images.length;index++)
+      body.addAll({'images[$index]' : '${images[index]}'});
     print('url = $url');
+    print(body);
     try {
       var response = await http
-          .get(Uri.parse(url + "/api/ahed/needies"), headers: headers)
+          .post(Uri.parse(url + "/api/ahed/needies"), headers: headers,body: jsonEncode(body))
           .catchError((error) {
         throw error;
       }).timeout(Duration(seconds: 120));
       print(response.body);
-      //ToDo:move this "/storage/" to backend and make it full link
-      return {
-        "Err_Flag": false,
-        "Values": dataMapper.getNeediesFromJson(
-            url + "/storage/", jsonDecode(response.body)['data']['data'])
-      };
+      var responseToJson = jsonDecode(response.body);
+      return responseToJson;
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
     } on SocketException {
@@ -169,6 +187,7 @@ class NeedyApiCaller {
     }
     // }
   }
+
   getById(String id) async {
     // QuerySnapshot snapshot = await urls.get();
     // for(int index = 0; index < snapshot.size; index++){
