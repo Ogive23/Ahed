@@ -406,6 +406,17 @@ class _OfflineTransactionCreationScreenState
               ElevatedButton(
                 onPressed: () async {
                   if (fullValidator()) {
+                    TransactionApiCaller transactionApiCaller = new TransactionApiCaller();
+                    SessionManager sessionManager = new SessionManager();
+                    Map<String,dynamic> status = await transactionApiCaller.addOfflineTransactions(
+                        sessionManager.user == null? null : sessionManager.user!.id,
+                        needyData.selectedNeedy!.id!,
+                        needyData.selectedNeedy!.type!,
+                        mobileNumber.text,
+                        int.parse(amount.text),
+                        address.text,
+                        startCollectDate,
+                        endCollectDate);
                     print('good');
                   }
                 },
