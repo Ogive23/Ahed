@@ -1,5 +1,7 @@
+import 'package:ahed/ApiCallers/TransactionApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/custom_textfield.dart';
+import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
@@ -164,12 +166,15 @@ class _OfflineTransactionCreationScreenState
           ),
         ),
         actions: [
-          IconButton(
-              onPressed: () => commonData.back(),
-              icon: Icon(
-                Icons.arrow_back_ios_sharp,
-                color: appTheme.themeData.appBarTheme.iconTheme!.color,
-              ))
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: IconButton(
+                onPressed: () => commonData.back(),
+                icon: Icon(
+                  Icons.arrow_back_ios_sharp,
+                  color: appTheme.themeData.appBarTheme.iconTheme!.color,
+                )),
+          )
         ],
       ),
       body: Container(
@@ -181,9 +186,6 @@ class _OfflineTransactionCreationScreenState
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CustomSpacing(),
-              CustomSpacing(),
-              CustomSpacing(),
               Container(
                 padding: EdgeInsets.only(
                     left: w / 10, right: w / 10, top: h / 100, bottom: h / 200),
@@ -195,7 +197,6 @@ class _OfflineTransactionCreationScreenState
                 child: Column(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('أسم الحالة: ',
                             style:
@@ -207,7 +208,6 @@ class _OfflineTransactionCreationScreenState
                     ),
                     CustomSpacing(),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('نوع الحالة: ',
                             style:
@@ -219,19 +219,6 @@ class _OfflineTransactionCreationScreenState
                     ),
                     CustomSpacing(),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('الخطورة: ',
-                            style:
-                                appTheme.themeData.primaryTextTheme.headline4),
-                        Text('${needyData.selectedNeedy!.severityClass}',
-                            style:
-                                appTheme.themeData.primaryTextTheme.headline4),
-                      ],
-                    ),
-                    CustomSpacing(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('التفاصيل: ',
                             style:
@@ -243,7 +230,6 @@ class _OfflineTransactionCreationScreenState
                     ),
                     CustomSpacing(),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('مسار النجاح: ',
                             style:
@@ -405,11 +391,14 @@ class _OfflineTransactionCreationScreenState
                       ],
                     ),
                     Center(
-                      child: Text(
-                        dateError!,
-                        style: appTheme.themeData.primaryTextTheme.subtitle2!
-                            .apply(color: Colors.red),
-                      ),
+                      child: dateError == null
+                          ? SizedBox()
+                          : Text(
+                              dateError!,
+                              style: appTheme
+                                  .themeData.primaryTextTheme.subtitle2!
+                                  .apply(color: Colors.red),
+                            ),
                     )
                   ],
                 ),
