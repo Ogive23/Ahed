@@ -5,7 +5,6 @@ class Needy {
   String? name;
   double? age;
   int? severity;
-  String? severityClass;
   String? type;
   String? details;
   double? need;
@@ -27,7 +26,6 @@ class Needy {
       this.name,
       this.age,
       this.severity,
-      this.severityClass,
       this.type,
       this.details,
       this.need,

@@ -1,3 +1,4 @@
+import 'package:ahed/ApiCallers/TransactionApiCaller.dart';
 import 'package:ahed/ApiCallers/UserApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomOfflineTransactionTimelineTile.dart';
@@ -27,10 +28,10 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   late AppTheme appTheme;
   late List<Transaction> transactions;
   late TabController tabController;
-  late UserApiCaller userApiCaller = new UserApiCaller();
   final DataMapper dataMapper = new DataMapper();
-
+  final TransactionApiCaller transactionApiCaller = new TransactionApiCaller();
   SessionManager sessionManager = new SessionManager();
+
   @override
   initState() {
     super.initState();
@@ -42,11 +43,13 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   // String prize;
   // String prizeImage;
   Future<Map<String, dynamic>> getOnlineTransactions() async {
-    return await userApiCaller.getOnlineTransactions(sessionManager.user!.id);
+    return await transactionApiCaller
+        .getOnlineTransactions(sessionManager.user!.id);
   }
 
   Future<Map<String, dynamic>> getOfflineTransactions() async {
-    return await userApiCaller.getOfflineTransactions(sessionManager.user!.id);
+    return await transactionApiCaller
+        .getOfflineTransactions(sessionManager.user!.id);
   }
 
   Widget getOnlineTransactionsBody(context) {

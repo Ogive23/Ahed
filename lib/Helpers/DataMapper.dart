@@ -11,12 +11,6 @@ import '../Models/NeedyMedia.dart';
 class DataMapper {
   Helper helper = new Helper();
 
-  String getSeverityClass(int severity) {
-    if (severity > 0 && severity < 4) return 'Low';
-    if (severity > 4 && severity < 7) return 'Medium';
-    return 'High';
-  }
-
   List<NeedyMedia> getNeediesMediaFromJson(String baseURL, List<dynamic> list) {
     print('here');
     List<NeedyMedia> returnedNeediesMedia = [];
@@ -36,7 +30,6 @@ class DataMapper {
         element['name'].toString(),
         double.parse(element['age'].toString()),
         int.parse(element['severity'].toString()),
-        getSeverityClass(element['severity']),
         element['type'],
         element['details'],
         double.parse(element['need'].toString()),
@@ -123,7 +116,6 @@ class DataMapper {
         json['name'].toString(),
         double.parse(json['age'].toString()),
         int.parse(json['severity'].toString()),
-        getSeverityClass(json['severity']),
         json['type'],
         json['details'],
         double.parse(json['need'].toString()),
