@@ -57,7 +57,7 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
           data: Theme.of(context).copyWith(
             canvasColor: Colors.white,
           ),
-          child: commonData.step > 3
+          child: commonData.step > Pages.SettingsScreen.index
               ? SizedBox()
               : BottomNavigationBar(
                   backgroundColor: appTheme.themeData.primaryColor,
@@ -70,7 +70,7 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
                   elevation: 0.0,
                   items: [
                       BottomNavigationBarItem(
-                          icon: Icon(Icons.attach_money), label: 'تبرعاتي'),
+                          icon: Icon(Icons.attach_money,), label: 'تبرعاتي'),
                       BottomNavigationBarItem(
                           icon: Icon(Icons.home), label: 'الرئيسية'),
                       BottomNavigationBarItem(
