@@ -181,31 +181,24 @@ class _MyDonationScreenState extends State<MyDonationScreen>
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: appTheme.themeData.primaryColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: appTheme.themeData.primaryColor,
         elevation: 0.0,
         title: Padding(
           padding: EdgeInsets.only(top: h / 20),
           child: Text(
             'تبرعاتي',
-            style: appTheme.nonStaticGetTextStyle(
-                1.0,
-                Colors.black,
-                appTheme.getTextTheme(context) * 1.5,
-                FontWeight.w600,
-                1.0,
-                TextDecoration.none,
-                'Delius'),
+            style: appTheme.themeData.primaryTextTheme.headline2,
           ),
         ),
       ),
       body: Container(
         height: double.infinity,
-        decoration: BoxDecoration(color: Colors.white),
         child: Column(children: [
-          CustomSpacing(),
-          CustomSpacing(),
-          CustomSpacing(),
+          CustomSpacing(
+            value: 33,
+          ),
           TabBar(
             tabs: [
               Tab(
@@ -213,7 +206,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 'الدفع الإلكتروني',
                 style: appTheme.nonStaticGetTextStyle(
                     1.0,
-                    Colors.black,
+                    appTheme.themeData.primaryTextTheme.headline2!.color,
                     appTheme.getSemiBodyTextTheme(context),
                     FontWeight.w600,
                     1.0,
@@ -225,7 +218,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 'الدفع النقدي',
                 style: appTheme.nonStaticGetTextStyle(
                     1.0,
-                    Colors.black,
+                    appTheme.themeData.primaryTextTheme.headline2!.color,
                     appTheme.getSemiBodyTextTheme(context),
                     FontWeight.w600,
                     1.0,
@@ -244,14 +237,15 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 1.0,
                 TextDecoration.none,
                 'Delius'),
-            labelStyle: appTheme.nonStaticGetTextStyle(
-                1.0,
-                Colors.black,
-                appTheme.getBodyTextTheme(context),
-                FontWeight.w600,
-                1.0,
-                TextDecoration.none,
-                'Delius'),
+            // labelStyle: appTheme.nonStaticGetTextStyle(
+            //     1.0,
+            //     Colors.black,
+            //     appTheme.getBodyTextTheme(context),
+            //     FontWeight.w600,
+            //     1.0,
+            //     TextDecoration.none,
+            //     'Delius'),
+          ),
           CustomSpacing(
             value: 100,
           ),
@@ -263,7 +257,11 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('عليك تسجيل الدخول للمتابعة'),
+                          Text(
+                            'عليك تسجيل الدخول للمتابعة',
+                            style:
+                                appTheme.themeData.primaryTextTheme.headline6,
+                          ),
                           GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(context, "LoginScreen");
@@ -287,7 +285,11 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('عليك تسجيل الدخول للمتابعة'),
+                          Text(
+                            'عليك تسجيل الدخول للمتابعة',
+                            style:
+                                appTheme.themeData.primaryTextTheme.headline6,
+                          ),
                           GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(context, "LoginScreen");

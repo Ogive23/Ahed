@@ -22,27 +22,20 @@ class SettingsScreen extends StatelessWidget {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: appTheme.themeData.primaryColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: appTheme.themeData.primaryColor,
         elevation: 0.0,
         title: Padding(
           padding: EdgeInsets.only(top: h / 20),
           child: Text(
             'الإعدادات',
-            style: appTheme.nonStaticGetTextStyle(
-                1.0,
-                Colors.black,
-                appTheme.getTextTheme(context) * 1.5,
-                FontWeight.w600,
-                1.0,
-                TextDecoration.none,
-                'Delius'),
+            style: appTheme.themeData.primaryTextTheme.headline2,
           ),
         ),
       ),
       body: Container(
         height: double.infinity,
-        decoration: BoxDecoration(color: Colors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

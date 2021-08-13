@@ -155,8 +155,9 @@ class _OfflineTransactionCreationScreenState
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: appTheme.themeData.primaryColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: appTheme.themeData.primaryColor,
         elevation: 0.0,
         title: Padding(
           padding: EdgeInsets.only(top: h / 20, bottom: h / 40),
@@ -180,9 +181,6 @@ class _OfflineTransactionCreationScreenState
       body: Container(
         // width: w,
         height: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -190,20 +188,17 @@ class _OfflineTransactionCreationScreenState
                 padding: EdgeInsets.only(
                     left: w / 10, right: w / 10, top: h / 100, bottom: h / 200),
                 width: w,
-                // height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
+                // height: double.infinity
                 child: Column(
                   children: [
                     Row(
                       children: [
                         Text('أسم الحالة: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline4),
+                                appTheme.themeData.primaryTextTheme.headline5),
                         Text('${needyData.selectedNeedy!.name}',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline4),
+                                appTheme.themeData.primaryTextTheme.headline5),
                       ],
                     ),
                     CustomSpacing(
@@ -213,10 +208,10 @@ class _OfflineTransactionCreationScreenState
                       children: [
                         Text('نوع الحالة: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline4),
+                                appTheme.themeData.primaryTextTheme.headline5),
                         Text('${needyData.selectedNeedy!.type}',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline4),
+                                appTheme.themeData.primaryTextTheme.headline5),
                       ],
                     ),
                     CustomSpacing(
@@ -226,10 +221,10 @@ class _OfflineTransactionCreationScreenState
                       children: [
                         Text('التفاصيل: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline4),
+                                appTheme.themeData.primaryTextTheme.headline5),
                         Text('${needyData.selectedNeedy!.details}',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline4),
+                                appTheme.themeData.primaryTextTheme.headline5),
                       ],
                     ),
                     CustomSpacing(
@@ -239,7 +234,7 @@ class _OfflineTransactionCreationScreenState
                       children: [
                         Text('مسار النجاح: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline4),
+                                appTheme.themeData.primaryTextTheme.headline5),
                         LinearPercentIndicator(
                           width: w / 2,
                           alignment: MainAxisAlignment.center,
@@ -373,12 +368,12 @@ class _OfflineTransactionCreationScreenState
                         ),
                         Text('-',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline4),
+                                appTheme.themeData.primaryTextTheme.headline5),
                         Column(
                           children: [
                             Text('إلي',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline4),
+                                    .themeData.primaryTextTheme.headline5),
                             ElevatedButton(
                               onPressed: () => selectToDate(context),
                               style: ButtonStyle(

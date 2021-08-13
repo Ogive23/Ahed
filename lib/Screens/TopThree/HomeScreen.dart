@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:ahed/ApiCallers/UserApiCaller.dart';
-import 'package:ahed/Custom%20Widgets/CustomLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomLoadingText.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/HomeScreenAchievementContainer.dart';
@@ -11,6 +10,7 @@ import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../GeneralInfo.dart';
 
@@ -71,163 +71,12 @@ class HomeScreen extends StatelessWidget {
   static late AppTheme appTheme;
   final Helper helper = new Helper();
 
-  @override
-  Widget build(BuildContext context) {
-    // print('profileImage : ${sessionManager.user.profileImage}');
-    commonData = Provider.of<CommonData>(context);
-    appTheme = Provider.of<AppTheme>(context);
-    w = MediaQuery.of(context).size.width;
-    h = MediaQuery.of(context).size.height;
-    return Scaffold(
-        backgroundColor: appTheme.themeData.primaryColor,
-        appBar: AppBar(
-          elevation: 0.0,
-          leadingWidth: 0.0,
-          backgroundColor: appTheme.themeData.primaryColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('عهد', style: appTheme.themeData.primaryTextTheme.headline1),
-              sessionManager.isLoggedIn()
-                  ? GestureDetector(
-                      onTap: () =>
-                          commonData.changeStep(Pages.ProfileScreen.index),
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: w / 100),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 3),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: Offset(
-                                      0, 1), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: PopupMenuButton(
-                              child: CircleAvatar(
-                                radius: h / 40,
-                                backgroundColor: Colors.transparent,
-                                child: ClipOval(
-                                  child:
-                                      sessionManager.user!.profileImage != 'N/A'
-                                          ? Image.network(
-                                              sessionManager.user!.profileImage!,
-                                              fit: BoxFit.contain,
-                                              width: w / 5,
-                                              height: h / 10,
-                                            )
-                                          : Image.asset(
-                                              'assets/images/user.png',
-                                              fit: BoxFit.cover,
-                                              width: w / 5,
-                                              height: h / 10,
-                                            ),
-                                ),
-                              ),
-                              onSelected: (value) {
-                                if (value == 'Profile')
-                                  return commonData
-                                      .changeStep(Pages.ProfileScreen.index);
-                                else if (value == 'Logout') {
-                                  sessionManager.logout();
-                                  Navigator.popUntil(context, (route) => false);
-                                  Navigator.pushNamed(context, "MainScreen");
-                                  return;
-                                }
-                              },
-                              itemBuilder: (context) {
-                                return [
-                                  PopupMenuItem(
-                                    child: Text(
-                                      'الملف الشخصي',
-                                      style: appTheme
-                                          .themeData.primaryTextTheme.headline4,
-                                    ),
-                                    value: 'Profile',
-                                  ),
-                                  PopupMenuItem(
-                                    child: Text(
-                                      'تسجيل الخروج',
-                                      style: appTheme
-                                          .themeData.primaryTextTheme.headline4,
-                                    ),
-                                    value: 'Logout',
-                                  ),
-                                ];
-                              },
-                            ),
-                          )),
-                    )
-                  : GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, "LoginScreen");
-                      },
-                      child: Text(
-                        'تسجيل الدخول',
-                        style: appTheme.nonStaticGetTextStyle(
-                            1.0,
-                            Colors.blue,
-                            appTheme.getSemiBodyTextTheme(context),
-                            FontWeight.w400,
-                            1.0,
-                            TextDecoration.none,
-                            'Delius'),
-                      ),
-                    )
-            ],
-          ),
-        ),
-        body: Container(
-          child: Column(
-            children: [
-              Center(
-                child: Text('${getGreetingText()}',
-                    style: appTheme.themeData.primaryTextTheme.headline3),
-              ),
-              CustomSpacing(),
-              Expanded(
-                child: SingleChildScrollView(
-                    // controller: scrollController,
-                    child: Padding(
-                  padding: EdgeInsets.only(right: w / 30),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        getAchievementCenter(context),
-                        //ToDo: Future V2
-                        // Visibility(
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text('الحالات المحفوظة',
-                        //           style: appTheme
-                        //               .themeData.primaryTextTheme.headline3),
-                        //       NeediesScreen(
-                        //         type: "Bookmarked",
-                        //       ),
-                        //     ],
-                        //   ),
-                        //   visible: sessionManager.hasAnyBookmarked(),
-                        // ),
-
-                        NeediesScreen(
-                          type: "Urgent",
-                        ),
-
-                        NeediesScreen(
-                          type: "Not Urgent",
-                        ),
-                      ]),
-                )),
-              ),
-            ],
-          ),
-        ));
+  Future<Map<String, dynamic>?> getAchievements() async {
+    UserApiCaller userApiCaller = new UserApiCaller();
+    Map<String, dynamic> status =
+        await userApiCaller.getAchievements(sessionManager.user?.id);
+    if (status['Err_Flag']) return null;
+    return status['Values'];
   }
 
   Widget getAchievementCenterBody(Map<String, dynamic> data, context) {
@@ -251,14 +100,8 @@ class HomeScreen extends StatelessWidget {
                       ? double.parse(
                           data['NumberOfNeediesUserHelped'].toString())
                       : null,
-                  countTextStyle: appTheme.nonStaticGetTextStyle(
-                      1.0,
-                      Colors.black,
-                      appTheme.getTextTheme(context) * 1.5,
-                      FontWeight.w200,
-                      1.0,
-                      TextDecoration.none,
-                      'Delius'),
+                  countTextStyle: appTheme.themeData.primaryTextTheme.headline5!
+                      .apply(fontSizeFactor: 1.5),
                   text: 'حالات قدرت تغير حياتهم للأحسن',
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
@@ -282,14 +125,8 @@ class HomeScreen extends StatelessWidget {
                       : null,
                   precision: 2,
                   suffix: 'جنيه',
-                  countTextStyle: appTheme.nonStaticGetTextStyle(
-                      1.0,
-                      Colors.black,
-                      appTheme.getTextTheme(context) * 1.5,
-                      FontWeight.w200,
-                      1.0,
-                      TextDecoration.none,
-                      'Delius'),
+                  countTextStyle: appTheme.themeData.primaryTextTheme.headline5!
+                      .apply(fontSizeFactor: 1.5),
                   text: 'هي حجم مساعدتك لينا',
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
@@ -515,8 +352,8 @@ class HomeScreen extends StatelessWidget {
   Widget getAchievementCenter(context) {
     return FutureBuilder<Map<String, dynamic>?>(
       future: getAchievements(),
-      builder:
-          (BuildContext context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+      builder: (BuildContext context,
+          AsyncSnapshot<Map<String, dynamic>?> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
           return getAchievementCenterBody(snapshot.data!, context);
@@ -542,11 +379,178 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Future<Map<String, dynamic>?> getAchievements() async {
-    UserApiCaller userApiCaller = new UserApiCaller();
-    Map<String, dynamic> status =
-        await userApiCaller.getAchievements(sessionManager.user?.id);
-    if (status['Err_Flag']) return null;
-    return status['Values'];
+  @override
+  Widget build(BuildContext context) {
+    // print('profileImage : ${sessionManager.user.profileImage}');
+    commonData = Provider.of<CommonData>(context);
+    appTheme = Provider.of<AppTheme>(context);
+    w = MediaQuery.of(context).size.width;
+    h = MediaQuery.of(context).size.height;
+    return Scaffold(
+        backgroundColor: appTheme.themeData.primaryColor,
+        appBar: AppBar(
+          elevation: 0.0,
+          leadingWidth: 0.0,
+          backgroundColor: appTheme.themeData.primaryColor,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('عهد', style: appTheme.themeData.primaryTextTheme.headline1),
+              sessionManager.isLoggedIn()
+                  ? GestureDetector(
+                      onTap: () =>
+                          commonData.changeStep(Pages.ProfileScreen.index),
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: w / 100),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 3),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(
+                                      0, 1), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: PopupMenuButton(
+                              child: CircleAvatar(
+                                radius: h / 40,
+                                backgroundColor: Colors.transparent,
+                                child: ClipOval(
+                                  child: sessionManager.user!.profileImage !=
+                                          'N/A'
+                                      ? Image.network(
+                                          sessionManager.user!.profileImage!,
+                                          fit: BoxFit.contain,
+                                          width: w / 5,
+                                          height: h / 10,
+                                        )
+                                      : Image.asset(
+                                          'assets/images/user.png',
+                                          fit: BoxFit.cover,
+                                          width: w / 5,
+                                          height: h / 10,
+                                        ),
+                                ),
+                              ),
+                              onSelected: (value) {
+                                if (value == 'Profile')
+                                  return commonData
+                                      .changeStep(Pages.ProfileScreen.index);
+                                else if (value == 'Logout') {
+                                  sessionManager.logout();
+                                  Navigator.popUntil(context, (route) => false);
+                                  Navigator.pushNamed(context, "MainScreen");
+                                  return;
+                                }
+                              },
+                              itemBuilder: (context) {
+                                return [
+                                  PopupMenuItem(
+                                    child: Text(
+                                      'الملف الشخصي',
+                                      style: appTheme
+                                          .themeData.primaryTextTheme.headline4,
+                                    ),
+                                    value: 'Profile',
+                                  ),
+                                  PopupMenuItem(
+                                    child: Text(
+                                      'تسجيل الخروج',
+                                      style: appTheme
+                                          .themeData.primaryTextTheme.headline4,
+                                    ),
+                                    value: 'Logout',
+                                  ),
+                                ];
+                              },
+                            ),
+                          )),
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, "LoginScreen");
+                      },
+                      child: Text(
+                        'تسجيل الدخول',
+                        style: appTheme.nonStaticGetTextStyle(
+                            1.0,
+                            Colors.blue,
+                            appTheme.getSemiBodyTextTheme(context),
+                            FontWeight.w400,
+                            1.0,
+                            TextDecoration.none,
+                            'Delius'),
+                      ),
+                    )
+            ],
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+        floatingActionButton: Padding(
+          padding: EdgeInsets.only(bottom: h / 50),
+          child: FloatingActionButton(
+            onPressed: sessionManager.isLoggedIn()
+                ? () {
+                    commonData.changeStep(Pages.NeedyCreationScreen.index);
+                  }
+                : null,
+            backgroundColor:
+                sessionManager.isLoggedIn() ? Colors.green : Colors.grey,
+            child: Icon(FontAwesomeIcons.handsHelping),
+          ),
+        ),
+        body: Container(
+          child: Column(
+            children: [
+              Center(
+                child: Text('${getGreetingText()}',
+                    style: appTheme.themeData.primaryTextTheme.headline3),
+              ),
+              CustomSpacing(
+                value: 100,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                    // controller: scrollController,
+                    child: Padding(
+                  padding: EdgeInsets.only(right: w / 30),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        getAchievementCenter(context),
+                        //ToDo: Future V2
+                        // Visibility(
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text('الحالات المحفوظة',
+                        //           style: appTheme
+                        //               .themeData.primaryTextTheme.headline3),
+                        //       NeediesScreen(
+                        //         type: "Bookmarked",
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   visible: sessionManager.hasAnyBookmarked(),
+                        // ),
+
+                        NeediesScreen(
+                          type: "Urgent",
+                        ),
+
+                        NeediesScreen(
+                          type: "Not Urgent",
+                        ),
+                      ]),
+                )),
+              ),
+            ],
+          ),
+        ));
   }
 }

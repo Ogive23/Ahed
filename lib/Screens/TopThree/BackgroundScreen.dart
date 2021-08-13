@@ -77,7 +77,10 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
                         icon: Icon(Icons.settings),
                         label: 'الإعدادات',
                       ),
-                    ]),
+                    ],unselectedLabelStyle: appTheme.themeData.primaryTextTheme.subtitle1,
+          selectedLabelStyle: appTheme.themeData.primaryTextTheme.headline4,
+
+          ),
         ),
       ),
     );

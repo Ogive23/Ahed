@@ -20,7 +20,7 @@ class CustomLoadingText extends StatelessWidget {
               appTheme.getTextTheme(context),
               FontWeight.normal,
               1.0,
-              TextDecoration.underline,
+              TextDecoration.none,
               'Delius'),
           colors: [
             Colors.purple,
