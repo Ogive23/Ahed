@@ -45,7 +45,7 @@ class StayInTouchScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      CustomSpacing(),
+                      CustomSpacing(value: 100,),
                       Padding(
                         padding: EdgeInsets.only(right: w / 20),
                         child: Text(
@@ -60,7 +60,7 @@ class StayInTouchScreen extends StatelessWidget {
                               'Delius'),
                         ),
                       ),
-                      CustomSpacing(),
+                      CustomSpacing(value: 100,),
                       Container(
                         padding: EdgeInsets.symmetric(
                             vertical: h / 100, horizontal: w / 50),

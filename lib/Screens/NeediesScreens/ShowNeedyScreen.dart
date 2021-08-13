@@ -205,7 +205,7 @@ class ShowNeedyScreen extends StatelessWidget {
                         )),
                   ],
                 ),
-                CustomSpacing(),
+                CustomSpacing(value: 100,),
                 Padding(
                   padding: EdgeInsets.only(left: w / 50, right: w / 50),
                   child: Text(
@@ -220,7 +220,7 @@ class ShowNeedyScreen extends StatelessWidget {
                         'OpenSans'),
                   ),
                 ),
-                CustomSpacing(),
+                CustomSpacing(value: 100,),
                 Padding(
                   padding: EdgeInsets.only(left: w / 25, right: w / 50),
                   // padding: const EdgeInsets.all(8.0),
@@ -230,7 +230,7 @@ class ShowNeedyScreen extends StatelessWidget {
                       style: appTheme.themeData.primaryTextTheme.headline4!
                           .apply(fontWeightDelta: 4)),
                 ),
-                CustomSpacing(),
+                CustomSpacing(value: 100,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -256,7 +256,7 @@ class ShowNeedyScreen extends StatelessWidget {
                         : SizedBox(),
                   ],
                 ),
-                CustomSpacing(),
+                CustomSpacing(value: 100,),
                 LinearPercentIndicator(
                   width: 170.0,
                   alignment: MainAxisAlignment.center,
@@ -285,7 +285,7 @@ class ShowNeedyScreen extends StatelessWidget {
                   ),
                   linearStrokeCap: LinearStrokeCap.roundAll,
                 ),
-                CustomSpacing(),
+                CustomSpacing(value: 100,),
                 needy.satisfied!
                     ? Center(
                         child: ElevatedButton(

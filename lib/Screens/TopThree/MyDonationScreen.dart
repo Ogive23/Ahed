@@ -252,8 +252,9 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 1.0,
                 TextDecoration.none,
                 'Delius'),
+          CustomSpacing(
+            value: 100,
           ),
-          CustomSpacing(),
           Expanded(
             child: TabBarView(
               children: [

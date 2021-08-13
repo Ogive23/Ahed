@@ -137,7 +137,7 @@ class _NeediesScreenState extends State<NeediesScreen> {
                 icon: Icon(Icons.refresh))
           ],
         ),
-        CustomSpacing(),
+        CustomSpacing(value: 100,),
         getNeediesBody(context),
       ],
     );

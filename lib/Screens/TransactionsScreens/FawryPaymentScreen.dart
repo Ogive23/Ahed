@@ -274,7 +274,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                     Text('جنيه مصري')
                   ],
                 ),
-                CustomSpacing(),
+                CustomSpacing(value: 100,),
                 // CustomSpacing(),
                 // CustomSpacing(),
                 Center(

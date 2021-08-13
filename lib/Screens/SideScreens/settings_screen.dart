@@ -47,9 +47,7 @@ class SettingsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CustomSpacing(),
-            CustomSpacing(),
-            CustomSpacing(),
+            CustomSpacing(value: 33,),
             Directionality(
                 textDirection: appLanguage.textDirection,
                 child: Column(

@@ -124,7 +124,7 @@ class _OnlineTransactionCreationScreenState
                           child: Text('${needyData.selectedNeedy!.name}')),
                     ],
                   ),
-                  CustomSpacing(),
+                  CustomSpacing(value: 100,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -133,7 +133,7 @@ class _OnlineTransactionCreationScreenState
                           child: Text('${needyData.selectedNeedy!.type}')),
                     ],
                   ),
-                  CustomSpacing(),
+                  CustomSpacing(value: 100,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -142,7 +142,7 @@ class _OnlineTransactionCreationScreenState
                           child: Text('${needyData.selectedNeedy!.details}')),
                     ],
                   ),
-                  CustomSpacing(),
+                  CustomSpacing(value: 100,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

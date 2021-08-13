@@ -206,7 +206,9 @@ class _OfflineTransactionCreationScreenState
                                 appTheme.themeData.primaryTextTheme.headline4),
                       ],
                     ),
-                    CustomSpacing(),
+                    CustomSpacing(
+                      value: 100,
+                    ),
                     Row(
                       children: [
                         Text('نوع الحالة: ',
@@ -217,7 +219,9 @@ class _OfflineTransactionCreationScreenState
                                 appTheme.themeData.primaryTextTheme.headline4),
                       ],
                     ),
-                    CustomSpacing(),
+                    CustomSpacing(
+                      value: 100,
+                    ),
                     Row(
                       children: [
                         Text('التفاصيل: ',
@@ -228,7 +232,9 @@ class _OfflineTransactionCreationScreenState
                                 appTheme.themeData.primaryTextTheme.headline4),
                       ],
                     ),
-                    CustomSpacing(),
+                    CustomSpacing(
+                      value: 100,
+                    ),
                     Row(
                       children: [
                         Text('مسار النجاح: ',
@@ -336,7 +342,9 @@ class _OfflineTransactionCreationScreenState
                         rightInfo: mobileNumberValidator(),
                         enableFormatters: true,
                         maxLines: 1),
-                    CustomSpacing(),
+                    CustomSpacing(
+                      value: 100,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -235,7 +235,9 @@ class HomeScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('إنجازاتك', style: appTheme.themeData.primaryTextTheme.headline3),
-        CustomSpacing(),
+        CustomSpacing(
+          value: 100,
+        ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: w / 35),
           child: SingleChildScrollView(
@@ -302,10 +304,13 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        CustomSpacing(),
-        CustomSpacing(),
+        CustomSpacing(
+          value: 50,
+        ),
         Text('إنجازتنا', style: appTheme.themeData.primaryTextTheme.headline3),
-        CustomSpacing(),
+        CustomSpacing(
+          value: 100,
+        ),
         Container(
           padding: EdgeInsets.only(right: w / 35),
           child: SingleChildScrollView(
@@ -477,7 +482,9 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        CustomSpacing(),
+        CustomSpacing(
+          value: 100,
+        ),
         HomeScreenAchievementContainer(
           w: w,
           count: double.parse(data['NeediesNotSatisfied'].toString()),
