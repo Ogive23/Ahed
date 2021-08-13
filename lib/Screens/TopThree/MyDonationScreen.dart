@@ -59,7 +59,8 @@ class _MyDonationScreenState extends State<MyDonationScreen>
           (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null &&
-            !snapshot.data!['Err_Flag']) {
+            !snapshot.data!['Err_Flag'] &&
+            snapshot.data!['Values'].isNotEmpty) {
           // return Expanded(
           return SingleChildScrollView(
             child: Column(
@@ -91,8 +92,19 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 //   ),
                 ),
           );
-        }
-        if (snapshot.connectionState == ConnectionState.done &&
+        } else if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null &&
+            !snapshot.data!['Err_Flag'] &&
+            snapshot.data!['Values'].isEmpty) {
+          // return Expanded(
+          return Container(
+            alignment: Alignment.center,
+            child: Text(
+              'لا توجد تبرعات متاحة',
+              style: appTheme.themeData.primaryTextTheme.headline4,
+            ),
+          );
+        } else if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null &&
             snapshot.data!['Err_Flag']) {
           print(snapshot.data);
@@ -120,7 +132,8 @@ class _MyDonationScreenState extends State<MyDonationScreen>
           (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null &&
-            !snapshot.data!['Err_Flag']) {
+            !snapshot.data!['Err_Flag'] &&
+            snapshot.data!['Values'].isNotEmpty) {
           // return Expanded(
           return SingleChildScrollView(
             child: Column(
@@ -152,8 +165,19 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 //   ),
                 ),
           );
-        }
-        if (snapshot.connectionState == ConnectionState.done &&
+        } else if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null &&
+            !snapshot.data!['Err_Flag'] &&
+            snapshot.data!['Values'].isEmpty) {
+          // return Expanded(
+          return Container(
+            alignment: Alignment.center,
+            child: Text(
+              'لا توجد تبرعات متاحة',
+              style: appTheme.themeData.primaryTextTheme.headline4,
+            ),
+          );
+        } else if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null &&
             snapshot.data!['Err_Flag']) {
           print(snapshot.data);
