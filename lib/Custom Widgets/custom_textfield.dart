@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 class CustomTextField extends StatelessWidget {
   late double w, h;
   final TextEditingController controller;
-  final String label;
-  final IconData selectedIcon;
+  final String? label;
+  final IconData? selectedIcon;
   final Color selectedColor;
   final Color borderColor;
   final bool obscureText;
@@ -17,8 +17,8 @@ class CustomTextField extends StatelessWidget {
   final String? error;
   final double width;
   final Function? onChanged;
-  final Function? onSubmitted;
-  final bool rightInfo;
+  final Function onSubmitted;
+  // final bool rightInfo;
   final bool enableFormatters;
   final int? maxLines;
   final int? maxLength;
@@ -28,17 +28,17 @@ class CustomTextField extends StatelessWidget {
   CustomTextField(
       {required this.controller,
       required this.label,
-      required this.selectedIcon,
+      this.selectedIcon,
       required this.selectedColor,
       required this.borderColor,
       required this.obscureText,
       required this.keyboardType,
       required this.hint,
-      @required this.error,
+      required this.error,
       required this.width,
-      required this.onChanged,
+      this.onChanged,
       required this.onSubmitted,
-      required this.rightInfo,
+      // required this.rightInfo,
       required this.enableFormatters,
       this.maxLength,
       this.maxLines,
@@ -61,8 +61,12 @@ class CustomTextField extends StatelessWidget {
             textAlign: TextAlign.center,
             style: appTheme.themeData.primaryTextTheme.bodyText1,
             textInputAction: TextInputAction.done,
-            onChanged:(value) =>  onChanged,
-            onSubmitted: (value) => onSubmitted,
+            onChanged: (value) {
+              onChanged!(value);
+            },
+            onSubmitted: (value) {
+              onSubmitted(value);
+            },
             inputFormatters: enableFormatters
                 ? [FilteringTextInputFormatter.digitsOnly]
                 : null,
@@ -91,23 +95,14 @@ class CustomTextField extends StatelessWidget {
               hintStyle: appTheme.themeData.primaryTextTheme.subtitle2,
               helperText: helperText,
               helperStyle: helperStyle,
-              suffix: rightInfo
-                  ? Container(
-                      child: Icon(
-                        Icons.done,
-                        color: Colors.white,
-                        size: h / 40,
-                      ),
-                      decoration: BoxDecoration(
-                          color: Colors.green, shape: BoxShape.circle),
+              icon: selectedIcon != null
+                  ? Icon(
+                      selectedIcon,
+                      color: selectedColor,
+                      //ToDo: Dynamic number
+                      size: selectedIcon == null ? 0 : h / 25,
                     )
-                  : null,
-              icon: Icon(
-                selectedIcon,
-                color: selectedColor,
-                //ToDo: Dynamic number
-                size: selectedIcon == null ? 0 : h / 25,
-              ),
+                  : SizedBox(),
               labelText: label,
             ),
             keyboardType: keyboardType,

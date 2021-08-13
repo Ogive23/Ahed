@@ -35,9 +35,6 @@ class _OfflineTransactionCreationScreenState
   String? dateError;
   static DateTime startCollectDate = DateTime.now();
   static DateTime endCollectDate = DateTime.now();
-  // DateTime from = new DateTime.now();
-  // DateTime to = new DateTime.now();
-  static bool assignPermanently = false;
 
   bool fullValidator() {
     return amountValidator() &&
@@ -288,7 +285,6 @@ class _OfflineTransactionCreationScreenState
                             width: w / 2,
                             onChanged: null,
                             onSubmitted: onSubmittedAmount,
-                            rightInfo: amountValidator(),
                             enableFormatters: true,
                             maxLines: 1),
                         SizedBox(
@@ -318,7 +314,6 @@ class _OfflineTransactionCreationScreenState
                         width: w,
                         onChanged: null,
                         onSubmitted: onSubmittedAddress,
-                        rightInfo: addressValidator(),
                         enableFormatters: false,
                         maxLines: 1),
                     CustomTextField(
@@ -334,7 +329,6 @@ class _OfflineTransactionCreationScreenState
                         width: w,
                         onChanged: null,
                         onSubmitted: onSubmittedMobileNumber,
-                        rightInfo: mobileNumberValidator(),
                         enableFormatters: true,
                         maxLines: 1),
                     CustomSpacing(
