@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/User.dart';
 
 class SessionManager {
-  late SharedPreferences sharedPreferences;
+  late SharedPreferences? sharedPreferences;
   User? user;
   DateTime? accessTokenExpireDate;
 
@@ -22,18 +22,19 @@ class SessionManager {
 
   createSession(User user, DateTime accessTokenExpiryDate) {
     this.user = user;
-    sharedPreferences.setStringList('user', user.toList());
-    sharedPreferences.setString(
+    print(user.toList());
+    sharedPreferences!.setStringList('user', user.toList());
+    sharedPreferences!.setString(
         'accessTokenExpireDate', accessTokenExpiryDate.toString());
   }
 
   loadSession() {
     accessTokenExpireDate =
-        DateTime.parse(sharedPreferences.getString('accessTokenExpireDate')!);
+        DateTime.parse(sharedPreferences!.getString('accessTokenExpireDate')!);
     if (accessTokenExpireDate!.isBefore(DateTime.now())) {
       logout();
     }
-    List<String> userData = sharedPreferences.getStringList('user')!;
+    List<String> userData = sharedPreferences!.getStringList('user')!;
     user = new User(
         userData[0],
         userData[1],
@@ -43,39 +44,39 @@ class SessionManager {
         userData[5],
         userData[6],
         //ToDo: Review
-        userData[8] == "true" ? true : false,
+        userData[7] == "true" ? true : false,
+        userData[8],
         userData[9],
         userData[10],
-        userData[11],
-        userData[12]);
+        userData[11]);
   }
 
   bool notFirstTime() {
-    return sharedPreferences.containsKey('notFirstTime'); //true if there
+    return sharedPreferences!.containsKey('notFirstTime'); //true if there
   }
 
   changeStatus() {
-    sharedPreferences.setString('notFirstTime', true.toString());
+    sharedPreferences!.setString('notFirstTime', true.toString());
   }
 
   bool isLoggedIn() {
-    return sharedPreferences.containsKey('user');
+    return sharedPreferences!.containsKey('user');
   }
 
   createPreferredTheme(bool theme) {
-    sharedPreferences.setString('theme', theme.toString());
+    sharedPreferences!.setString('theme', theme.toString());
   }
 
   bool loadPreferredTheme() {
-    return sharedPreferences.get('theme') == 'true';
+    return sharedPreferences!.get('theme') == 'true';
   }
 
   createPreferredLanguage(String lang) {
-    sharedPreferences.setString('lang', lang);
+    sharedPreferences!.setString('lang', lang);
   }
 
   String? loadPreferredLanguage() {
-    return sharedPreferences.getString('lang');
+    return sharedPreferences!.getString('lang');
   }
 
   bool accessTokenExpired() {
@@ -85,8 +86,8 @@ class SessionManager {
   logout() {
     this.user = null;
     this.accessTokenExpireDate = null;
-    sharedPreferences.remove('accessTokenExpireDate');
-    sharedPreferences.remove('user');
+    sharedPreferences!.remove('accessTokenExpireDate');
+    sharedPreferences!.remove('user');
   }
 
   User? getDummyData() {
