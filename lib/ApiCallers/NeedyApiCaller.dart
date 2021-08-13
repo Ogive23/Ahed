@@ -9,9 +9,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Session/session_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 
 class NeedyApiCaller {
-  String url = "http://192.168.1.2:8000";
+  String url = "http://192.168.1.4:8000";
   ResponseHandler responseHandler = new ResponseHandler();
   SessionManager sessionManager = new SessionManager();
   DataMapper dataMapper = new DataMapper();
@@ -36,10 +37,11 @@ class NeedyApiCaller {
           .catchError((error) {
         throw error;
       }).timeout(Duration(seconds: 120));
+      print(url);
       return {
         "Err_Flag": false,
         "Values": dataMapper.getNeediesFromJson(
-            url , jsonDecode(response.body)['data']['data']),
+            url, jsonDecode(response.body)['data']['data']),
         "total": jsonDecode(response.body)['data']['total'],
         "lastPage": jsonDecode(response.body)['data']['last_page']
       };
@@ -76,7 +78,7 @@ class NeedyApiCaller {
       return {
         "Err_Flag": false,
         "Values": dataMapper.getNeediesFromJson(
-            url , jsonDecode(response.body)['data']['data']),
+            url, jsonDecode(response.body)['data']['data']),
         "total": jsonDecode(response.body)['data']['total'],
         "lastPage": jsonDecode(response.body)['data']['last_page']
       };
@@ -106,13 +108,13 @@ class NeedyApiCaller {
     };
     print('url = $url');
     String params = '';
-    for(int index=0; index < bookmarkedIDs.length; index++)
-      params+='ids[${index.toString()}]=${bookmarkedIDs[index].toString()}&';
-    print(url+'/api/ahed/neediesWithIDs?'+params);
+    for (int index = 0; index < bookmarkedIDs.length; index++)
+      params += 'ids[${index.toString()}]=${bookmarkedIDs[index].toString()}&';
+    print(url + '/api/ahed/neediesWithIDs?' + params);
     try {
       var response = await http
           .get(Uri.parse(url + "/api/ahed/neediesWithIDs?$params"),
-          headers: headers)
+              headers: headers)
           .catchError((error) {
         throw error;
       }).timeout(Duration(seconds: 120));
@@ -134,15 +136,8 @@ class NeedyApiCaller {
     // }
   }
 
-  create(String userId,
-      String name,
-      int age,
-      int severity,
-      String type,
-      String details,
-      int need,
-      String address,
-      List<File> images) async {
+  create(String userId, String name, int age, int severity, String type,
+      String details, int need, String address, List<File> images) async {
     // QuerySnapshot snapshot = await urls.get();
     // for(int index = 0; index < snapshot.size; index++){
     //   String url = snapshot.docs[index]['url'];
@@ -153,7 +148,7 @@ class NeedyApiCaller {
       "Content-Type": "application/json",
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
-    var body = {
+    FormData formData = new FormData.fromMap(({
       'name': name,
       'age': age,
       'severity': severity,
@@ -161,21 +156,36 @@ class NeedyApiCaller {
       'details': details,
       'need': need,
       'address': address,
-      'createdBy': userId
-    };
-    for(int index = 0; index < images.length;index++)
-      body.addAll({'images[$index]' : '${images[index]}'});
+      'createdBy': userId,
+      for (int index = 0; index < images.length; index++)
+        "images[$index]": await MultipartFile.fromFile(images[index].path),
+    }));
+    // for (int index = 0; index < images.length; index++)
+    //   body.addAll({'images[$index]': '${images[index].path}'});
     print('url = $url');
-    print(body);
+    print(formData.files);
     try {
-      var response = await http
-          .post(Uri.parse(url + "/api/ahed/needies"), headers: headers,body: jsonEncode(body))
+      var response = await Dio()
+          .post(url + "/api/ahed/needies",
+              data: formData, options: Options(headers: headers))
           .catchError((error) {
         throw error;
       }).timeout(Duration(seconds: 120));
-      print(response.body);
-      var responseToJson = jsonDecode(response.body);
+      print(response);
+      var responseToJson = jsonDecode(response.toString());
       return responseToJson;
+    } on DioError catch (e) {
+      if (e.response!.statusCode == 400) {
+        print(e.response);
+        var responseToJson = jsonDecode(e.response.toString());
+        return responseToJson;
+      } else if (e.response!.statusCode == 404) {
+        print(e.response);
+        var responseToJson = jsonDecode(e.response.toString());
+        return responseToJson;
+      } else {
+        return responseHandler.errorPrinter('حدث خطأ ما.');
+      }
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
     } on SocketException {
@@ -201,15 +211,14 @@ class NeedyApiCaller {
     };
     try {
       var response = await http
-          .get(Uri.parse(url + "/api/ahed/needies/$id"),
-          headers: headers)
+          .get(Uri.parse(url + "/api/ahed/needies/$id"), headers: headers)
           .catchError((error) {
         throw error;
       }).timeout(Duration(seconds: 120));
       return {
         "Err_Flag": false,
-        "Value": dataMapper.getNeedyFromJson(
-            url , jsonDecode(response.body)['data'])
+        "Value":
+            dataMapper.getNeedyFromJson(url, jsonDecode(response.body)['data'])
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
