@@ -6,6 +6,7 @@ import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:ahed/Shared%20Data/NeedyData.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart' as intl;
@@ -342,7 +343,7 @@ class _OfflineTransactionCreationScreenState
                           children: [
                             Text('من',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline4),
+                                    .themeData.primaryTextTheme.headline5),
                             ElevatedButton(
                               onPressed: () => selectFromDate(context),
                               style: ButtonStyle(
@@ -388,6 +389,11 @@ class _OfflineTransactionCreationScreenState
                       ],
                     ),
                     Center(
+                        child: Text(
+                      '*يجب أن يكون الفارق بين التاريخين يوم علي الأقل*',
+                      style: appTheme.themeData.primaryTextTheme.subtitle1,
+                    )),
+                    Center(
                       child: dateError == null
                           ? SizedBox()
                           : Text(
@@ -403,18 +409,38 @@ class _OfflineTransactionCreationScreenState
               ElevatedButton(
                 onPressed: () async {
                   if (fullValidator()) {
-                    TransactionApiCaller transactionApiCaller = new TransactionApiCaller();
+                    TransactionApiCaller transactionApiCaller =
+                        new TransactionApiCaller();
                     SessionManager sessionManager = new SessionManager();
-                    Map<String,dynamic> status = await transactionApiCaller.addOfflineTransactions(
-                        sessionManager.user == null? null : sessionManager.user!.id,
-                        needyData.selectedNeedy!.id!,
-                        needyData.selectedNeedy!.type!,
-                        mobileNumber.text,
-                        int.parse(amount.text),
-                        address.text,
-                        startCollectDate,
-                        endCollectDate);
-                    print('good');
+                    Map<String, dynamic> status =
+                        await transactionApiCaller.addOfflineTransactions(
+                            sessionManager.user == null
+                                ? null
+                                : sessionManager.user!.id,
+                            needyData.selectedNeedy!.id!,
+                            needyData.selectedNeedy!.type!,
+                            mobileNumber.text,
+                            int.parse(amount.text),
+                            address.text,
+                            startCollectDate,
+                            endCollectDate);
+                    if (status['Err_Flag']) {
+                      return CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.error,
+                          lottieAsset: 'assets/animations/38213-error.json',
+                          text: status['Err_Desc'],
+                          confirmBtnColor: Color(0xff1c9691),
+                          title: '');
+                    }
+                    commonData.back();
+                    return CoolAlert.show(
+                        context: context,
+                        type: CoolAlertType.success,
+                        lottieAsset: 'assets/animations/6951-success.json',
+                        text: status['message'],
+                        confirmBtnColor: Color(0xff1c9691),
+                        title: '');
                   }
                 },
                 child: Text(
