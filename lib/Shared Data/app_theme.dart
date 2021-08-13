@@ -65,14 +65,16 @@ class AppTheme extends ChangeNotifier {
               1.0,
               TextDecoration.none,
               "OpenSans"),
-          headline2: getTextStyle(
+          headline2:
+
+          getTextStyle(
               1.0,
-              Color.fromRGBO(25, 36, 40, 1.0),
-              getTextTheme(context) * 2,
-              FontWeight.bold,
+              Color.fromRGBO(247, 148, 29, 1.0),
+              getTextTheme(context) * 1.5,
+              FontWeight.w600,
               1.0,
               TextDecoration.none,
-              "OpenSans"),
+              'Delius'),
           headline3: getTextStyle(
               1.0,
               Color.fromRGBO(247, 148, 29, 1.0),
@@ -91,12 +93,12 @@ class AppTheme extends ChangeNotifier {
               "Delius"),
           headline5: getTextStyle(
               1.0,
-              Color.fromRGBO(38, 92, 126, 1.0),
-              getTextTheme(context),
-              FontWeight.bold,
+              Colors.white,
+              getSemiBodyTextTheme(context),
+              FontWeight.normal,
               1.0,
               TextDecoration.none,
-              "OpenSans"),
+              "Delius"),
           bodyText1: getTextStyle(
               1.0,
               Color.fromRGBO(247, 148, 29, 1.0),
@@ -135,7 +137,7 @@ class AppTheme extends ChangeNotifier {
                 1.0,
                 TextDecoration.none,
                 "OpenSans"),
-            iconTheme: IconThemeData(color: Color.fromRGBO(38, 92, 126, 1.0))),cardColor: Color.fromRGBO(45, 56, 60, 1.0),
+            iconTheme: IconThemeData(color: Color.fromRGBO(247, 148, 29, 1.0))),cardColor: Color.fromRGBO(45, 56, 60, 1.0),
         toggleableActiveColor: Colors.green,
         toggleButtonsTheme: ToggleButtonsThemeData(
             disabledColor: Colors.grey, selectedColor: Colors.amber),
@@ -156,14 +158,15 @@ class AppTheme extends ChangeNotifier {
               1.0,
               TextDecoration.none,
               "OpenSans"),
-          headline2: getTextStyle(
+          headline2:
+          getTextStyle(
               1.0,
-              Color.fromRGBO(38, 92, 126, 1.0),
-              getTextTheme(context) * 2,
-              FontWeight.bold,
+              Colors.amber[300],
+              getTextTheme(context) * 1.5,
+              FontWeight.w600,
               1.0,
               TextDecoration.none,
-              "OpenSans"),
+              'Delius'),
           headline3: getTextStyle(1.0, Colors.amber[300], getTextTheme(context),
               FontWeight.bold, 1.0, TextDecoration.none, "Delius"),
           headline4: getTextStyle(
@@ -176,12 +179,12 @@ class AppTheme extends ChangeNotifier {
               "Delius"),
           headline5: getTextStyle(
               1.0,
-              Color.fromRGBO(38, 92, 126, 1.0),
-              getTextTheme(context),
-              FontWeight.bold,
+              Colors.black,
+              getSemiBodyTextTheme(context),
+              FontWeight.normal,
               1.0,
               TextDecoration.none,
-              "OpenSans"),
+              "Delius"),
           bodyText1: getTextStyle(
               1.0,
               Colors.amber[300],
@@ -220,7 +223,7 @@ class AppTheme extends ChangeNotifier {
                 1.0,
                 TextDecoration.none,
                 "OpenSans"),
-            iconTheme: IconThemeData(color: Color.fromRGBO(38, 92, 126, 1.0))),
+            iconTheme: IconThemeData(color: Colors.amber[300])),
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
