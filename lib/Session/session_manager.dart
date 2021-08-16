@@ -1,6 +1,5 @@
 import 'package:ahed/Models/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../Models/User.dart';
 
 class SessionManager {
@@ -9,9 +8,7 @@ class SessionManager {
   DateTime? accessTokenExpireDate;
 
   SessionManager._privateConstructor();
-
   static final SessionManager _instance = SessionManager._privateConstructor();
-
   factory SessionManager() {
     return _instance;
   }
@@ -89,22 +86,7 @@ class SessionManager {
     sharedPreferences!.remove('accessTokenExpireDate');
     sharedPreferences!.remove('user');
   }
-
-  User? getDummyData() {
-    return null;
-    // return User(
-    //     '1234',
-    //     'Mahmoued Mohamed',
-    //     'Mahmoued',
-    //     'mahmouedmartin222@yahoo.com',
-    //     'male',
-    //     '+201146284953',
-    //     '26 El Gesr elbrany St, Dar Elsalam, Cairo - Egypt',
-    //     // 'https://adventure.com/wp-content/uploads/2018/10/Rehahn-and-giving-back-in-travel-photography-Hmong-in-Bac-Ha-Photo-credit-Rehahn.jpg',
-    //     'https://content.thriveglobal.com/wp-content/uploads/2018/01/Happy_guy.jpg?w=1550',
-    //     true);
-  }
-
+  
   //ToDo: Future V2
   // bool needyIsBookmarked(String id) {
   //   if (sharedPreferences.containsKey('Bookmarks')) {
