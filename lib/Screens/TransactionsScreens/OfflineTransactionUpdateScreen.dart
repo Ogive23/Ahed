@@ -244,8 +244,11 @@ class _OfflineTransactionUpdateScreenState
                     CustomSpacing(
                       value: 100,
                     ),
-                    Container(
-                      height: h / 4,
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxHeight: h/5,
+                          minHeight: h/10
+                      ),
                       child: SingleChildScrollView(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
