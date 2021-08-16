@@ -1,9 +1,13 @@
+import 'package:ahed/ApiCallers/TransactionApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomButtonLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/custom_textfield.dart';
+import 'package:ahed/Session/session_manager.dart';
+import 'package:ahed/Shared%20Data/NeedyData.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +20,7 @@ class FawryPaymentScreen extends StatefulWidget {
 class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   late double w, h;
   late CommonData commonData;
+  late NeedyData needyData;
   late AppLanguage appLanguage;
   late AppTheme appTheme;
   final TextEditingController cardNumber = new TextEditingController();
@@ -29,10 +34,14 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   bool isLoading = false;
 
   bool fullValidator() {
-    return onSubmittedCardNumber(cardNumber.text) &&
-        onSubmittedExpiryDate(expiryDate.text) &&
-        onSubmittedCVV(cvv.text) &&
-        onSubmittedAmount(amount.text);
+    bool cardNumberValidation = onSubmittedCardNumber(cardNumber.text);
+    bool expiryDateValidation = onSubmittedExpiryDate(expiryDate.text);
+    bool cvvValidation = onSubmittedCVV(cvv.text);
+    bool amountValidation = onSubmittedAmount(amount.text);
+    return cardNumberValidation &&
+        expiryDateValidation &&
+        cvvValidation &&
+        amountValidation;
   }
 
   bool cardNumberValidator() {
@@ -74,7 +83,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   bool onSubmittedCardNumber(String value) {
     if (value.length == 0) {
       setState(() {
-        cardNumberError = null;
+        cardNumberError = "هذا الحقل لا يمكن أن يكون فارغاً.";
       });
       return false;
     }
@@ -93,7 +102,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   bool onSubmittedExpiryDate(String value) {
     if (value.length == 0) {
       setState(() {
-        expiryDateError = null;
+        expiryDateError = "هذا الحقل لا يمكن أن يكون فارغاً.";
       });
       return false;
     }
@@ -136,7 +145,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   bool onSubmittedCVV(String value) {
     if (value.length == 0) {
       setState(() {
-        cvvError = null;
+        cvvError = "رقم خاطئ.";
       });
       return false;
     }
@@ -175,10 +184,17 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
     return true;
   }
 
+  changeLoadingState() {
+    setState(() {
+      isLoading = !isLoading;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
     appTheme = Provider.of<AppTheme>(context);
+    needyData = Provider.of<NeedyData>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return GestureDetector(
@@ -200,7 +216,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // CustomSpacing(),
+                CustomSpacing(value: 50),
                 CustomTextField(
                     controller: cardNumber,
                     label: 'رقم بطاقة الدفع',
@@ -272,7 +288,9 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                     Text('جنيه مصري')
                   ],
                 ),
-                CustomSpacing(value: 100,),
+                CustomSpacing(
+                  value: 100,
+                ),
                 // CustomSpacing(),
                 // CustomSpacing(),
                 Center(
@@ -301,6 +319,43 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                               onPressed: () async {
                                 print('h');
                                 if (fullValidator()) {
+                                  changeLoadingState();
+                                  TransactionApiCaller transactionApiCaller =
+                                      new TransactionApiCaller();
+                                  SessionManager sessionManager =
+                                      new SessionManager();
+                                  Map<String, dynamic> status =
+                                      await transactionApiCaller
+                                          .addOnlineTransaction(
+                                              sessionManager.user == null
+                                                  ? null
+                                                  : sessionManager.user!.id,
+                                              needyData.selectedNeedy!.id!,
+                                              int.parse(amount.text),
+                                              cardNumber.text,
+                                              expiryDate.text,
+                                              cvv.text);
+                                  changeLoadingState();
+                                  if (status['Err_Flag']) {
+                                    return CoolAlert.show(
+                                        context: context,
+                                        type: CoolAlertType.error,
+                                        lottieAsset:
+                                            'assets/animations/38213-error.json',
+                                        text: status['Err_Desc'],
+                                        confirmBtnColor: Color(0xff1c9691),
+                                        title: '');
+                                  }
+                                  commonData.back();
+                                  return CoolAlert.show(
+                                      context: context,
+                                      type: CoolAlertType.success,
+                                      lottieAsset:
+                                          'assets/animations/6951-success.json',
+                                      text: status['message'],
+                                      confirmBtnColor: Color(0xff1c9691),
+                                      title: '');
+                                }
                               },
                               child: Text('تبرع'),
                               style: ButtonStyle(
