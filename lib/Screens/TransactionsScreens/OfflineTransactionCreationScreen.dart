@@ -29,14 +29,15 @@ class _OfflineTransactionCreationScreenState
   late AppTheme appTheme;
   final TextEditingController amount = new TextEditingController();
   late String preferredSection;
-  final TextEditingController address = new TextEditingController();
-  final TextEditingController mobileNumber = new TextEditingController();
+  late TextEditingController address;
+  late TextEditingController mobileNumber;
   String? amountError;
   String? addressError;
   String? mobileNumberError;
   String? dateError;
   DateTime startCollectDate = DateTime.now();
   DateTime endCollectDate = DateTime.now();
+  bool firstTime = true;
   bool isLoading = false;
 
   bool fullValidator() {
@@ -160,6 +161,13 @@ class _OfflineTransactionCreationScreenState
     appTheme = Provider.of<AppTheme>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
+    if (firstTime) {
+      SessionManager sessionManager = new SessionManager();
+      address = new TextEditingController(text: sessionManager.user!.address);
+      mobileNumber =
+          new TextEditingController(text: sessionManager.user!.phoneNumber);
+      firstTime = false;
+    }
     return Scaffold(
       backgroundColor: appTheme.themeData.primaryColor,
       appBar: AppBar(
