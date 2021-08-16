@@ -24,7 +24,7 @@ class _OnlineTransactionCreationScreenState
   late AppLanguage appLanguage;
   late AppTheme appTheme;
   late TabController tabController;
-
+  ScrollController scrollController = new ScrollController();
   @override
   initState() {
     super.initState();
@@ -51,28 +51,118 @@ class _OnlineTransactionCreationScreenState
                   )),
             )
           ],
-          title: Text(
-            'التبرع',
-            style: appTheme.nonStaticGetTextStyle(
-                1.0,
-                Colors.white,
-                appTheme.getTextTheme(context),
-                FontWeight.w600,
-                1.0,
-                TextDecoration.none,
-                'Delius'),
-          ),
-          centerTitle: true,
-          backgroundColor: Color.fromRGBO(38, 92, 126, 1.0),
+          title: Padding(
+              padding: EdgeInsets.only(top: h / 20, bottom: h / 40),
+              child: Text(
+                'تبرع',
+                style: appTheme.themeData.primaryTextTheme.headline2,
+              )),
+          backgroundColor: appTheme.themeData.primaryColor,
           elevation: 0.0),
-      backgroundColor: Color.fromRGBO(38, 92, 126, 1.0),
+      backgroundColor: appTheme.themeData.primaryColor,
       body: Container(
         child: Column(
           children: [
+            Container(
+              padding: EdgeInsets.only(
+                  left: w / 10, right: w / 10, top: h / 100, bottom: h / 200),
+              width: w,
+              height: h / 4,
+              // height: double.infinity
+              child: Scrollbar(
+                controller: scrollController,
+                isAlwaysShown: true,
+                hoverThickness: 4.5,
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('أسم الحالة: ',
+                              style: appTheme
+                                  .themeData.primaryTextTheme.headline5),
+                          Flexible(
+                            child: Text('${needyData.selectedNeedy!.name}',
+                                style: appTheme
+                                    .themeData.primaryTextTheme.headline5),
+                          ),
+                        ],
+                      ),
+                      CustomSpacing(
+                        value: 100,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('نوع الحالة: ',
+                              style: appTheme
+                                  .themeData.primaryTextTheme.headline5),
+                          Flexible(
+                            child: Text('${needyData.selectedNeedy!.type}',
+                                style: appTheme
+                                    .themeData.primaryTextTheme.headline5),
+                          ),
+                        ],
+                      ),
+                      CustomSpacing(
+                        value: 100,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('التفاصيل: ',
+                              style: appTheme
+                                  .themeData.primaryTextTheme.headline5),
+                          Flexible(
+                            child: Text('${needyData.selectedNeedy!.details}',
+                                style: appTheme
+                                    .themeData.primaryTextTheme.headline5),
+                          ),
+                        ],
+                      ),
+                      CustomSpacing(
+                        value: 100,
+                      ),
+                      Row(
+                        children: [
+                          Text('مسار النجاح: ',
+                              style: appTheme
+                                  .themeData.primaryTextTheme.headline5),
+                          LinearPercentIndicator(
+                            width: w / 2,
+                            alignment: MainAxisAlignment.center,
+                            animation: true,
+                            padding: EdgeInsets.symmetric(vertical: h / 100),
+                            animationDuration: 1000,
+                            lineHeight: h / 25,
+                            linearGradient: LinearGradient(
+                                colors: [Colors.green, Colors.greenAccent]),
+                            percent: needyData.selectedNeedy!.collected! /
+                                needyData.selectedNeedy!.need!,
+                            center: Text(
+                              (needyData.selectedNeedy!.need! -
+                                          needyData.selectedNeedy!.collected!)
+                                      .toStringAsFixed(0) +
+                                  ' جنيه متبقي',
+                              style:
+                                  appTheme.themeData.primaryTextTheme.bodyText2,
+                            ),
+                            linearStrokeCap: LinearStrokeCap.butt,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            CustomSpacing(value: 100),
             TabBar(
-              onTap: (value) {
-                setState(() {});
-              },
+              // onTap: (value) {
+              //   // setState(() {});
+              // },
               tabs: [
                 Tab(
                     icon: Image.asset(
@@ -105,72 +195,6 @@ class _OnlineTransactionCreationScreenState
                   1.0,
                   TextDecoration.none,
                   'Delius'),
-            ),
-            Container(
-              padding:
-                  EdgeInsets.symmetric(horizontal: w / 10, vertical: h / 200),
-              width: w,
-              // height: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(child: Text('الحالة: ')),
-                      Container(
-                          child: Text('${needyData.selectedNeedy!.name}')),
-                    ],
-                  ),
-                  CustomSpacing(value: 100,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(child: Text('نوع الحالة: ')),
-                      Container(
-                          child: Text('${needyData.selectedNeedy!.type}')),
-                    ],
-                  ),
-                  CustomSpacing(value: 100,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(child: Text('التفاصيل: ')),
-                      Container(
-                          child: Text('${needyData.selectedNeedy!.details}')),
-                    ],
-                  ),
-                  CustomSpacing(value: 100,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(child: Text('المبلغ المتبقي: ')),
-                      LinearPercentIndicator(
-                        width: 170.0,
-                        alignment: MainAxisAlignment.center,
-                        animation: true,
-                        padding: EdgeInsets.zero,
-                        animationDuration: 1000,
-                        lineHeight: h / 40,
-                        linearGradient: LinearGradient(
-                            colors: [Colors.green, Colors.greenAccent]),
-                        percent: needyData.selectedNeedy!.collected! /
-                            needyData.selectedNeedy!.need!,
-                        center: Text(
-                          (needyData.selectedNeedy!.need! -
-                                      needyData.selectedNeedy!.collected!)
-                                  .toStringAsFixed(0) +
-                              ' جنيه متبقي',
-                          style: appTheme.themeData.primaryTextTheme.bodyText2,
-                        ),
-                        linearStrokeCap: LinearStrokeCap.butt,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
             ),
             Expanded(
               child: TabBarView(
