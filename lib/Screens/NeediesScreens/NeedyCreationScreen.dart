@@ -178,8 +178,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
 
   Future<File?> pickImageFromGallery(ImageSource source) async {
     PickedFile? pickedFile = await new ImagePicker().getImage(source: source);
-    if(pickedFile == null)
-      return null;
+    if (pickedFile == null) return null;
     return File(pickedFile.path);
   }
 

@@ -35,8 +35,8 @@ class _OfflineTransactionCreationScreenState
   String? addressError;
   String? mobileNumberError;
   String? dateError;
-  static DateTime startCollectDate = DateTime.now();
-  static DateTime endCollectDate = DateTime.now();
+  DateTime startCollectDate = DateTime.now();
+  DateTime endCollectDate = DateTime.now();
   bool isLoading = false;
 
   bool fullValidator() {
@@ -64,16 +64,16 @@ class _OfflineTransactionCreationScreenState
 
   bool onSubmittedSelectedDates(
       DateTime startCollectDate, DateTime endCollectDate) {
-    if (startCollectDate.isAfter(endCollectDate)) {
+    if (endCollectDate.isAfter(startCollectDate)) {
       setState(() {
-        dateError = "خطأ في إختيار الفترة";
+        dateError = '';
       });
-      return false;
+      return true;
     }
     setState(() {
-      dateError = '';
+      dateError = "خطأ في إختيار الفترة";
     });
-    return true;
+    return false;
   }
 
   bool onSubmittedAddress(String value) {
