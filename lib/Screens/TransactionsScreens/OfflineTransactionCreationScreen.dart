@@ -1,4 +1,5 @@
 import 'package:ahed/ApiCallers/TransactionApiCaller.dart';
+import 'package:ahed/Custom%20Widgets/CustomButtonLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/custom_textfield.dart';
 import 'package:ahed/Session/session_manager.dart';
@@ -36,6 +37,7 @@ class _OfflineTransactionCreationScreenState
   String? dateError;
   static DateTime startCollectDate = DateTime.now();
   static DateTime endCollectDate = DateTime.now();
+  bool isLoading = false;
 
   bool fullValidator() {
     return amountValidator() &&
@@ -143,6 +145,12 @@ class _OfflineTransactionCreationScreenState
       setState(() {
         endCollectDate = picked;
       });
+  }
+
+  changeLoadingState() {
+    setState(() {
+      isLoading = !isLoading;
+    });
   }
 
   @override
@@ -416,51 +424,57 @@ class _OfflineTransactionCreationScreenState
                   ],
                 ),
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (fullValidator()) {
-                    TransactionApiCaller transactionApiCaller =
-                        new TransactionApiCaller();
-                    SessionManager sessionManager = new SessionManager();
-                    Map<String, dynamic> status =
-                        await transactionApiCaller.addOfflineTransactions(
-                            sessionManager.user == null
-                                ? null
-                                : sessionManager.user!.id,
-                            needyData.selectedNeedy!.id!,
-                            needyData.selectedNeedy!.type!,
-                            mobileNumber.text,
-                            int.parse(amount.text),
-                            address.text,
-                            startCollectDate,
-                            endCollectDate);
-                    if (status['Err_Flag']) {
-                      return CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.error,
-                          lottieAsset: 'assets/animations/38213-error.json',
-                          text: status['Err_Desc'],
-                          confirmBtnColor: Color(0xff1c9691),
-                          title: '');
-                    }
-                    commonData.back();
-                    return CoolAlert.show(
-                        context: context,
-                        type: CoolAlertType.success,
-                        lottieAsset: 'assets/animations/6951-success.json',
-                        text: status['message'],
-                        confirmBtnColor: Color(0xff1c9691),
-                        title: '');
-                  }
-                },
-                child: Text(
-                  'تبرع',
-                  style: appTheme.themeData.primaryTextTheme.bodyText2,
-                ),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(38, 92, 126, 1.0))),
-              ),
+              isLoading
+                  ? CustomButtonLoading()
+                  : ElevatedButton(
+                      onPressed: () async {
+                        if (fullValidator()) {
+                          changeLoadingState();
+                          TransactionApiCaller transactionApiCaller =
+                              new TransactionApiCaller();
+                          SessionManager sessionManager = new SessionManager();
+                          Map<String, dynamic> status =
+                              await transactionApiCaller.addOfflineTransaction(
+                                  sessionManager.user == null
+                                      ? null
+                                      : sessionManager.user!.id,
+                                  needyData.selectedNeedy!.id!,
+                                  needyData.selectedNeedy!.type!,
+                                  mobileNumber.text,
+                                  int.parse(amount.text),
+                                  address.text,
+                                  startCollectDate,
+                                  endCollectDate);
+                          changeLoadingState();
+                          if (status['Err_Flag']) {
+                            return CoolAlert.show(
+                                context: context,
+                                type: CoolAlertType.error,
+                                lottieAsset:
+                                    'assets/animations/38213-error.json',
+                                text: status['Err_Desc'],
+                                confirmBtnColor: Color(0xff1c9691),
+                                title: '');
+                          }
+                          commonData.back();
+                          return CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.success,
+                              lottieAsset:
+                                  'assets/animations/6951-success.json',
+                              text: status['message'],
+                              confirmBtnColor: Color(0xff1c9691),
+                              title: '');
+                        }
+                      },
+                      child: Text(
+                        'تبرع',
+                        style: appTheme.themeData.primaryTextTheme.bodyText2,
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(38, 92, 126, 1.0))),
+                    ),
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:ahed/Custom%20Widgets/CustomButtonLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/custom_textfield.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
@@ -25,6 +26,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   String? cvvError;
   final TextEditingController amount = new TextEditingController();
   String? amountError;
+  bool isLoading = false;
 
   bool fullValidator() {
     return onSubmittedCardNumber(cardNumber.text) &&
@@ -293,17 +295,19 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                             'Delius'),
                         // ),
                       ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          if (fullValidator()) {
-                            print('good');
-                          }
-                        },
-                        child: Text('تبرع'),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Color.fromRGBO(38, 92, 126, 1.0))),
-                      ),
+                      isLoading
+                          ? CustomButtonLoading()
+                          : ElevatedButton(
+                              onPressed: () async {
+                                print('h');
+                                if (fullValidator()) {
+                              },
+                              child: Text('تبرع'),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Color.fromRGBO(38, 92, 126, 1.0))),
+                            ),
                     ],
                   ),
                 )

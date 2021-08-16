@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ahed/ApiCallers/NeedyApiCaller.dart';
+import 'package:ahed/Custom%20Widgets/CustomButtonLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomDropdownButton.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/custom_textfield.dart';
@@ -47,6 +48,8 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
   String? detailsError;
   String? needError;
   String? addressError;
+
+  bool isLoading = false;
 
   bool fullValidator() {
     print('here');
@@ -179,6 +182,13 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
       return null;
     return File(pickedFile.path);
   }
+
+  changeLoadingState() {
+    setState(() {
+      isLoading = !isLoading;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
@@ -491,48 +501,55 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                   style: appTheme.themeData.primaryTextTheme.subtitle1,
                 ),
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (fullValidator()) {
-                    NeedyApiCaller needyApiCaller = new NeedyApiCaller();
-                    SessionManager sessionManager = new SessionManager();
-                    Map<String, dynamic> status = await needyApiCaller.create(
-                        sessionManager.user!.id,
-                        name.text,
-                        int.parse(age.text),
-                        severity,
-                        type!,
-                        details.text,
-                        int.parse(need.text),
-                        address.text,
-                        selectedImages);
-                    if (status['Err_Flag']) {
-                      return CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.error,
-                          lottieAsset: 'assets/animations/38213-error.json',
-                          text: status['Err_Desc'],
-                          confirmBtnColor: Color(0xff1c9691),
-                          title: '');
-                    }
-                    commonData.back();
-                    return CoolAlert.show(
-                        context: context,
-                        type: CoolAlertType.success,
-                        lottieAsset: 'assets/animations/6951-success.json',
-                        text: status['message'],
-                        confirmBtnColor: Color(0xff1c9691),
-                        title: '');
-                  }
-                },
-                child: Text(
-                  'إنشاء الطلب',
-                  style: appTheme.themeData.primaryTextTheme.bodyText2,
-                ),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(38, 92, 126, 1.0))),
-              ),
+              isLoading
+                  ? CustomButtonLoading()
+                  : ElevatedButton(
+                      onPressed: () async {
+                        if (fullValidator()) {
+                          changeLoadingState();
+                          NeedyApiCaller needyApiCaller = new NeedyApiCaller();
+                          SessionManager sessionManager = new SessionManager();
+                          Map<String, dynamic> status =
+                              await needyApiCaller.create(
+                                  sessionManager.user!.id,
+                                  name.text,
+                                  int.parse(age.text),
+                                  severity,
+                                  type!,
+                                  details.text,
+                                  int.parse(need.text),
+                                  address.text,
+                                  selectedImages);
+                          changeLoadingState();
+                          if (status['Err_Flag']) {
+                            return CoolAlert.show(
+                                context: context,
+                                type: CoolAlertType.error,
+                                lottieAsset:
+                                    'assets/animations/38213-error.json',
+                                text: status['Err_Desc'],
+                                confirmBtnColor: Color(0xff1c9691),
+                                title: '');
+                          }
+                          commonData.back();
+                          return CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.success,
+                              lottieAsset:
+                                  'assets/animations/6951-success.json',
+                              text: status['message'],
+                              confirmBtnColor: Color(0xff1c9691),
+                              title: '');
+                        }
+                      },
+                      child: Text(
+                        'إنشاء الطلب',
+                        style: appTheme.themeData.primaryTextTheme.bodyText2,
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(38, 92, 126, 1.0))),
+                    ),
             ],
           ),
         ),

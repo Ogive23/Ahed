@@ -3,6 +3,7 @@ import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ahed/Custom Widgets/CustomButtonLoading.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,12 +18,15 @@ class _LoginScreenState extends State<LoginScreen> {
   static late double w, h;
   static late AppTheme appTheme;
   String error = '';
+  bool isLoading = false;
   String get email => emailController.text;
   String get password => passwordController.text;
 
   Future<dynamic> onSubmit(context) async {
+    changeLoadingState();
     UserApiCaller userApiCaller = new UserApiCaller();
     Map<String, dynamic> status = await userApiCaller.login(email, password);
+    changeLoadingState();
     if (status['Err_Flag']) {
       setState(() {
         this.error = status['Err_Desc'];
@@ -31,10 +35,18 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     SessionManager sessionManager = new SessionManager();
     print(status['Values']);
-    sessionManager.createSession(status['Values'], DateTime.now());
+    //ToDo: Access Token Duration
+    sessionManager.createSession(
+        status['Values'], DateTime.now().add(Duration(days: 30)));
     print('thing ${sessionManager.sharedPreferences}');
     Navigator.popUntil(context, (route) => false);
     Navigator.pushNamed(context, 'MainScreen');
+  }
+
+  changeLoadingState() {
+    setState(() {
+      isLoading = !isLoading;
+    });
   }
 
   @override
@@ -207,34 +219,38 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ElevatedButton(
-                              child: Text(
-                                'Login',
-                                style: appTheme.nonStaticGetTextStyle(
-                                    1.0,
-                                    Colors.white,
-                                    appTheme.getSemiBodyTextTheme(context),
-                                    FontWeight.normal,
-                                    1.0,
-                                    TextDecoration.none,
-                                    'OpenSans'),
-                                textAlign: TextAlign.center,
-                              ),
-                              style: ButtonStyle(
-                                  minimumSize: MaterialStateProperty.all<Size>(
-                                      Size(w / 4, h / 20)),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Color.fromRGBO(53, 67, 77, 1.0)),
-                                  shape:
-                                      MaterialStateProperty.all<OutlinedBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)))),
-                              onPressed: () {
-                                onSubmit(context);
-                              },
-                            ),
+                            isLoading
+                                ? CustomButtonLoading()
+                                : ElevatedButton(
+                                    child: Text(
+                                      'Login',
+                                      style: appTheme.nonStaticGetTextStyle(
+                                          1.0,
+                                          Colors.white,
+                                          appTheme
+                                              .getSemiBodyTextTheme(context),
+                                          FontWeight.normal,
+                                          1.0,
+                                          TextDecoration.none,
+                                          'OpenSans'),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    style: ButtonStyle(
+                                        minimumSize:
+                                            MaterialStateProperty.all<Size>(
+                                                Size(w / 4, h / 20)),
+                                        backgroundColor: MaterialStateProperty.all<
+                                                Color>(
+                                            Color.fromRGBO(53, 67, 77, 1.0)),
+                                        shape: MaterialStateProperty.all<
+                                                OutlinedBorder>(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)))),
+                                    onPressed: () {
+                                      onSubmit(context);
+                                    },
+                                  ),
                             Padding(
                               padding: EdgeInsets.only(left: 25),
                               child: Text(
