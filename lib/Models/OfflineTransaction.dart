@@ -3,6 +3,7 @@ import 'Transaction.dart';
 class OfflineTransaction extends Transaction {
   String preferredSection;
   String address;
+  String phoneNumber;
   DateTime startCollectDate;
   DateTime endCollectDate;
   DateTime? selectedDate;
@@ -17,6 +18,7 @@ class OfflineTransaction extends Transaction {
       String type,
       this.preferredSection,
       this.address,
+      this.phoneNumber,
       this.startCollectDate,
       this.endCollectDate,
       this.selectedDate,

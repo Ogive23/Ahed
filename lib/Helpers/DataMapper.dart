@@ -99,6 +99,7 @@ class DataMapper {
           'OfflineTransaction',
           offlineTransaction['preferredSection'].toString(),
           offlineTransaction['address'].toString(),
+          offlineTransaction['phoneNumber'].toString(),
           DateTime.parse(offlineTransaction['startCollectDate']),
           DateTime.parse(offlineTransaction['endCollectDate']),
           offlineTransaction['selectedDate'] != null
