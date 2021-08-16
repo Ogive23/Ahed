@@ -9,7 +9,7 @@ import 'package:ahed/Session/session_manager.dart';
 import 'package:intl/intl.dart';
 
 class TransactionApiCaller {
-  String url = "http://192.168.1.4:8000";
+  String url = "http://192.168.1.190:8000";
   ResponseHandler responseHandler = new ResponseHandler();
   SessionManager sessionManager = new SessionManager();
   DataMapper dataMapper = new DataMapper();
@@ -44,10 +44,10 @@ class TransactionApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }
@@ -73,6 +73,7 @@ class TransactionApiCaller {
       }).timeout(Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
       if (responseToJson['Err_Flag']) return responseToJson;
+      print(responseToJson);
       return {
         "Err_Flag": responseToJson['Err_Flag'],
         "Values":
@@ -82,16 +83,16 @@ class TransactionApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }
 
-  Future<Map<String, dynamic>> addOnlineTransactions(
-      String userId, String needyId, int amount) async {
+  Future<Map<String, dynamic>> addOnlineTransaction(
+      String? userId, String needyId, int amount,String cardNumber,String expiryDate,String cvv) async {
     // QuerySnapshot snapshot = await urls.get();
     // for(int index = 0; index < snapshot.size; index++){
     //   String url = snapshot.docs[index]['url'];
@@ -102,7 +103,7 @@ class TransactionApiCaller {
       "Content-Type": "application/json",
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
-    var body = {'giver': userId, 'needy': needyId, 'amount': amount};
+    var body = {'giver': userId, 'needy': needyId, 'amount': amount,'cardNumber': cardNumber, 'expiryDate': expiryDate,'cvv': cvv};
     try {
       print(url + "/api/ahed/onlinetransactions");
       var response = await http
@@ -117,15 +118,15 @@ class TransactionApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }
 
-  Future<Map<String, dynamic>> addOfflineTransactions(
+  Future<Map<String, dynamic>> addOfflineTransaction(
       String? userId,
       String needyId,
       String preferredSection,
@@ -173,20 +174,21 @@ class TransactionApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }
 
-  Future<Map<String, dynamic>> updateOfflineTransactions(
-      String userId,
+  Future<Map<String, dynamic>> updateOfflineTransaction(
+      String? userId,
       String transactionId,
       String needyId,
       String preferredSection,
-      double amount,
+      String mobileNumber,
+      int amount,
       String address,
       DateTime startCollectDate,
       DateTime endCollectDate) async {
@@ -205,6 +207,7 @@ class TransactionApiCaller {
       'userId': userId,
       'needy': needyId,
       'preferredSection': preferredSection,
+      'phoneNumber': mobileNumber,
       'amount': amount,
       'address': address,
       'startCollectDate':
@@ -225,16 +228,16 @@ class TransactionApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }
 
   Future<Map<String, dynamic>> deleteOfflineTransactions(
-      String userId, String transactionId, DateTime endCollectDate) async {
+      String userId, String transactionId) async {
     // QuerySnapshot snapshot = await urls.get();
     // for(int index = 0; index < snapshot.size; index++){
     //   String url = snapshot.docs[index]['url'];
@@ -264,10 +267,10 @@ class TransactionApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }

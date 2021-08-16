@@ -12,7 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 
 class NeedyApiCaller {
-  String url = "http://192.168.1.4:8000";
+  String url = "http://192.168.1.190:8000";
   ResponseHandler responseHandler = new ResponseHandler();
   SessionManager sessionManager = new SessionManager();
   DataMapper dataMapper = new DataMapper();
@@ -49,10 +49,10 @@ class NeedyApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }
@@ -86,10 +86,10 @@ class NeedyApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }
@@ -128,10 +128,10 @@ class NeedyApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }
@@ -190,10 +190,10 @@ class NeedyApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }
@@ -224,10 +224,10 @@ class NeedyApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }

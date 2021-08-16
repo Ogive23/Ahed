@@ -17,7 +17,7 @@ class UserApiCaller {
   TokenApiCaller tokenApiCaller = new TokenApiCaller();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference urls = FirebaseFirestore.instance.collection('URLs');
-  String url = "http://192.168.1.4:8000";
+  String url = "http://192.168.1.190:8000";
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     // if (sessionManager.accessTokenExpired()) {
@@ -37,6 +37,7 @@ class UserApiCaller {
         throw error;
       }).timeout(Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
+      print(responseToJson);
       if (responseToJson['Err_Flag']) return responseToJson;
       //ToDo:move this "/storage/" to backend and make it full link
       return {
@@ -47,10 +48,10 @@ class UserApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
   }
 
@@ -83,10 +84,10 @@ class UserApiCaller {
       return responseHandler.timeOutPrinter();
     } on SocketException {
       return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك.");
+          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
     } catch (e) {
       print('e = $e');
-      return responseHandler.errorPrinter('حدث خطأ ما.');
+      return responseHandler.errorPrinter('حدث خطأ ما');
     }
     // }
   }

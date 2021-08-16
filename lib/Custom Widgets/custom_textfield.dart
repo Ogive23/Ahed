@@ -61,9 +61,9 @@ class CustomTextField extends StatelessWidget {
             textAlign: TextAlign.center,
             style: appTheme.themeData.primaryTextTheme.bodyText1,
             textInputAction: TextInputAction.done,
-            onChanged: (value) {
+            onChanged: onChanged != null? (value) {
               onChanged!(value);
-            },
+            }: null,
             onSubmitted: (value) {
               onSubmitted(value);
             },

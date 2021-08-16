@@ -23,18 +23,7 @@ enum Pages {
   StayInTouchScreen,
   LoginScreen
 }
-final pageTitles = [
-  'عهد',
-  'Settings',
-  'Cases',
-  'Create Case',
-  'Donate',
-  'Donate',
-  'My Donations',
-  'Profile',
-  'Our Society',
-  'Login'
-];
+
 
 final pageOptions = [
   MyDonationScreen(),
