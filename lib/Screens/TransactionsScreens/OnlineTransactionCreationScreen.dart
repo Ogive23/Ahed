@@ -109,18 +109,25 @@ class _OnlineTransactionCreationScreenState
                       CustomSpacing(
                         value: 100,
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('التفاصيل: ',
-                              style: appTheme
-                                  .themeData.primaryTextTheme.headline5),
-                          Flexible(
-                            child: Text('${needyData.selectedNeedy!.details}',
-                                style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                      Container(
+                        height: h / 4,
+                        child: SingleChildScrollView(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('التفاصيل: ',
+                                  style: appTheme
+                                      .themeData.primaryTextTheme.headline5),
+                              Flexible(
+                                child: Text(
+                                  '${needyData.selectedNeedy!.details}',
+                                  style: appTheme
+                                      .themeData.primaryTextTheme.headline5,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                       CustomSpacing(
                         value: 100,
