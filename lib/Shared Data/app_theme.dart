@@ -54,7 +54,7 @@ class AppTheme extends ChangeNotifier {
   ThemeData getDarkTheme(context) {
     return ThemeData(
         primaryColor: Color.fromRGBO(25, 36, 40, 1.0),
-        accentColor: Color.fromRGBO(45, 56, 60, 1.0),
+        accentColor: Color.fromRGBO(55, 66, 70, 1.0),
         shadowColor: Colors.white.withOpacity(0.5),
         primaryTextTheme: TextTheme(
           headline1: getTextStyle(
@@ -137,7 +137,8 @@ class AppTheme extends ChangeNotifier {
                 1.0,
                 TextDecoration.none,
                 "OpenSans"),
-            iconTheme: IconThemeData(color: Color.fromRGBO(247, 148, 29, 1.0))),cardColor: Color.fromRGBO(45, 56, 60, 1.0),
+            iconTheme: IconThemeData(color: Color.fromRGBO(247, 148, 29, 1.0))),
+        cardColor: Color.fromRGBO(45, 56, 60, 1.0),
         toggleableActiveColor: Colors.green,
         toggleButtonsTheme: ToggleButtonsThemeData(
             disabledColor: Colors.grey, selectedColor: Colors.amber),
