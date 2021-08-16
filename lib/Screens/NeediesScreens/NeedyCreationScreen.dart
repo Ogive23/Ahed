@@ -233,6 +233,8 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                   children: [
                     Card(
                       color: appTheme.themeData.cardColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
                       child: Container(
                         padding: EdgeInsets.only(
                             left: w / 20,
@@ -332,6 +334,8 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                     ),
                     Card(
                       color: appTheme.themeData.cardColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
                       child: Container(
                         padding: EdgeInsets.only(
                             left: w / 20,
@@ -430,6 +434,8 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                     ),
                     Card(
                       color: appTheme.themeData.cardColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
                       child: Container(
                         padding: EdgeInsets.only(
                             left: w / 20,
@@ -447,30 +453,55 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 children: <Widget>[
-                                  TextButton(
-                                    onPressed: () async {
-                                      File? selectedFile = await pickImageFromGallery(ImageSource.gallery);
-                                      if(selectedFile != null)
-                                        setState(() {
-                                          selectedImages.add(selectedFile);
-                                        });
-                                    },
-                                    child: Text(
-                                      'Add Image',
-                                      style: appTheme
-                                          .themeData.primaryTextTheme.headline5,
-                                    ),
-                                    style: ButtonStyle(
-                                        side: MaterialStateProperty.all<
-                                                BorderSide>(
-                                            BorderSide(color: Colors.black)),
-                                        minimumSize:
-                                            MaterialStateProperty.all<Size>(
-                                                Size(w / 4, h / 7))),
-                                  ),
-                                ]+selectedImages.map((image) => Container(
-                                  child: Image.file(image,width: w/4,height: h/7,),
-                                )).toList(),
+                                      TextButton(
+                                        onPressed: () async {
+                                          File? selectedFile =
+                                              await pickImageFromGallery(
+                                                  ImageSource.gallery);
+                                          if (selectedFile != null)
+                                            setState(() {
+                                              selectedImages.add(selectedFile);
+                                            });
+                                        },
+                                        child: Text(
+                                          'إضافة صورة',
+                                          style: appTheme.themeData
+                                              .primaryTextTheme.headline5,
+                                        ),
+                                        style: ButtonStyle(
+                                            side: MaterialStateProperty
+                                                .all<BorderSide>(BorderSide(
+                                                    color: Colors.black
+                                                        .withOpacity(0.3))),
+                                            minimumSize:
+                                                MaterialStateProperty.all<Size>(
+                                                    Size(w / 4, h / 7))),
+                                      ),
+                                    ] +
+                                    selectedImages.reversed
+                                        .map((image) => Container(
+                                              child: Stack(
+                                                children: [
+                                                  Image.file(
+                                                    image,
+                                                    width: w / 4,
+                                                    height: h / 7,
+                                                  ),
+                                                  IconButton(
+                                                      icon: Icon(
+                                                        Icons.remove_circle,
+                                                        color: Colors.red,
+                                                      ),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          selectedImages
+                                                              .remove(image);
+                                                        });
+                                                      })
+                                                ],
+                                              ),
+                                            ))
+                                        .toList(),
                               ),
                             )
                           ],

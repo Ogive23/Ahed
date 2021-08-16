@@ -198,26 +198,32 @@ class _OfflineTransactionCreationScreenState
                 child: Column(
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('أسم الحالة: ',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline5),
-                        Text('${needyData.selectedNeedy!.name}',
-                            style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                        Flexible(
+                          child: Text('${needyData.selectedNeedy!.name}',
+                              style: appTheme
+                                  .themeData.primaryTextTheme.headline5),
+                        ),
                       ],
                     ),
                     CustomSpacing(
                       value: 100,
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('نوع الحالة: ',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline5),
-                        Text('${needyData.selectedNeedy!.type}',
-                            style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                        Flexible(
+                          child: Text('${needyData.selectedNeedy!.type}',
+                              style: appTheme
+                                  .themeData.primaryTextTheme.headline5),
+                        ),
                       ],
                     ),
                     CustomSpacing(

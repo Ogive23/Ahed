@@ -84,6 +84,7 @@ class CustomNeedyContainer extends StatelessWidget {
                                     image.url,
                                     fit: BoxFit.cover,
                                     height: h / 3,
+                                    width: w,
                                   ),
                                 ))
                             .toList(),
