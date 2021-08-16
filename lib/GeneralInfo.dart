@@ -1,6 +1,7 @@
 
 
 import 'package:ahed/Screens/RegistrationScreens/login_screen.dart';
+import 'package:ahed/Screens/TransactionsScreens/OfflineTransactionUpdateScreen.dart';
 
 import 'Screens/NeediesScreens/NeediesScreen.dart';
 import 'Screens/NeediesScreens/NeedyCreationScreen.dart';
@@ -19,6 +20,7 @@ enum Pages {
   NeedyCreationScreen,
   OnlineTransactionCreationScreen,
   OfflineTransactionCreationScreen,
+  OfflineTransactionUpdateScreen,
   ProfileScreen,
   StayInTouchScreen,
   LoginScreen
@@ -32,6 +34,7 @@ final pageOptions = [
   NeedyCreationScreen(),
   OnlineTransactionCreationScreen(),
   OfflineTransactionCreationScreen(),
+  OfflineTransactionUpdateScreen(),
   ProfileScreen(),
   StayInTouchScreen(),
   LoginScreen()

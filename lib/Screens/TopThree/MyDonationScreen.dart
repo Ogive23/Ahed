@@ -356,7 +356,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   List<Widget> getOfflineTimeLine(List<Transaction> transactions) {
     return transactions
         .map((transaction) => CustomOfflineTransactionTimelineTile(
-            done: true, transaction: transaction as OfflineTransaction))
+            done: true, transaction: transaction as OfflineTransaction,callBack: (){setState((){});}))
         .toList()
         .reversed
         .toList();

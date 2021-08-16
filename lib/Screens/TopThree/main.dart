@@ -1,3 +1,4 @@
+import 'package:ahed/Shared%20Data/TransactionData.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +7,6 @@ import '../../Shared Data/app_language.dart';
 import '../../Shared Data/app_theme.dart';
 import '../../Shared Data/common_data.dart';
 import '../../Shared Data/NeedyData.dart';
-import '../drawer_screen.dart';
 import 'BackgroundScreen.dart';
 import 'first_time_screens.dart';
 import '../RegistrationScreens/login_screen.dart';
@@ -47,6 +47,7 @@ class MainScreen extends StatelessWidget {
   static late AppLanguage appLanguage;
   final NeedyData needyData = new NeedyData();
   final CommonData commonData = new CommonData();
+  final TransactionData transactionData = new TransactionData();
   @override
   Widget build(BuildContext context) {
     appTheme = new AppTheme(sessionManager.loadPreferredTheme(),context);
@@ -64,7 +65,10 @@ class MainScreen extends StatelessWidget {
           ),
           ChangeNotifierProvider<NeedyData>(
             create: (context) => needyData,
-          )
+          ),
+          ChangeNotifierProvider<TransactionData>(
+            create: (context) => transactionData,
+          ),
         ],
         child: Directionality(
             textDirection: TextDirection.rtl, child: BackgroundScreen()));
