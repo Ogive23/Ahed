@@ -44,23 +44,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
         amountValidation;
   }
 
-  bool cardNumberValidator() {
-    return onSubmittedCardNumber(cardNumber.text);
-  }
 
-  bool expiryDateValidator() {
-    return onSubmittedExpiryDate(expiryDate.text);
-  }
-
-  bool cvvValidator() {
-    return onSubmittedCVV(cvv.text);
-  }
-
-  bool amountValidator() {
-    return onSubmittedAmount(amount.text);
-  }
-
-  onChangedCardNumber(String value) {}
   onChangedExpiryDate(String value) {
     if (value.length == 0) {
       return setState(() {
@@ -77,8 +61,6 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
     }
   }
 
-  onChangedCVV(String value) {}
-  onChangedAmount(String value) {}
 
   bool onSubmittedCardNumber(String value) {
     if (value.length == 0) {
@@ -228,7 +210,6 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                     hint: 'أدخل رقم بطاقة الدفع',
                     error: cardNumberError,
                     width: w,
-                    onChanged: onChangedCardNumber,
                     onSubmitted: onSubmittedCardNumber,
                     enableFormatters: true,
                     maxLength: 16,
@@ -260,7 +241,6 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                     hint: 'CVV',
                     error: cvvError,
                     width: w / 2.5,
-                    onChanged: onChangedCVV,
                     onSubmitted: onSubmittedCVV,
                     enableFormatters: true,
                     maxLength: 3,
@@ -278,7 +258,6 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                         hint: 'أدخل المبلغ',
                         error: amountError,
                         width: w / 2,
-                        onChanged: onChangedAmount,
                         onSubmitted: onSubmittedAmount,
                         enableFormatters: false,
                         maxLines: 1),

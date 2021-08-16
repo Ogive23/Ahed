@@ -86,7 +86,7 @@ class SessionManager {
     sharedPreferences!.remove('accessTokenExpireDate');
     sharedPreferences!.remove('user');
   }
-  
+
   //ToDo: Future V2
   // bool needyIsBookmarked(String id) {
   //   if (sharedPreferences.containsKey('Bookmarks')) {

@@ -480,6 +480,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                     ] +
                                     selectedImages.reversed
                                         .map((image) => Container(
+                                      margin: EdgeInsets.symmetric(horizontal: w/100),
                                               child: Stack(
                                                 children: [
                                                   Image.file(

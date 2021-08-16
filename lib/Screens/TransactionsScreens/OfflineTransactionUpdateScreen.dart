@@ -45,26 +45,15 @@ class _OfflineTransactionUpdateScreenState
   bool isLoading = false;
 
   bool fullValidator() {
-    return amountValidator() &&
-        addressValidator() &&
-        mobileNumberValidator() &&
-        datesValidator();
-  }
-
-  bool datesValidator() {
-    return onSubmittedSelectedDates(startCollectDate, endCollectDate);
-  }
-
-  bool amountValidator() {
-    return onSubmittedAmount(amount.text);
-  }
-
-  bool addressValidator() {
-    return onSubmittedAddress(address.text);
-  }
-
-  bool mobileNumberValidator() {
-    return onSubmittedMobileNumber(mobileNumber.text);
+    bool amountValidation = onSubmittedAmount(amount.text);
+    bool addressValidation = onSubmittedAddress(address.text);
+    bool mobileNumberValidation = onSubmittedMobileNumber(mobileNumber.text);
+    bool datesValidation =
+    onSubmittedSelectedDates(startCollectDate, endCollectDate);
+    return amountValidation &&
+        addressValidation &&
+        mobileNumberValidation &&
+        datesValidation;
   }
 
   bool onSubmittedSelectedDates(
