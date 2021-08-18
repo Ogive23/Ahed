@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -457,26 +458,52 @@ class _ProfileScreenState extends State<ProfileScreen>
     }
   }
 
-  Future<File> pickImageFromGallery(ImageSource source) async {
+  Future<File?> pickImageFromGallery(ImageSource source) async {
     PickedFile? pickedFile = await new ImagePicker().getImage(source: source);
     return File(pickedFile!.path);
   }
 
-  uploadImage(ImageSource source) async {
-    image = await pickImageFromGallery(source);
-    // UserApi apiCaller = new UserApi();
-    // String status = await apiCaller.updateProfilePicture(
-    //     userData: {'image': image, 'userId': sessionManager.getUser().id});
-    // if ('done' == status) {
-    //   User user = await apiCaller
-    //       .getById(userData: {'userId': sessionManager.getUser().id});
-    //   sessionManager.logout();
-    //   sessionManager.createSession(user);
-    //   sessionManager.loadSession();
-    //   setState(() {});
-    // } else {
-    //   Toast.show('Error!', context);
-    // }
+  Future<void> uploadImage(ImageSource source) async {
+    File? image = await pickImageFromGallery(source);
+    if (image != null) {
+      UserApiCaller userApiCaller = new UserApiCaller();
+      Map<String, dynamic> status = await userApiCaller.changeProfilePicture(
+          sessionManager.user!.id, image);
+      if (!status['Err_Flag']) {
+        Navigator.pop(context);
+        imageCache!.clear();
+        imageCache!.clearLiveImages();
+        setState(() {});
+        return CoolAlert.show(
+            context: context,
+            type: CoolAlertType.success,
+            lottieAsset: 'assets/animations/6951-success.json',
+            text: status['message'],
+            confirmBtnColor: Color(0xff1c9691),
+            title: '');
+      }else {
+        return CoolAlert.show(
+            context: context,
+            type: CoolAlertType.error,
+            lottieAsset: 'assets/animations/38213-error.json',
+            text: status['Err_Desc'],
+            confirmBtnColor: Color(0xff1c9691),
+            title: '');
+      }
+      // UserApi apiCaller = new UserApi();
+      // String status = await apiCaller.updateProfilePicture(
+      //     userData: {'image': image, 'userId': sessionManager.getUser().id});
+      // if ('done' == status) {
+      //   User user = await apiCaller
+      //       .getById(userData: {'userId': sessionManager.getUser().id});
+      //   sessionManager.logout();
+      //   sessionManager.createSession(user);
+      //   sessionManager.loadSession();
+      //   setState(() {});
+      // } else {
+      //   Toast.show('Error!', context);
+      // }
+    }
   }
 
   void onImagePressed(context) {
