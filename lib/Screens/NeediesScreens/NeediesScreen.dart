@@ -23,9 +23,7 @@ class _NeediesScreenState extends State<NeediesScreen> {
   List<Needy>? needies;
   int current = 0;
   SessionManager sessionManager = new SessionManager();
-
   int currentPage = 1;
-  // int lastPage;
   static late int total;
 
   @override
@@ -125,27 +123,11 @@ class _NeediesScreenState extends State<NeediesScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
             Text(this.widget.type == 'Urgent' ? 'الحالات الحرجة' : 'الحالات',
                 style: appTheme.themeData.primaryTextTheme.headline3),
-            IconButton(
-                onPressed: () {
-                  setState(() {});
-                },
-                icon: Icon(Icons.refresh))
-          ],
-        ),
         CustomSpacing(value: 100,),
         getNeediesBody(context),
       ],
     );
-  }
-
-  String getSeverityClass(int severity) {
-    if (severity > 0 && severity < 4) return 'يمكنها الإنتظار';
-    if (severity > 4 && severity < 7) return 'متوسطة';
-    return 'حرجة';
   }
 }

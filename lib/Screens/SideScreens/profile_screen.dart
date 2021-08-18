@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:ahed/ApiCallers/UserApiCaller.dart';
 import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
@@ -24,7 +25,6 @@ class _ProfileScreenState extends State<ProfileScreen>
   static late AnimationController animationController;
   static late Animation<Color> colorAnimation;
   final GlobalKey toolTipKey = GlobalKey();
-  static late File image;
   List<String> contributions = [
     'My Pets',
     'Pets Acquired',
@@ -441,21 +441,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ),
                           ))),
                 ))));
-  }
-
-  Color getColor(int number) {
-    if (number < 5) return Colors.red;
-    if (number < 10) return Colors.yellow;
-    return Colors.green;
-  }
-
-  String getText(int index, int number) {
-    switch (index) {
-      case 6:
-        return number.toString() + ' MIN';
-      default:
-        return number.toString();
-    }
   }
 
   Future<File?> pickImageFromGallery(ImageSource source) async {

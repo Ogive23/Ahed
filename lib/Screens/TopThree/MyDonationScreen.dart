@@ -362,6 +362,12 @@ class _MyDonationScreenState extends State<MyDonationScreen>
     //   transactionWidgets.add(CustomTimelineTile(done: false));
     // }
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
+  }
 }
 
 //ToDo: Ahed V2 When adding Prize

@@ -152,9 +152,15 @@ class _OfflineTransactionCreationScreenState
     h = MediaQuery.of(context).size.height;
     if (firstTime) {
       SessionManager sessionManager = new SessionManager();
-      address = new TextEditingController(text: sessionManager.user!.address);
-      mobileNumber =
-          new TextEditingController(text: sessionManager.user!.phoneNumber);
+      if(sessionManager.user == null){
+        address = new TextEditingController();
+        mobileNumber = new TextEditingController();
+      }
+      else{
+        address = new TextEditingController(text: sessionManager.user!.address);
+        mobileNumber =
+        new TextEditingController(text: sessionManager.user!.phoneNumber);
+      }
       firstTime = false;
     }
     return Scaffold(
