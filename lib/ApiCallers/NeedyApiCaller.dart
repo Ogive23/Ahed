@@ -148,7 +148,7 @@ class NeedyApiCaller {
       "Content-Type": "application/json",
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
-    FormData formData = new FormData.fromMap(({
+    FormData formData = new FormData.fromMap({
       'name': name,
       'age': age,
       'severity': severity,
@@ -159,7 +159,7 @@ class NeedyApiCaller {
       'createdBy': userId,
       for (int index = 0; index < images.length; index++)
         "images[$index]": await MultipartFile.fromFile(images[index].path),
-    }));
+    });
     // for (int index = 0; index < images.length; index++)
     //   body.addAll({'images[$index]': '${images[index].path}'});
     print('url = $url');
@@ -179,7 +179,13 @@ class NeedyApiCaller {
         print(e.response);
         var responseToJson = jsonDecode(e.response.toString());
         return responseToJson;
-      } else if (e.response!.statusCode == 404) {
+      }
+      if (e.response!.statusCode == 403) {
+        print(e.response);
+        var responseToJson = jsonDecode(e.response.toString());
+        return responseToJson;
+      }
+      else if (e.response!.statusCode == 404) {
         print(e.response);
         var responseToJson = jsonDecode(e.response.toString());
         return responseToJson;
