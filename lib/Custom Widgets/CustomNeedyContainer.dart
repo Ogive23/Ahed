@@ -168,9 +168,30 @@ class CustomNeedyContainer extends StatelessWidget {
                               'OpenSans'),
                         )),
                   ),
-                  Positioned(
-                      bottom: 0,
-                      right: w / 20,
+                ],
+              ),
+              CustomSpacing(
+                value: 100,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: w / 50, right: w / 50),
+                    child: Text(
+                      '${getTime(needy.createdOn.toString())}',
+                      style: appTheme.nonStaticGetTextStyle(
+                          1.0,
+                          Colors.grey.withOpacity(0.7),
+                          appTheme.getBodyTextTheme(context),
+                          FontWeight.w400,
+                          1.0,
+                          TextDecoration.none,
+                          'OpenSans'),
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(left: w / 50, right: w / 50),
                       child: Stack(
                         children: [
                           CircleAvatar(
@@ -223,22 +244,9 @@ class CustomNeedyContainer extends StatelessWidget {
                       )),
                 ],
               ),
-              CustomSpacing(value: 100,),
-              Padding(
-                padding: EdgeInsets.only(left: w / 50, right: w / 50),
-                child: Text(
-                  '${getTime(needy.createdOn.toString())}',
-                  style: appTheme.nonStaticGetTextStyle(
-                      1.0,
-                      Colors.grey.withOpacity(0.7),
-                      appTheme.getBodyTextTheme(context),
-                      FontWeight.w400,
-                      1.0,
-                      TextDecoration.none,
-                      'OpenSans'),
-                ),
+              CustomSpacing(
+                value: 100,
               ),
-              CustomSpacing(value: 100,),
               Padding(
                 padding: EdgeInsets.only(left: w / 25, right: w / 50),
                 // padding: const EdgeInsets.all(8.0),
@@ -248,7 +256,9 @@ class CustomNeedyContainer extends StatelessWidget {
                     style: appTheme.themeData.primaryTextTheme.headline4!
                         .apply(fontWeightDelta: 4)),
               ),
-              CustomSpacing(value: 100,),
+              CustomSpacing(
+                value: 100,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -274,7 +284,9 @@ class CustomNeedyContainer extends StatelessWidget {
                       : SizedBox(),
                 ],
               ),
-              CustomSpacing(value: 100,),
+              CustomSpacing(
+                value: 100,
+              ),
               LinearPercentIndicator(
                 width: 170.0,
                 alignment: MainAxisAlignment.center,
@@ -301,7 +313,9 @@ class CustomNeedyContainer extends StatelessWidget {
                 ),
                 linearStrokeCap: LinearStrokeCap.roundAll,
               ),
-              CustomSpacing(value: 100,),
+              CustomSpacing(
+                value: 100,
+              ),
               needy.satisfied!
                   ? Center(
                       child: ElevatedButton(

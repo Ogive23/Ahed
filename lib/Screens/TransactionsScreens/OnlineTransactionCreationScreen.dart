@@ -137,7 +137,7 @@ class _OnlineTransactionCreationScreenState
                       ),
                       Row(
                         children: [
-                          Text('مسار النجاح: ',
+                          Text('المتبقي: ',
                               style: appTheme
                                   .themeData.primaryTextTheme.headline5),
                           LinearPercentIndicator(
@@ -155,7 +155,7 @@ class _OnlineTransactionCreationScreenState
                               (needyData.selectedNeedy!.need! -
                                           needyData.selectedNeedy!.collected!)
                                       .toStringAsFixed(0) +
-                                  ' جنيه متبقي',
+                                  ' جنيه',
                               style:
                                   appTheme.themeData.primaryTextTheme.bodyText2,
                             ),

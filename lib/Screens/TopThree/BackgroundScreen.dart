@@ -69,18 +69,23 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
                   currentIndex: commonData.step,
                   elevation: 0.0,
                   items: [
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.attach_money,), label: 'تبرعاتي'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.home), label: 'الرئيسية'),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.settings),
-                        label: 'الإعدادات',
-                      ),
-                    ],unselectedLabelStyle: appTheme.themeData.primaryTextTheme.subtitle1,
-          selectedLabelStyle: appTheme.themeData.primaryTextTheme.headline4,
-
-          ),
+                    const BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.attach_money,
+                        ),
+                        label: 'تبرعاتي'),
+                    const BottomNavigationBarItem(
+                        icon: Icon(Icons.home), label: 'الرئيسية'),
+                    const BottomNavigationBarItem(
+                      icon: Icon(Icons.settings),
+                      label: 'الإعدادات',
+                    ),
+                  ],
+                  unselectedLabelStyle:
+                      appTheme.themeData.primaryTextTheme.subtitle1,
+                  selectedLabelStyle:
+                      appTheme.themeData.primaryTextTheme.headline4,
+                ),
         ),
       ),
     );

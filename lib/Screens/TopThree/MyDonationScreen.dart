@@ -89,7 +89,6 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                     // ),
                     // ] +
                     getOnlineTimeLine(snapshot.data!['Values'])
-                //   ),
                 ),
           );
         } else if (snapshot.connectionState == ConnectionState.done &&
@@ -162,7 +161,6 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                     // ),
                     // ] +
                     getOfflineTimeLine(snapshot.data!['Values'])
-                //   ),
                 ),
           );
         } else if (snapshot.connectionState == ConnectionState.done &&

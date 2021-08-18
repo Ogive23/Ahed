@@ -136,7 +136,7 @@ class NeedyInfoDialog extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text('مسار النجاح: ',
+                            Text('المتبقي: ',
                                 style: appTheme
                                     .themeData.primaryTextTheme.headline5),
                             LinearPercentIndicator(
@@ -152,7 +152,7 @@ class NeedyInfoDialog extends StatelessWidget {
                               center: Text(
                                 (needy.need! - needy.collected!)
                                         .toStringAsFixed(0) +
-                                    ' جنيه متبقي',
+                                    ' جنيه',
                                 style: appTheme
                                     .themeData.primaryTextTheme.bodyText2,
                               ),

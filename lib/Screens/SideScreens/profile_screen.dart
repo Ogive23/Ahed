@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:ahed/Custom Widgets/CustomImageShower.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -82,21 +83,18 @@ class _ProfileScreenState extends State<ProfileScreen>
                             width: MediaQuery.of(context).size.width,
                             child: Column(
                               children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Directionality(
-                                      textDirection: TextDirection.ltr,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.arrow_back_ios_sharp,
-                                          color: Colors.black,
-                                        ),
-                                        onPressed: () => commonData.back(),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Directionality(
+                                    textDirection: TextDirection.ltr,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.arrow_back_ios_sharp,
+                                        color: Colors.black,
                                       ),
+                                      onPressed: () => commonData.back(),
                                     ),
-                                  ],
+                                  ),
                                 ),
                                 Expanded(
                                   child: Stack(
@@ -371,7 +369,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         decoration: BoxDecoration(boxShadow: [
                                           BoxShadow(
                                               color:
-                                                  Colors.black.withOpacity(0.7),
+                                                  Colors.black.withOpacity(0.5),
                                               blurRadius: 60,
                                               offset: Offset(0, 4))
                                         ]),
@@ -538,32 +536,6 @@ class _ProfileScreenState extends State<ProfileScreen>
           ),
         );
       },
-    );
-  }
-}
-
-class CustomImageShower extends StatelessWidget {
-  final url;
-  SessionManager sessionManager = new SessionManager();
-  CustomImageShower({this.url});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: sessionManager.user!.profileImage != 'N/A'
-            ? Image.network(this.url)
-            : Image.asset(
-                'assets/images/user.png',
-              ),
-      ),
     );
   }
 }

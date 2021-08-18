@@ -254,7 +254,7 @@ class _OfflineTransactionCreationScreenState
                     ),
                     Row(
                       children: [
-                        Text('مسار النجاح: ',
+                        Text('المتبقي: ',
                             style:
                                 appTheme.themeData.primaryTextTheme.headline5),
                         LinearPercentIndicator(
@@ -272,7 +272,7 @@ class _OfflineTransactionCreationScreenState
                             (needyData.selectedNeedy!.need! -
                                         needyData.selectedNeedy!.collected!)
                                     .toStringAsFixed(0) +
-                                ' جنيه متبقي',
+                                ' جنيه',
                             style:
                                 appTheme.themeData.primaryTextTheme.bodyText2,
                           ),
@@ -344,7 +344,7 @@ class _OfflineTransactionCreationScreenState
                     CustomTextField(
                         controller: mobileNumber,
                         label: 'رقم الهاتف',
-                        selectedIcon: FontAwesomeIcons.mobile,
+                        selectedIcon: FontAwesomeIcons.phoneAlt,
                         selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
                         borderColor: Colors.grey,
                         obscureText: false,
