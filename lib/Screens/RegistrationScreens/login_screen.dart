@@ -86,18 +86,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     )),
-                AnimatedDefaultTextStyle(
-                  child: Text(
-                    'Ascend By Giving',
-                  ),
+                Text(
+                    'أرتقِ عبر العطاء',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: appTheme.mediumTextSize(context),
                     fontWeight: FontWeight.w400,
                     letterSpacing: 2.0,
                   ),
-                  duration: Duration(seconds: 1),
-                  curve: ElasticInCurve(4),
+                ),
+                Text(
+                  'Ascend By Giving',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: appTheme.mediumTextSize(context),
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 2.0,
+                  ),
                 ),
                 Container(
                   margin:
