@@ -16,6 +16,9 @@ import 'splash_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  ErrorWidget.builder = (errorDetails) {
+    return Container(child: Text('حدث خطأ ما'));
+  };
   runApp(MyApp());
 }
 
