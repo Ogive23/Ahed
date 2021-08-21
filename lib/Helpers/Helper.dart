@@ -4,6 +4,10 @@ class Helper{
   }
 
   String getAppropriateText(dynamic object) {
-    return notNull(object) ? object.toString() : 'N/A';
+    return notNull(object) ? object.toString() : 'غير متوفر';
+  }
+
+  bool isNotAvailable(String text){
+    return text == 'غير متوفر';
   }
 }

@@ -147,4 +147,41 @@ class UserApiCaller {
     }
     // }
   }
+  changeUserInformation(String userId,String bio, String address, String phoneNumber) async {
+    // QuerySnapshot snapshot = await urls.get();
+    // for(int index = 0; index < snapshot.size; index++){
+    //   String url = snapshot.docs[index]['url'];
+    // if (sessionManager.accessTokenExpired()) {
+    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
+    // }
+    var headers = {
+      "Content-Type": "application/json",
+      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+    };
+    var body = {
+      '_method': 'put',
+      'userId': userId,
+      'bio': bio,
+      'address': address,
+      'phoneNumber': phoneNumber,
+    };
+    try {
+      var response = await http
+          .post(Uri.parse(url + "/api/profile/$userId/information"),
+          headers: headers, body: jsonEncode(body))
+          .catchError((error) {
+        throw error;
+      }).timeout(Duration(seconds: 120));
+      print(response);
+      return jsonDecode(response.body);
+    } on TimeoutException {
+      return responseHandler.timeOutPrinter();
+    } on SocketException {
+      return responseHandler.errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
+    } catch (e) {
+      print('e = $e');
+      return responseHandler.errorPrinter('حدث خطأ ما');
+    }
+    // }
+  }
 }

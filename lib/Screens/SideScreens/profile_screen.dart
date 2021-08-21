@@ -25,6 +25,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   static late AnimationController animationController;
   static late Animation<Color> colorAnimation;
   final GlobalKey toolTipKey = GlobalKey();
+  final Helper helper = new Helper();
+  UserApiCaller userApiCaller = new UserApiCaller();
   List<String> contributions = [
     'My Pets',
     'Pets Acquired',
@@ -35,6 +37,12 @@ class _ProfileScreenState extends State<ProfileScreen>
     'Total Active Time'
   ];
 
+  bool isEditing = false;
+
+  late TextEditingController address;
+  late TextEditingController phoneNumber;
+  late TextEditingController bio;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +51,11 @@ class _ProfileScreenState extends State<ProfileScreen>
     colorAnimation =
         Tween<Color>(begin: Color.fromRGBO(224, 101, 90, 1.0), end: Colors.blue)
             .animate(animationController);
+    address = new TextEditingController(text: sessionManager.user!.address);
+    phoneNumber =
+        new TextEditingController(text: sessionManager.user!.phoneNumber);
+    bio = new TextEditingController(
+        text: helper.getAppropriateText(sessionManager.user!.profileBio));
   }
 
   @override
@@ -94,353 +107,142 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         color: Colors.black,
                                       ),
                                       onPressed: () => commonData.back(),
+                                    isEditing
+                                        ? CustomTextField(
+                                            controller: bio,
+                                            label: "نبذة مختصرة",
+                                            selectedColor: Colors.grey,
+                                            borderColor: Colors.grey,
+                                            obscureText: false,
+                                            keyboardType:
+                                                TextInputType.streetAddress,
+                                            hint: "أدخل نبذة مختصرة عنك",
+                                            error: null,
+                                            maxLength: 300,
+                                            width: w,
+                                            enableFormatters: false)
+                                        : Text(
+                                            '${helper.isNotAvailable(sessionManager.user!.profileBio!) ? 'لا توجد نبذة مختصرة' : sessionManager.user!.profileBio}',
+                                            textAlign: TextAlign.center,
+                                            style: appTheme.themeData
+                                                .primaryTextTheme.bodyText1,
+                                          ),
+                                    Align(
+                                        alignment: Alignment.topRight,
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: h / 50,
+                                              horizontal: w / 40),
+                                          child: Text(
+                                            'المعلومات الشخصية',
+                                            style: appTheme.themeData
+                                                .primaryTextTheme.headline3,
+                                          ),
+                                        )),
+                                    CustomSpacing(
+                                      value: 100,
+                                    ),
+                                    isEditing
+                                        ? CustomTextField(
+                                            controller: address,
+                                            label: "العنوان",
+                                            selectedColor: Colors.grey,
+                                            borderColor: Colors.grey,
+                                            obscureText: false,
+                                            keyboardType:
+                                                TextInputType.streetAddress,
+                                            hint: "أدخل عنوانك",
+                                            error: null,
+                                            width: w,
+                                            enableFormatters: false)
+                                        : CustomRowText(
+                                            firstText: "العنوان",
+                                            secondText:
+                                                sessionManager.user!.address),
+                                    CustomSpacing(
+                                      value: 100,
+                                    ),
+                                    isEditing
+                                        ? CustomTextField(
+                                            controller: phoneNumber,
+                                            label: "رقم الهاتف",
+                                            selectedColor: Colors.grey,
+                                            borderColor: Colors.grey,
+                                            obscureText: false,
+                                            keyboardType:
+                                                TextInputType.streetAddress,
+                                            hint: "أدخل رقم هاتفك",
+                                            error: null,
+                                            width: w,
+                                            enableFormatters: false)
+                                        : CustomRowText(
+                                            firstText: "رقم الهاتف",
+                                            secondText: sessionManager
+                                                .user!.phoneNumber),
+                                  ],
+                                ),
+                              ),
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Stack(
-                                    alignment: Alignment.topCenter,
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        margin: EdgeInsets.only(
-                                            top: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                5),
-                                        padding: EdgeInsets.only(
-                                          top: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              10,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(0.5)),
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              sessionManager.user!.name,
-                                              style: appTheme
-                                                  .nonStaticGetTextStyle(
-                                                      1.0,
-                                                      appTheme
-                                                          .themeData
-                                                          .primaryTextTheme
-                                                          .bodyText1!
-                                                          .color,
-                                                      appTheme.getTextTheme(
-                                                          context),
-                                                      FontWeight.w500,
-                                                      1.0,
-                                                      TextDecoration.none,
-                                                      "OpenSans",
-                                                      [
-                                                    Shadow(
-                                                        // bottomLeft
-                                                        offset:
-                                                            Offset(-1.0, -1.0),
-                                                        color: Colors.white),
-                                                    Shadow(
-                                                        // bottomRight
-                                                        offset:
-                                                            Offset(1.0, -1.0),
-                                                        color: Colors.white),
-                                                    Shadow(
-                                                        // topRight
-                                                        offset:
-                                                            Offset(1.0, 1.0),
-                                                        color: Colors.white),
-                                                    Shadow(
-                                                        // topLeft
-                                                        offset:
-                                                            Offset(-1.0, 1.0),
-                                                        color: Colors.white),
-                                                  ]),
-                                            ),
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  100,
-                                            ),
-                                            Text('London, UK',
-                                                style: appTheme
-                                                    .nonStaticGetTextStyle(
-                                                        1.0,
-                                                        appTheme
-                                                            .themeData
-                                                            .primaryTextTheme
-                                                            .bodyText1!
-                                                            .color,
-                                                        appTheme
-                                                            .getSemiBodyTextTheme(
-                                                                context),
-                                                        FontWeight.w500,
-                                                        1.0,
-                                                        TextDecoration.none,
-                                                        "OpenSans")),
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  50,
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      10,
-                                                  left: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      10),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text.rich(
-                                                        TextSpan(
-                                                            text: 'Profile',
-                                                            children: [
-                                                              TextSpan(
-                                                                  text: ' 70%',
-                                                                  style: appTheme.nonStaticGetTextStyle(
-                                                                      1.0,
-                                                                      appTheme
-                                                                          .themeData
-                                                                          .primaryTextTheme
-                                                                          .bodyText1!
-                                                                          .color,
-                                                                      appTheme.getSemiBodyTextTheme(
-                                                                          context),
-                                                                      FontWeight
-                                                                          .w500,
-                                                                      1.0,
-                                                                      TextDecoration
-                                                                          .none,
-                                                                      "OpenSans"))
-                                                            ],
-                                                            style: appTheme.nonStaticGetTextStyle(
-                                                                1.0,
-                                                                Colors.black
-                                                                    .withOpacity(
-                                                                        0.5),
-                                                                appTheme
-                                                                    .getSemiBodyTextTheme(
-                                                                        context),
-                                                                FontWeight.w500,
-                                                                1.0,
-                                                                TextDecoration
-                                                                    .none,
-                                                                "OpenSans")),
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                      ),
-                                                      GestureDetector(
-                                                          onTap: () {
-                                                            final dynamic
-                                                                tooltip =
-                                                                toolTipKey
-                                                                    .currentState;
-                                                            tooltip
-                                                                .ensureTooltipVisible();
-                                                          },
-                                                          child: Tooltip(
-                                                            key: toolTipKey,
-                                                            showDuration:
-                                                                Duration(
-                                                                    seconds: 5),
-                                                            message:
-                                                                'You Have to\nYou Have to',
-                                                            child: Icon(
-                                                              Icons
-                                                                  .info_outline,
-                                                              size: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  20,
-                                                              color: appTheme
-                                                                  .themeData
-                                                                  .iconTheme
-                                                                  .color,
-                                                            ),
-                                                          )),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            100,
-                                                  ),
-                                                  LinearProgressIndicator(
-                                                    value: 0.7,
-                                                    backgroundColor:
-                                                        Colors.black,
-                                                    valueColor: colorAnimation,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  80,
-                                            ),
-                                            Divider(),
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  80,
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      10,
-                                                  left: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text('Current Title',
-                                                      style: appTheme
-                                                          .nonStaticGetTextStyle(
-                                                              1.0,
-                                                              Colors.black,
-                                                              appTheme
-                                                                  .getSemiBodyTextTheme(
-                                                                      context),
-                                                              FontWeight.w500,
-                                                              1.0,
-                                                              TextDecoration
-                                                                  .none,
-                                                              "OpenSans")),
-                                                  Text('Something',
-                                                      style: appTheme
-                                                          .nonStaticGetTextStyle(
-                                                              1.0,
-                                                              appTheme
-                                                                  .themeData
-                                                                  .primaryTextTheme
-                                                                  .bodyText1!
-                                                                  .color,
-                                                              appTheme
-                                                                  .getTextTheme(
-                                                                      context),
-                                                              FontWeight.w500,
-                                                              1.0,
-                                                              TextDecoration
-                                                                  .none,
-                                                              "OpenSans"))
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  80,
-                                            ),
-                                            Divider(),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            top: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                10),
-                                        decoration: BoxDecoration(boxShadow: [
-                                          BoxShadow(
-                                              color:
-                                                  Colors.black.withOpacity(0.5),
-                                              blurRadius: 60,
-                                              offset: Offset(0, 4))
-                                        ]),
-                                        child: GestureDetector(
-                                          child: CircleAvatar(
-                                            radius: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                10,
-                                            backgroundColor: Colors.transparent,
-                                            child: ClipOval(
-                                              child: sessionManager
-                                                          .user!.profileImage !=
-                                                      'N/A'
-                                                  ? Image.network(
-                                                      sessionManager
-                                                          .user!.profileImage!,
-                                                      fit: BoxFit.fill,
-                                                      width: w / 5,
-                                                      height: h / 10,
-                                                    )
-                                                  : Image.asset(
-                                                      'assets/images/user.png',
-                                                      fit: BoxFit.cover,
-                                                      width: w / 5,
-                                                      height: h / 10,
-                                                    ),
-                                            ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: h / 5),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: isEditing
+                                      ? IconButton(
+                                          icon: Icon(
+                                            Icons.done,
+                                            color: Colors.black,
                                           ),
-                                          onTap: () {
-                                            onImagePressed(context);
+                                          onPressed: () async{
+                                            Map<String,dynamic> status = await userApiCaller.changeUserInformation(
+                                              sessionManager.user!.id,
+                                              bio.text,
+                                              address.text,
+                                              phoneNumber.text
+                                            );
+                                            setState(() {
+                                              isEditing = !isEditing;
+                                            });
+                                            if (!status['Err_Flag']) {
+                                              sessionManager.changeUserInfo(
+                                                bio.text,
+                                                address.text,
+                                                phoneNumber.text
+                                              );
+                                              return CoolAlert.show(
+                                                  context: context,
+                                                  type: CoolAlertType.success,
+                                                  lottieAsset: 'assets/animations/6951-success.json',
+                                                  text: status['message'],
+                                                  confirmBtnColor: Color(0xff1c9691),
+                                                  title: '');
+                                            } else {
+                                              return CoolAlert.show(
+                                                  context: context,
+                                                  type: CoolAlertType.error,
+                                                  lottieAsset: 'assets/animations/38213-error.json',
+                                                  text: status['Err_Desc'],
+                                                  confirmBtnColor: Color(0xff1c9691),
+                                                  title: '');
+                                            }
+                                          },
+                                        )
+                                      : IconButton(
+                                          icon: Icon(
+                                            Icons.build,
+                                            color: Colors.black,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              isEditing = !isEditing;
+                                            });
+                                            print(isEditing);
                                           },
                                         ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            top: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                5),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.auto_fix_high,
-                                                color: appTheme
-                                                    .themeData.primaryColor,
-                                              ),
-                                              onPressed: () {},
-                                            ),
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.build,
-                                                color: appTheme
-                                                    .themeData.primaryColor,
-                                              ),
-                                              onPressed: () {},
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                 ),
-                              ],
-                            ),
-                          ))),
-                ))));
   }
 
   Future<File?> pickImageFromGallery(ImageSource source) async {

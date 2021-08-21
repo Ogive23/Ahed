@@ -87,6 +87,28 @@ class SessionManager {
     sharedPreferences!.remove('user');
   }
 
+  void changeUserInfo(String bio, String address, String phoneNumber) {
+    this.user!.profileBio = bio;
+    this.user!.address = address;
+    this.user!.phoneNumber = phoneNumber;
+    sharedPreferences!.setStringList('user', user!.toList());
+    List<String> userData = sharedPreferences!.getStringList('user')!;
+    user = new User(
+        userData[0],
+        userData[1],
+        userData[2],
+        userData[3],
+        userData[4],
+        userData[5],
+        userData[6],
+        //ToDo: Review
+        userData[7] == "true" ? true : false,
+        userData[8],
+        userData[9],
+        userData[10],
+        userData[11]);
+  }
+
   //ToDo: Future V2
   // bool needyIsBookmarked(String id) {
   //   if (sharedPreferences.containsKey('Bookmarks')) {
