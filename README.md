@@ -32,11 +32,7 @@ Donation is now easier than you ever think, All you have to do is to choose the 
 Wanna participate as a shadow? don't wanna enter your secret payment data? no problem we got that too.
 All you have to do is to choose offline payment, fill in the needed data then submit.
 
+## Case Sharing
 
-```mermaid
-graph LR
-A[Submit Offline Transaction]
-A --> B(We Gonna contact you through phone)
-B --> C{A chosen date is set}
-C --> D(Collect time)
+Participating isn't only about money, you can always share the cases with your friends, family, or anyone.
 
