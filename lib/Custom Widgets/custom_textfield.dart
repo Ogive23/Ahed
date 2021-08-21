@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
   final String? error;
   final double width;
   final Function? onChanged;
-  final Function onSubmitted;
+  final Function? onSubmitted;
   // final bool rightInfo;
   final bool enableFormatters;
   final int? maxLines;
@@ -37,7 +37,7 @@ class CustomTextField extends StatelessWidget {
       required this.error,
       required this.width,
       this.onChanged,
-      required this.onSubmitted,
+      this.onSubmitted,
       // required this.rightInfo,
       required this.enableFormatters,
       this.maxLength,
@@ -61,12 +61,18 @@ class CustomTextField extends StatelessWidget {
             textAlign: TextAlign.center,
             style: appTheme.themeData.primaryTextTheme.bodyText1,
             textInputAction: TextInputAction.done,
-            onChanged: onChanged != null? (value) {
-              onChanged!(value);
-            }: null,
-            onSubmitted: (value) {
-              onSubmitted(value);
-            },
+            onChanged: onChanged != null
+                ? (value) {
+                    onChanged!(value);
+                  }
+                : null,
+            onSubmitted:
+            onSubmitted != null
+                ? (value) {
+              onSubmitted!(value);
+            }
+                : null
+            ,
             inputFormatters: enableFormatters
                 ? [FilteringTextInputFormatter.digitsOnly]
                 : null,
