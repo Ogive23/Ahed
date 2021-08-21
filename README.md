@@ -1,14 +1,15 @@
 # Ahed
+<p align="center"><img src="https://github.com/Ogive23/Ahed/blob/main/screenshots/Ahed%20white%20background%20rounded.png" width="300"></p>
 
 Wanna change the world around you? wanna help the poor to find a better place, get their medicine or even help brides to get ready for their wedding? then...
-Ahed is the place where your donation should go.
+Ahed is the place where your donation should go.<br>
 # Features
-1- Achievement Center for your contributions
-2- Case Creation
-3- Cases Progress Watcher
-4- Online Donation
-5- Offline Donation
-6- Case Sharing
+1- Achievement Center for your contributions<br>
+2- Case Creation<br>
+3- Cases Progress Watcher<br>
+4- Online Donation<br>
+5- Offline Donation<br>
+6- Case Sharing<br>
 
 ## Achievement Center
 Have you helped someone by only publishing its story for people? Donated to another? Don't worry it's all **counted** in our achievement center.
