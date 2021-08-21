@@ -1,6 +1,10 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:ahed/ApiCallers/UserApiCaller.dart';
+import 'package:ahed/Custom%20Widgets/CustomRowText.dart';
+import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
+import 'package:ahed/Custom%20Widgets/custom_textfield.dart';
+import 'package:ahed/Helpers/Helper.dart';
 import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
@@ -64,49 +68,93 @@ class _ProfileScreenState extends State<ProfileScreen>
     h = MediaQuery.of(context).size.height;
     appTheme = Provider.of<AppTheme>(context);
     commonData = Provider.of<CommonData>(context);
-    return Material(
-        child: SafeArea(
-            child: Container(
-                height: double.infinity,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      image: sessionManager.user!.profileImage != 'N/A'
-                          ? DecorationImage(
-                              image: NetworkImage(
-                                sessionManager.user!.profileImage!,
-                              ),
-                              colorFilter: ColorFilter.mode(
-                                  appTheme.themeData.primaryColor,
-                                  BlendMode.softLight),
-                              fit: BoxFit.cover,
-                            )
-                          : DecorationImage(
-                              image: AssetImage(
-                                'assets/images/user.png',
-                              ),
-                              colorFilter: ColorFilter.mode(
-                                  appTheme.themeData.primaryColor,
-                                  BlendMode.softLight),
-                              fit: BoxFit.cover,
-                            )),
-                  child: ClipRRect(
-                      child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Directionality(
-                                    textDirection: TextDirection.ltr,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.arrow_back_ios_sharp,
-                                        color: Colors.black,
+    return Scaffold(
+        backgroundColor: appTheme.themeData.primaryColor,
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: appTheme.themeData.primaryColor,
+          elevation: 0.0,
+          title: Text(
+            'الملف الشخصي',
+            style: appTheme.themeData.primaryTextTheme.headline2,
+          ),
+          actions: [
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: IconButton(
+                  onPressed: () => commonData.back(),
+                  icon: Icon(
+                    Icons.arrow_back_ios_sharp,
+                    color: appTheme.themeData.appBarTheme.iconTheme!.color,
+                  )),
+            )
+          ],
+        ),
+        body: Container(
+            height: h,
+            child: SingleChildScrollView(
+              child: Container(
+                width: w,
+                decoration: BoxDecoration(
+                    image: sessionManager.user!.profileCover != 'N/A'
+                        ? DecorationImage(
+                            image: NetworkImage(
+                              sessionManager.user!.profileCover!,
+                            ),
+                            colorFilter: ColorFilter.mode(
+                                appTheme.themeData.primaryColor,
+                                BlendMode.softLight),
+                            fit: BoxFit.cover,
+                          )
+                        : DecorationImage(
+                            image: AssetImage(
+                              'assets/images/user.png',
+                            ),
+                            colorFilter: ColorFilter.mode(
+                                appTheme.themeData.primaryColor,
+                                BlendMode.softLight),
+                            fit: BoxFit.cover,
+                          )),
+                child: ClipRRect(
+                    child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
+                        child: Container(
+                          width: w,
+                          height: h,
+                          // child: Column(
+                          //   children: [
+                          //     Expanded(
+                          child: Stack(
+                            alignment: Alignment.topCenter,
+                            children: [
+                              Container(
+                                width: w,
+                                margin: EdgeInsets.only(top: h / 5),
+                                padding: EdgeInsets.only(
+                                  top: h / 10,
+                                ),
+                                decoration: BoxDecoration(
+                                    color: appTheme.themeData.primaryTextTheme
+                                        .headline5!.color!
+                                        .withOpacity(0.5)),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      sessionManager.user!.name,
+                                      style: appTheme.nonStaticGetTextStyle(
+                                        1.0,
+                                        appTheme.themeData.primaryTextTheme
+                                            .bodyText1!.color,
+                                        appTheme.largeTextSize(context),
+                                        FontWeight.w500,
+                                        1.0,
+                                        TextDecoration.none,
+                                        "OpenSans",
                                       ),
-                                      onPressed: () => commonData.back(),
+                                    ),
+                                    CustomSpacing(
+                                      value: 100,
+                                    ),
                                     isEditing
                                         ? CustomTextField(
                                             controller: bio,
@@ -182,8 +230,40 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   ],
                                 ),
                               ),
+                              Container(
+                                margin: EdgeInsets.only(top: h / 10),
+                                decoration: BoxDecoration(boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.5),
+                                      blurRadius: 60,
+                                      offset: Offset(0, 4))
+                                ]),
+                                child: GestureDetector(
+                                  child: CircleAvatar(
+                                    radius: h / 10,
+                                    backgroundColor: Colors.transparent,
+                                    child: ClipOval(
+                                      child:
+                                          sessionManager.user!.profileImage !=
+                                                  'N/A'
+                                              ? Image.network(
+                                                  sessionManager
+                                                      .user!.profileImage!,
+                                                  fit: BoxFit.cover,
+                                                  width: w / 4,
+                                                  height: h / 10,
+                                                )
+                                              : Image.asset(
+                                                  'assets/images/user.png',
+                                                  fit: BoxFit.cover,
+                                                  width: w / 5,
+                                                  height: h / 10,
+                                                ),
                                     ),
                                   ),
+                                  onTap: () {
+                                    onImagePressed(context, "Profile");
+                                  },
                                 ),
                               ),
                               Container(
@@ -243,6 +323,23 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           },
                                         ),
                                 ),
+                              ),
+                              Container(
+                                child: TextButton(
+                                  child: Text('تغيير الغلاف'),
+                                  onPressed: () {
+                                    onImagePressed(context, "Cover");
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                          // ),
+                          // ],
+                          // ),
+                        ))),
+              ),
+            )));
   }
 
   Future<File?> pickImageFromGallery(ImageSource source) async {
@@ -250,14 +347,17 @@ class _ProfileScreenState extends State<ProfileScreen>
     return File(pickedFile!.path);
   }
 
-  Future<void> uploadImage(ImageSource source) async {
+  Future<void> uploadImage(ImageSource source, String relatedImage) async {
     File? image = await pickImageFromGallery(source);
     if (image != null) {
-      UserApiCaller userApiCaller = new UserApiCaller();
-      Map<String, dynamic> status = await userApiCaller.changeProfilePicture(
-          sessionManager.user!.id, image);
+      Map<String, dynamic> status;
+      if (relatedImage == "Profile")
+        status = await userApiCaller.changeProfilePicture(
+            sessionManager.user!.id, image);
+      else
+        status = await userApiCaller.changeCoverPicture(
+            sessionManager.user!.id, image);
       if (!status['Err_Flag']) {
-        Navigator.pop(context);
         imageCache!.clear();
         imageCache!.clearLiveImages();
         setState(() {});
@@ -268,7 +368,7 @@ class _ProfileScreenState extends State<ProfileScreen>
             text: status['message'],
             confirmBtnColor: Color(0xff1c9691),
             title: '');
-      }else {
+      } else {
         return CoolAlert.show(
             context: context,
             type: CoolAlertType.error,
@@ -293,7 +393,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     }
   }
 
-  void onImagePressed(context) {
+  void onImagePressed(context, relatedImage) {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -303,7 +403,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       builder: (context) {
         return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: appTheme.themeData.primaryColor,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           ),
@@ -311,20 +411,30 @@ class _ProfileScreenState extends State<ProfileScreen>
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ButtonTheme(
-                minWidth: MediaQuery.of(context).size.width / 2,
-                buttonColor: Colors.transparent,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      elevation: MaterialStateProperty.all<double>(0.0)),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CustomImageShower(
-                                url: sessionManager.user!.profileImage)));
-                  },
-                  child: Text('Show profile picture'),
+              ElevatedButton(
+                style: ButtonStyle(
+                    elevation: MaterialStateProperty.all<double>(0.0),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.transparent)),
+                onPressed: relatedImage == "Profile" &&
+                            sessionManager.user!.profileImage == 'N/A' ||
+                        relatedImage == "Cover" &&
+                            sessionManager.user!.profileCover == 'N/A'
+                    ? null
+                    : () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CustomImageShower(
+                                    url: relatedImage == "Profile"
+                                        ? sessionManager.user!.profileImage
+                                        : sessionManager.user!.profileCover)));
+                      },
+                child: Text(
+                  relatedImage == "Profile"
+                      ? 'Show Profile Picture'
+                      : 'Show Cover Picture',
+                  style: appTheme.themeData.primaryTextTheme.headline5,
                 ),
               ),
               Divider(
@@ -333,17 +443,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                 indent: 10,
                 endIndent: 10,
               ),
-              ButtonTheme(
-                minWidth: MediaQuery.of(context).size.width / 2,
-                buttonColor: Colors.transparent,
-                child: ElevatedButton(
-                  style: ButtonStyle(
+              ElevatedButton(
+                style: ButtonStyle(
                     elevation: MaterialStateProperty.all<double>(0.0),
-                  ),
-                  onPressed: () async {
-                    await uploadImage(ImageSource.gallery);
-                  },
-                  child: Text('Change profile picture'),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.transparent)),
+                onPressed: () async {
+                  await uploadImage(ImageSource.gallery, relatedImage);
+                },
+                child: Text(
+                  relatedImage == "Profile"
+                      ? 'Change Profile Picture'
+                      : 'Change Cover Picture',
+                  style: appTheme.themeData.primaryTextTheme.headline5,
                 ),
               ),
             ],

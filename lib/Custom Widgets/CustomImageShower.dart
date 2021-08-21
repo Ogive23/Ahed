@@ -8,6 +8,7 @@ class CustomImageShower extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(url);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -17,7 +18,8 @@ class CustomImageShower extends StatelessWidget {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: sessionManager.user!.profileImage != 'N/A'
+        color: Colors.white,
+        child: url != 'N/A'
             ? Image.network(this.url)
             : Image.asset(
           'assets/images/user.png',
