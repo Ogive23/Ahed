@@ -18,7 +18,7 @@ class UserApiCaller {
   TokenApiCaller tokenApiCaller = new TokenApiCaller();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference urls = FirebaseFirestore.instance.collection('URLs');
-  String url = "http://192.168.1.190:8000";
+  String url = "http://192.168.1.3:8000";
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     // if (sessionManager.accessTokenExpired()) {
@@ -110,7 +110,7 @@ class UserApiCaller {
     });
     try {
       var response = await Dio()
-          .post(url + "/api/profile/$userId",
+          .post(url + "/api/profile/$userId/picture",
               data: formData, options: Options(headers: headers))
           .catchError((error) {
         throw error;
