@@ -73,7 +73,7 @@ class ImageCarouselShow extends StatelessWidget {
                     style: appTheme.nonStaticGetTextStyle(
                         1.5,
                         Colors.white,
-                        appTheme.getBodyTextTheme(context),
+                        appTheme.smallTextSize(context),
                         FontWeight.bold,
                         1.0,
                         TextDecoration.none,

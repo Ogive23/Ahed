@@ -53,7 +53,7 @@ class StayInTouchScreen extends StatelessWidget {
                           style: appTheme.nonStaticGetTextStyle(
                               1.0,
                               Colors.black,
-                              appTheme.getTextTheme(context) * 1.5,
+                              appTheme.largeTextSize(context) * 1.5,
                               FontWeight.w600,
                               1.0,
                               TextDecoration.none,

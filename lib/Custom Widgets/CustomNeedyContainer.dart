@@ -108,7 +108,7 @@ class CustomNeedyContainer extends StatelessWidget {
                           style: appTheme.nonStaticGetTextStyle(
                               1.0,
                               Colors.white,
-                              appTheme.getBodyTextTheme(context),
+                              appTheme.smallTextSize(context),
                               FontWeight.w400,
                               1.0,
                               TextDecoration.none,
@@ -161,7 +161,7 @@ class CustomNeedyContainer extends StatelessWidget {
                           style: appTheme.nonStaticGetTextStyle(
                               1.0,
                               Colors.white,
-                              appTheme.getBodyTextTheme(context),
+                              appTheme.smallTextSize(context),
                               FontWeight.bold,
                               1.0,
                               TextDecoration.none,
@@ -183,7 +183,7 @@ class CustomNeedyContainer extends StatelessWidget {
                       style: appTheme.nonStaticGetTextStyle(
                           1.0,
                           Colors.grey.withOpacity(0.7),
-                          appTheme.getBodyTextTheme(context),
+                          appTheme.smallTextSize(context),
                           FontWeight.w400,
                           1.0,
                           TextDecoration.none,
@@ -228,7 +228,7 @@ class CustomNeedyContainer extends StatelessWidget {
                                 textStyle: appTheme.nonStaticGetTextStyle(
                                     1.0,
                                     Color.fromRGBO(30, 111, 92, 1.0),
-                                    appTheme.getBodyTextTheme(context),
+                                    appTheme.smallTextSize(context),
                                     FontWeight.bold,
                                     1.0,
                                     TextDecoration.none,
@@ -274,7 +274,7 @@ class CustomNeedyContainer extends StatelessWidget {
                             style: appTheme.nonStaticGetTextStyle(
                                 1.0,
                                 Colors.grey,
-                                appTheme.getBodyTextTheme(context),
+                                appTheme.smallTextSize(context),
                                 FontWeight.bold,
                                 1.0,
                                 TextDecoration.none,
@@ -305,7 +305,7 @@ class CustomNeedyContainer extends StatelessWidget {
                   style: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.white,
-                      appTheme.getBodyTextTheme(context),
+                      appTheme.smallTextSize(context),
                       FontWeight.bold,
                       1.0,
                       TextDecoration.none,
@@ -392,7 +392,7 @@ class CustomNeedyContainer extends StatelessWidget {
                         // Icons.share,
                         FontAwesomeIcons.share,
                         color: Colors.white,
-                        size: appTheme.getTextTheme(context),
+                        size: appTheme.largeTextSize(context),
                       ),
                     ],
                   ),

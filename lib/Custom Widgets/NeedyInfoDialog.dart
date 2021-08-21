@@ -203,7 +203,7 @@ class NeedyInfoDialog extends StatelessWidget {
                                   // Icons.share,
                                   FontAwesomeIcons.share,
                                   color: Colors.white,
-                                  size: appTheme.getTextTheme(context),
+                                  size: appTheme.largeTextSize(context),
                                 ),
                               ],
                             ),

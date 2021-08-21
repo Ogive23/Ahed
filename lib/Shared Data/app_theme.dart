@@ -7,15 +7,15 @@ class AppTheme extends ChangeNotifier {
     this.isDark = isDark;
     themeData = getCurrentTheme(context);
   }
-  getTextTheme(context) {
+  largeTextSize(context) {
     return MediaQuery.of(context).size.height / 40;
   }
 
-  getSemiBodyTextTheme(context) {
+  mediumTextSize(context) {
     return MediaQuery.of(context).size.height / 50;
   }
 
-  getBodyTextTheme(context) {
+  smallTextSize(context) {
     return MediaQuery.of(context).size.height / 60;
   }
 
@@ -40,7 +40,7 @@ class AppTheme extends ChangeNotifier {
         decoration, family, shadows);
   }
 
-  changeTheme(bool value,context) {
+  changeTheme(bool value, context) {
     this.isDark = value;
     themeData = getCurrentTheme(context);
     print('changed');
@@ -60,17 +60,15 @@ class AppTheme extends ChangeNotifier {
           headline1: getTextStyle(
               1.0,
               Color.fromRGBO(247, 148, 29, 1.0),
-              getTextTheme(context) * 2,
+              largeTextSize(context) * 2,
               FontWeight.bold,
               1.0,
               TextDecoration.none,
               "OpenSans"),
-          headline2:
-
-          getTextStyle(
+          headline2: getTextStyle(
               1.0,
               Color.fromRGBO(247, 148, 29, 1.0),
-              getTextTheme(context) * 1.5,
+              largeTextSize(context) * 1.5,
               FontWeight.w600,
               1.0,
               TextDecoration.none,
@@ -78,7 +76,7 @@ class AppTheme extends ChangeNotifier {
           headline3: getTextStyle(
               1.0,
               Color.fromRGBO(247, 148, 29, 1.0),
-              getTextTheme(context),
+              largeTextSize(context),
               FontWeight.bold,
               1.0,
               TextDecoration.none,
@@ -86,41 +84,29 @@ class AppTheme extends ChangeNotifier {
           headline4: getTextStyle(
               1.0,
               Color.fromRGBO(38, 92, 126, 1.0),
-              getSemiBodyTextTheme(context),
+              mediumTextSize(context),
               FontWeight.w400,
               1.0,
               TextDecoration.none,
               "Delius"),
-          headline5: getTextStyle(
-              1.0,
-              Colors.white,
-              getSemiBodyTextTheme(context),
-              FontWeight.normal,
-              1.0,
-              TextDecoration.none,
-              "Delius"),
+          headline5: getTextStyle(1.0, Colors.white, mediumTextSize(context),
+              FontWeight.normal, 1.0, TextDecoration.none, "Delius"),
           bodyText1: getTextStyle(
               1.0,
               Color.fromRGBO(247, 148, 29, 1.0),
-              getSemiBodyTextTheme(context),
+              mediumTextSize(context),
               FontWeight.normal,
               1.0,
               TextDecoration.none,
               "Delius"),
-          bodyText2: getTextStyle(
-              1.0,
-              Colors.white,
-              getSemiBodyTextTheme(context),
-              FontWeight.normal,
-              1.0,
-              TextDecoration.none,
-              "Delius"),
-          subtitle1: getTextStyle(1.0, Colors.grey, getBodyTextTheme(context),
+          bodyText2: getTextStyle(1.0, Colors.white, mediumTextSize(context),
+              FontWeight.normal, 1.0, TextDecoration.none, "Delius"),
+          subtitle1: getTextStyle(1.0, Colors.grey, smallTextSize(context),
               FontWeight.w300, 1.0, TextDecoration.none, "Delius"),
           subtitle2: getTextStyle(
               1.0,
               Colors.grey.withOpacity(0.5),
-              getBodyTextTheme(context),
+              smallTextSize(context),
               FontWeight.w300,
               1.0,
               TextDecoration.none,
@@ -154,60 +140,53 @@ class AppTheme extends ChangeNotifier {
           headline1: getTextStyle(
               1.0,
               Colors.amber[300],
-              getTextTheme(context) * 2,
+              largeTextSize(context) * 2,
               FontWeight.bold,
               1.0,
               TextDecoration.none,
               "OpenSans"),
-          headline2:
-          getTextStyle(
+          headline2: getTextStyle(
               1.0,
               Colors.amber[300],
-              getTextTheme(context) * 1.5,
+              largeTextSize(context) * 1.5,
               FontWeight.w600,
               1.0,
               TextDecoration.none,
               'Delius'),
-          headline3: getTextStyle(1.0, Colors.amber[300], getTextTheme(context),
-              FontWeight.bold, 1.0, TextDecoration.none, "Delius"),
+          headline3: getTextStyle(
+              1.0,
+              Colors.amber[300],
+              largeTextSize(context),
+              FontWeight.bold,
+              1.0,
+              TextDecoration.none,
+              "Delius"),
           headline4: getTextStyle(
               1.0,
               Color.fromRGBO(38, 92, 126, 1.0),
-              getSemiBodyTextTheme(context),
+              mediumTextSize(context),
               FontWeight.w400,
               1.0,
               TextDecoration.none,
               "Delius"),
-          headline5: getTextStyle(
-              1.0,
-              Colors.black,
-              getSemiBodyTextTheme(context),
-              FontWeight.normal,
-              1.0,
-              TextDecoration.none,
-              "Delius"),
+          headline5: getTextStyle(1.0, Colors.black, mediumTextSize(context),
+              FontWeight.normal, 1.0, TextDecoration.none, "Delius"),
           bodyText1: getTextStyle(
               1.0,
               Colors.amber[300],
-              getSemiBodyTextTheme(context),
+              mediumTextSize(context),
               FontWeight.normal,
               1.0,
               TextDecoration.none,
               "Delius"),
-          bodyText2: getTextStyle(
-              1.0,
-              Colors.white,
-              getSemiBodyTextTheme(context),
-              FontWeight.normal,
-              1.0,
-              TextDecoration.none,
-              "Delius"),
-          subtitle1: getTextStyle(1.0, Colors.grey, getBodyTextTheme(context),
+          bodyText2: getTextStyle(1.0, Colors.white, mediumTextSize(context),
+              FontWeight.normal, 1.0, TextDecoration.none, "Delius"),
+          subtitle1: getTextStyle(1.0, Colors.grey, smallTextSize(context),
               FontWeight.w300, 1.0, TextDecoration.none, "Delius"),
           subtitle2: getTextStyle(
               1.0,
               Colors.grey.withOpacity(0.5),
-              getBodyTextTheme(context),
+              smallTextSize(context),
               FontWeight.w300,
               1.0,
               TextDecoration.none,

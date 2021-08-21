@@ -192,7 +192,7 @@ class _OnlineTransactionCreationScreenState
               unselectedLabelStyle: appTheme.nonStaticGetTextStyle(
                   1.0,
                   Colors.grey.withOpacity(0.4),
-                  appTheme.getBodyTextTheme(context),
+                  appTheme.smallTextSize(context),
                   FontWeight.w600,
                   1.0,
                   TextDecoration.none,
@@ -200,7 +200,7 @@ class _OnlineTransactionCreationScreenState
               labelStyle: appTheme.nonStaticGetTextStyle(
                   1.0,
                   Colors.black,
-                  appTheme.getBodyTextTheme(context),
+                  appTheme.smallTextSize(context),
                   FontWeight.w600,
                   1.0,
                   TextDecoration.none,

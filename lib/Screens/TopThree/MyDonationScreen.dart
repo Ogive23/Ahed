@@ -229,7 +229,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 style: appTheme.nonStaticGetTextStyle(
                     1.0,
                     appTheme.themeData.primaryTextTheme.headline2!.color,
-                    appTheme.getSemiBodyTextTheme(context),
+                    appTheme.mediumTextSize(context),
                     FontWeight.w600,
                     1.0,
                     TextDecoration.none,
@@ -241,7 +241,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 style: appTheme.nonStaticGetTextStyle(
                     1.0,
                     appTheme.themeData.primaryTextTheme.headline2!.color,
-                    appTheme.getSemiBodyTextTheme(context),
+                    appTheme.mediumTextSize(context),
                     FontWeight.w600,
                     1.0,
                     TextDecoration.none,
@@ -254,7 +254,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
             unselectedLabelStyle: appTheme.nonStaticGetTextStyle(
                 1.0,
                 Colors.grey.withOpacity(0.4),
-                appTheme.getBodyTextTheme(context),
+                appTheme.smallTextSize(context),
                 FontWeight.w600,
                 1.0,
                 TextDecoration.none,
@@ -293,7 +293,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                               style: appTheme.nonStaticGetTextStyle(
                                   1.0,
                                   Colors.blue,
-                                  appTheme.getSemiBodyTextTheme(context),
+                                  appTheme.mediumTextSize(context),
                                   FontWeight.w400,
                                   1.0,
                                   TextDecoration.underline,
@@ -321,7 +321,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                               style: appTheme.nonStaticGetTextStyle(
                                   1.0,
                                   Colors.blue,
-                                  appTheme.getSemiBodyTextTheme(context),
+                                  appTheme.mediumTextSize(context),
                                   FontWeight.w400,
                                   1.0,
                                   TextDecoration.underline,

@@ -106,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.grey[500],
-                      appTheme.getSemiBodyTextTheme(context),
+                      appTheme.mediumTextSize(context),
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -131,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.grey[500],
-                      appTheme.getSemiBodyTextTheme(context),
+                      appTheme.mediumTextSize(context),
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -161,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getTextTheme(context) * 2,
+                      appTheme.largeTextSize(context) * 2,
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -170,7 +170,7 @@ class HomeScreen extends StatelessWidget {
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getSemiBodyTextTheme(context),
+                      appTheme.mediumTextSize(context),
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -189,7 +189,7 @@ class HomeScreen extends StatelessWidget {
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getTextTheme(context) * 2,
+                      appTheme.largeTextSize(context) * 2,
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -198,7 +198,7 @@ class HomeScreen extends StatelessWidget {
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getSemiBodyTextTheme(context),
+                      appTheme.mediumTextSize(context),
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -217,7 +217,7 @@ class HomeScreen extends StatelessWidget {
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getTextTheme(context) * 2,
+                      appTheme.largeTextSize(context) * 2,
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -226,7 +226,7 @@ class HomeScreen extends StatelessWidget {
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getSemiBodyTextTheme(context),
+                      appTheme.mediumTextSize(context),
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -245,7 +245,7 @@ class HomeScreen extends StatelessWidget {
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getTextTheme(context) * 2,
+                      appTheme.largeTextSize(context) * 2,
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -254,7 +254,7 @@ class HomeScreen extends StatelessWidget {
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getSemiBodyTextTheme(context),
+                      appTheme.mediumTextSize(context),
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -273,7 +273,7 @@ class HomeScreen extends StatelessWidget {
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getTextTheme(context) * 2,
+                      appTheme.largeTextSize(context) * 2,
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -282,7 +282,7 @@ class HomeScreen extends StatelessWidget {
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getSemiBodyTextTheme(context),
+                      appTheme.mediumTextSize(context),
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -300,7 +300,7 @@ class HomeScreen extends StatelessWidget {
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getTextTheme(context) * 2,
+                      appTheme.largeTextSize(context) * 2,
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -309,7 +309,7 @@ class HomeScreen extends StatelessWidget {
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
-                      appTheme.getSemiBodyTextTheme(context),
+                      appTheme.mediumTextSize(context),
                       FontWeight.w200,
                       1.0,
                       TextDecoration.none,
@@ -328,7 +328,7 @@ class HomeScreen extends StatelessWidget {
           countTextStyle: appTheme.nonStaticGetTextStyle(
               1.0,
               Colors.red,
-              appTheme.getSemiBodyTextTheme(context),
+              appTheme.mediumTextSize(context),
               FontWeight.w200,
               1.0,
               TextDecoration.none,
@@ -339,7 +339,7 @@ class HomeScreen extends StatelessWidget {
           achievementTextStyle: appTheme.nonStaticGetTextStyle(
               1.0,
               Colors.red,
-              appTheme.getSemiBodyTextTheme(context),
+              appTheme.mediumTextSize(context),
               FontWeight.w200,
               1.0,
               TextDecoration.none,
@@ -480,7 +480,7 @@ class HomeScreen extends StatelessWidget {
                         style: appTheme.nonStaticGetTextStyle(
                             1.0,
                             Colors.blue,
-                            appTheme.getSemiBodyTextTheme(context),
+                            appTheme.mediumTextSize(context),
                             FontWeight.w400,
                             1.0,
                             TextDecoration.none,

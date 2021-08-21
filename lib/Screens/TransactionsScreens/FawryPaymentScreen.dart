@@ -285,7 +285,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                         style: appTheme.nonStaticGetTextStyle(
                             1.0,
                             Colors.red,
-                            appTheme.getBodyTextTheme(context),
+                            appTheme.smallTextSize(context),
                             FontWeight.w800,
                             1.0,
                             TextDecoration.none,

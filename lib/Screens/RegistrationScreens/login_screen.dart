@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: appTheme.getSemiBodyTextTheme(context),
+                    fontSize: appTheme.mediumTextSize(context),
                     fontWeight: FontWeight.w400,
                     letterSpacing: 2.0,
                   ),
@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: appTheme.nonStaticGetTextStyle(
                                   2.0,
                                   Colors.white,
-                                  appTheme.getSemiBodyTextTheme(context),
+                                  appTheme.mediumTextSize(context),
                                   FontWeight.w300,
                                   1.0,
                                   TextDecoration.none,
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: appTheme.nonStaticGetTextStyle(
                                 1.0,
                                 Colors.white,
-                                appTheme.getSemiBodyTextTheme(context),
+                                appTheme.mediumTextSize(context),
                                 FontWeight.normal,
                                 1.0,
                                 TextDecoration.none,
@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: appTheme.nonStaticGetTextStyle(
                                 1.0,
                                 Colors.white,
-                                appTheme.getSemiBodyTextTheme(context),
+                                appTheme.mediumTextSize(context),
                                 FontWeight.normal,
                                 1.0,
                                 TextDecoration.none,
@@ -206,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: appTheme.nonStaticGetTextStyle(
                                 1.0,
                                 Colors.red,
-                                appTheme.getSemiBodyTextTheme(context),
+                                appTheme.mediumTextSize(context),
                                 FontWeight.bold,
                                 1.0,
                                 TextDecoration.none,
@@ -228,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           1.0,
                                           Colors.white,
                                           appTheme
-                                              .getSemiBodyTextTheme(context),
+                                              .mediumTextSize(context),
                                           FontWeight.normal,
                                           1.0,
                                           TextDecoration.none,
@@ -258,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: appTheme.nonStaticGetTextStyle(
                                     1.0,
                                     Colors.red,
-                                    appTheme.getBodyTextTheme(context),
+                                    appTheme.smallTextSize(context),
                                     FontWeight.normal,
                                     1.0,
                                     TextDecoration.underline,
@@ -283,7 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: appTheme.nonStaticGetTextStyle(
                                     1.0,
                                     Colors.white,
-                                    appTheme.getBodyTextTheme(context),
+                                    appTheme.smallTextSize(context),
                                     FontWeight.normal,
                                     1.0,
                                     TextDecoration.none,
@@ -298,7 +298,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: appTheme.nonStaticGetTextStyle(
                                       1.0,
                                       Colors.green,
-                                      appTheme.getSemiBodyTextTheme(context),
+                                      appTheme.mediumTextSize(context),
                                       FontWeight.w600,
                                       1.0,
                                       TextDecoration.none,
