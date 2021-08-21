@@ -1,16 +1,42 @@
-# ahed
+# Ahed
 
-A new Flutter application.
+Wanna change the world around you? wanna help the poor to find a better place, get their medicine or even help brides to get ready for their wedding? then...
+Ahed is the place where your donation should go.
+# Features
+1- Achievement Center for your contributions
+2- Case Creation
+3- Cases Progress Watcher
+4- Online Donation
+5- Offline Donation
+6- Case Sharing
 
-## Getting Started
+## Achievement Center
+Have you helped someone by only publishing its story for people? Donated to another? Don't worry it's all **counted** in our achievement center.
 
-This project is a starting point for a Flutter application.
+## Case Creation
 
-A few resources to get you started if this is your first Flutter project:
+It's not only about donating, you can also help in cases creation, All you have to do is to create a case request, fill the data, and then submit it.
+Once you submit your request, our team would start investigating to either accept or refuse your request.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Cases Progress Watcher
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Wanna make sure that your money has gone in the right way? You can watch the progress of every case you donated to until it's satisfying.
+
+## Online Donation
+
+Donation is now easier than you ever think, All you have to do is to choose the case you want to donate to, choose online payment, fill the needed data, then submit.
+**This Feature is restricted to only logged in users**
+
+## Offline Dontaion
+
+Wanna participate as a shadow? don't wanna enter your secret payment data? no problem we got that too.
+All you have to do is to choose offline payment, fill in the needed data then submit.
+
+
+```mermaid
+graph LR
+A[Submit Offline Transaction]
+A --> B(We Gonna contact you through phone)
+B --> C{A chosen date is set}
+C --> D(Collect time)
+
