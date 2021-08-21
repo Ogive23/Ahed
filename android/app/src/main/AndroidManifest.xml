@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ogive.ahed">
    <application
-        android:label="ahed"
+        android:label="عهد"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity

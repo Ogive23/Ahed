@@ -12,7 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 
 class NeedyApiCaller {
-  String url = "http://192.168.1.190:8000";
+  String url = "http://192.168.1.3:8000";
   ResponseHandler responseHandler = new ResponseHandler();
   SessionManager sessionManager = new SessionManager();
   DataMapper dataMapper = new DataMapper();
@@ -31,6 +31,7 @@ class NeedyApiCaller {
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
     try {
+      print(url + "/api/ahed/urgentneedies?page=$pageNumber");
       var response = await http
           .get(Uri.parse(url + "/api/ahed/urgentneedies?page=$pageNumber"),
               headers: headers)
@@ -38,6 +39,7 @@ class NeedyApiCaller {
         throw error;
       }).timeout(Duration(seconds: 120));
       print(url);
+      print(response.body);
       return {
         "Err_Flag": false,
         "Values": dataMapper.getNeediesFromJson(
