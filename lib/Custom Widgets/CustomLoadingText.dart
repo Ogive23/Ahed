@@ -17,7 +17,7 @@ class CustomLoadingText extends StatelessWidget {
           textStyle: appTheme.nonStaticGetTextStyle(
               1.0,
               Colors.blueAccent,
-              appTheme.getTextTheme(context),
+              appTheme.largeTextSize(context),
               FontWeight.normal,
               1.0,
               TextDecoration.none,

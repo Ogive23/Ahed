@@ -20,15 +20,11 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
-    with SingleTickerProviderStateMixin {
+class _ProfileScreenState extends State<ProfileScreen> {
   static late double w, h;
   final SessionManager sessionManager = new SessionManager();
   static late AppTheme appTheme;
   static late CommonData commonData;
-  static late AnimationController animationController;
-  static late Animation<Color> colorAnimation;
-  final GlobalKey toolTipKey = GlobalKey();
   final Helper helper = new Helper();
   UserApiCaller userApiCaller = new UserApiCaller();
   List<String> contributions = [
@@ -50,11 +46,6 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     super.initState();
-    animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 3));
-    colorAnimation =
-        Tween<Color>(begin: Color.fromRGBO(224, 101, 90, 1.0), end: Colors.blue)
-            .animate(animationController);
     address = new TextEditingController(text: sessionManager.user!.address);
     phoneNumber =
         new TextEditingController(text: sessionManager.user!.phoneNumber);
@@ -377,19 +368,6 @@ class _ProfileScreenState extends State<ProfileScreen>
             confirmBtnColor: Color(0xff1c9691),
             title: '');
       }
-      // UserApi apiCaller = new UserApi();
-      // String status = await apiCaller.updateProfilePicture(
-      //     userData: {'image': image, 'userId': sessionManager.getUser().id});
-      // if ('done' == status) {
-      //   User user = await apiCaller
-      //       .getById(userData: {'userId': sessionManager.getUser().id});
-      //   sessionManager.logout();
-      //   sessionManager.createSession(user);
-      //   sessionManager.loadSession();
-      //   setState(() {});
-      // } else {
-      //   Toast.show('Error!', context);
-      // }
     }
   }
 

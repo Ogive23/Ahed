@@ -260,7 +260,12 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                 width: w,
                                 onSubmitted: onSubmittedName,
                                 enableFormatters: false,
-                                maxLines: 1),
+                                maxLines: 1),Center(
+                                child: Text(
+                                  '*يمكنك عدم الإفصاح عن أسم الشخص، فقط أدخل كلمة شخص*',
+                                  textAlign: TextAlign.center,
+                                  style: appTheme.themeData.primaryTextTheme.subtitle1,
+                                )),
                             CustomSpacing(
                               value: 100,
                             ),
