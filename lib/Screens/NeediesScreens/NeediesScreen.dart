@@ -24,7 +24,7 @@ class _NeediesScreenState extends State<NeediesScreen> {
   int current = 0;
   SessionManager sessionManager = new SessionManager();
   int currentPage = 1;
-  static late int total;
+  late int total;
 
   @override
   initState() {
@@ -67,7 +67,11 @@ class _NeediesScreenState extends State<NeediesScreen> {
               enableInfiniteScroll: false,
               onPageChanged: (index, reason) async {
                 current = index;
-                if (current == needies!.length && current < total) {
+                print(current);
+                print(this.total);
+                print(needies!.length);
+                print(current == needies!.length && current < this.total);
+                if (current == needies!.length && current < this.total) {
                   currentPage++;
                   List<Needy> addedNeedies =
                       await getGeneratedNeedies(widget.type);
@@ -108,7 +112,7 @@ class _NeediesScreenState extends State<NeediesScreen> {
     if (!status['Err_Flag']) {
       setState(() {
         // this.lastPage = status['lastPage'];
-        total = status['total'];
+        this.total = status['total'];
       });
       return status['Values'];
     }
