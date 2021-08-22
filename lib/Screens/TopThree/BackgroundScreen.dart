@@ -25,16 +25,16 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
         ? (await showDialog(
             context: context,
             builder: (context) => new AlertDialog(
-              title: new Text('Are you sure?'),
-              content: new Text('Do you want to exit an App'),
+              title: new Text('هل أت متأكد؟'),
+              content: new Text('هل  تريد إغلاق التطبيق'),
               actions: <Widget>[
                 new TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: new Text('No'),
+                  child: new Text('لا'),
                 ),
                 new TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: new Text('Yes'),
+                  child: new Text('نعم'),
                 ),
               ],
             ),
