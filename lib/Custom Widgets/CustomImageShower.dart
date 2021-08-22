@@ -20,10 +20,14 @@ class CustomImageShower extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
         child: url != 'N/A'
-            ? Image.network(this.url)
+            ? Image.network(
+                this.url,
+                errorBuilder: (context, error, stackTrace) =>
+                    Image.asset('assets/images/user.png'),
+              )
             : Image.asset(
-          'assets/images/user.png',
-        ),
+                'assets/images/user.png',
+              ),
       ),
     );
   }

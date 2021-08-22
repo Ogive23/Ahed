@@ -43,6 +43,17 @@ class ImageCarouselShow extends StatelessWidget {
               .map(
                 (needyMedia) => Image.network(
                   needyMedia.url,
+                  errorBuilder:
+                      (context, error, stackTrace) =>
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'حدث خطأ أثناء تحميل الصورة',
+                          style: appTheme.themeData
+                              .primaryTextTheme.headline4!
+                              .apply(color: Colors.red),
+                        ),
+                      ),
                 ),
               )
               .toList(),
@@ -96,6 +107,17 @@ class ImageCarouselShow extends StatelessWidget {
                   .map(
                     (needyMedia) => Image.network(
                       needyMedia.url,
+                      errorBuilder:
+                          (context, error, stackTrace) =>
+                          Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'حدث خطأ أثناء تحميل الصورة',
+                              style: appTheme.themeData
+                                  .primaryTextTheme.headline4!
+                                  .apply(color: Colors.red),
+                            ),
+                          ),
                     ),
                   )
                   .toList(),

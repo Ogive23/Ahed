@@ -85,6 +85,17 @@ class CustomNeedyContainer extends StatelessWidget {
                                     fit: BoxFit.cover,
                                     height: h / 3,
                                     width: w,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'حدث خطأ أثناء تحميل الصورة',
+                                        style: appTheme.themeData
+                                            .primaryTextTheme.headline4!
+                                            .apply(color: Colors.red),
+                                      ),
+                                    ),
                                   ),
                                 ))
                             .toList(),
@@ -211,6 +222,8 @@ class CustomNeedyContainer extends StatelessWidget {
                                   fit: BoxFit.cover,
                                   width: w / 5,
                                   height: h / 10,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Image.asset('assets/images/user.png'),
                                 ),
                               ),
                             ),

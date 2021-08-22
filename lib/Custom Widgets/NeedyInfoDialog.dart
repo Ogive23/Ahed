@@ -66,6 +66,17 @@ class NeedyInfoDialog extends StatelessWidget {
                                     fit: BoxFit.cover,
                                     height: h / 3,
                                     width: w,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'حدث خطأ أثناء تحميل الصورة',
+                                        style: appTheme.themeData
+                                            .primaryTextTheme.headline4!
+                                            .apply(color: Colors.red),
+                                      ),
+                                    ),
                                   ),
                                 ))
                             .toList(),
@@ -110,9 +121,7 @@ class NeedyInfoDialog extends StatelessWidget {
                         ),
                         ConstrainedBox(
                           constraints: BoxConstraints(
-                              maxHeight: h/8,
-                              minHeight: h/10
-                          ),
+                              maxHeight: h / 8, minHeight: h / 10),
                           child: SingleChildScrollView(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
