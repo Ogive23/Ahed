@@ -7,7 +7,6 @@ class User {
   String phoneNumber;
   String address;
   bool verified;
-  String accessToken;
   String? profileImage;
   String? profileCover;
   String? profileBio;
@@ -21,7 +20,6 @@ class User {
       this.phoneNumber,
       this.address,
       this.verified,
-      this.accessToken,
       this.profileImage,
       this.profileCover,
       this.profileBio);
@@ -36,7 +34,6 @@ class User {
       this.phoneNumber,
       this.address,
       this.verified.toString(),
-      this.accessToken.toString(),
       this.profileImage!,
       this.profileCover!,
       this.profileBio!

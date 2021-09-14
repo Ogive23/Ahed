@@ -62,7 +62,6 @@ class DataMapper {
         helper.getAppropriateText(info['user']['phone_number'].toString()),
         helper.getAppropriateText(info['user']['address'].toString()),
         info['user']['email_verified_at'] != null ? true : false,
-        info['token'],
         info['profile']['image'] != null
             ? url + info['profile']['image']
             : 'N/A',

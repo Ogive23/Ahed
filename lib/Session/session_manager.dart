@@ -5,6 +5,7 @@ import '../Models/User.dart';
 class SessionManager {
   late SharedPreferences? sharedPreferences;
   User? user;
+  String? accessToken;
   DateTime? accessTokenExpireDate;
 
   SessionManager._privateConstructor();
@@ -17,20 +18,23 @@ class SessionManager {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  createSession(User user, DateTime accessTokenExpiryDate) {
+  createSession(User user, String accessToken, DateTime expiryDate) {
     this.user = user;
+    this.accessToken = accessToken;
+    this.accessTokenExpireDate = expiryDate;
     print(user.toList());
     sharedPreferences!.setStringList('user', user.toList());
-    sharedPreferences!.setString(
-        'accessTokenExpireDate', accessTokenExpiryDate.toString());
+    sharedPreferences!.setString('accessToken', accessToken);
+    sharedPreferences!.setString('expiryDate', expiryDate.toString());
   }
 
   loadSession() {
     accessTokenExpireDate =
-        DateTime.parse(sharedPreferences!.getString('accessTokenExpireDate')!);
+        DateTime.parse(sharedPreferences!.getString('expiryDate')!);
     if (accessTokenExpireDate!.isBefore(DateTime.now())) {
       logout();
     }
+    accessToken = sharedPreferences!.getString('accessToken')!;
     List<String> userData = sharedPreferences!.getStringList('user')!;
     user = new User(
         userData[0],
@@ -42,7 +46,6 @@ class SessionManager {
         userData[6],
         //ToDo: Review
         userData[7] == "true" ? true : false,
-        userData[8],
         userData[9],
         userData[10],
         userData[11]);
@@ -82,8 +85,10 @@ class SessionManager {
 
   logout() {
     this.user = null;
+    this.accessToken = null;
     this.accessTokenExpireDate = null;
     sharedPreferences!.remove('accessTokenExpireDate');
+    sharedPreferences!.remove('accessToken');
     sharedPreferences!.remove('user');
   }
 
@@ -103,7 +108,6 @@ class SessionManager {
         userData[6],
         //ToDo: Review
         userData[7] == "true" ? true : false,
-        userData[8],
         userData[9],
         userData[10],
         userData[11]);
