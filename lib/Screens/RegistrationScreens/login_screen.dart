@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     print(status['Values']);
     //ToDo: Access Token Duration
     sessionManager.createSession(
-        status['User'],status['AccessToken'],status['ExpiryDate']);
+        status['User'],status['AccessToken'],DateTime.parse(status['ExpiryDate']));
     print('thing ${sessionManager.sharedPreferences}');
     Navigator.popUntil(context, (route) => false);
     Navigator.pushNamed(context, 'MainScreen');
