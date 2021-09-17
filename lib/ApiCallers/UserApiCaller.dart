@@ -18,7 +18,7 @@ class UserApiCaller {
   TokenApiCaller tokenApiCaller = new TokenApiCaller();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference urls = FirebaseFirestore.instance.collection('URLs');
-  String url = "http://192.168.1.3:8000";
+  String url = "http://192.168.1.5:8000";
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     // if (sessionManager.accessTokenExpired()) {
@@ -106,7 +106,7 @@ class UserApiCaller {
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
     FormData formData = new FormData.fromMap({
-      '_method': 'put',
+      '_method': 'patch',
       'userId': userId,
       'image': await MultipartFile.fromFile(image.path),
     });
@@ -160,7 +160,7 @@ class UserApiCaller {
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
     FormData formData = new FormData.fromMap({
-      '_method': 'put',
+      '_method': 'patch',
       'userId': userId,
       'image': await MultipartFile.fromFile(image.path),
     });
@@ -214,7 +214,7 @@ class UserApiCaller {
       // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
     };
     var body = {
-      '_method': 'put',
+      '_method': 'patch',
       'userId': userId,
       'bio': bio,
       'address': address,

@@ -2,16 +2,16 @@ import 'package:ahed/Shared%20Data/TransactionData.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../Session/session_manager.dart';
-import '../../Shared Data/app_language.dart';
-import '../../Shared Data/app_theme.dart';
-import '../../Shared Data/common_data.dart';
-import '../../Shared Data/NeedyData.dart';
-import 'BackgroundScreen.dart';
+import 'Session/session_manager.dart';
+import 'Shared Data/app_language.dart';
+import 'Shared Data/app_theme.dart';
+import 'Shared Data/common_data.dart';
+import 'Shared Data/NeedyData.dart';
+import 'Screens/TopThree/BackgroundScreen.dart';
 import 'first_time_screens.dart';
-import '../RegistrationScreens/login_screen.dart';
-import '../RegistrationScreens/sign_up_screen.dart';
-import 'splash_screen.dart';
+import 'Screens/RegistrationScreens/login_screen.dart';
+import 'Screens/RegistrationScreens/sign_up_screen.dart';
+import 'Screens/TopThree/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../Custom Widgets/text.dart';
-import '../../Session/session_manager.dart';
+import 'Custom Widgets/text.dart';
+import 'Session/session_manager.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -21,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 30),
                 CustomText(
-                  sentence: 'Welcome To Breed Me App!',
+                  sentence: 'Welcome To Ahed App!',
                   color: Colors.black,
                   fontSize: MediaQuery.of(context).size.height / 30,
                   textDecoration: TextDecoration.none,

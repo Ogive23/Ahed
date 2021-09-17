@@ -9,7 +9,7 @@ import 'package:ahed/Session/session_manager.dart';
 import 'package:intl/intl.dart';
 
 class TransactionApiCaller {
-  String url = "http://192.168.1.3:8000";
+  String url = "http://192.168.1.5:8000";
   ResponseHandler responseHandler = new ResponseHandler();
   SessionManager sessionManager = new SessionManager();
   DataMapper dataMapper = new DataMapper();

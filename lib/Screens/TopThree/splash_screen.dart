@@ -48,8 +48,7 @@ class _SplashScreen extends State<SplashScreen>
   }
 
   getHomePage() {
-    //ToDo:Remove Comments
-    // if (!sessionManager.notFirstTime()) return 'WelcomeScreen';
+    if (!sessionManager.notFirstTime()) return 'WelcomeScreen';
     if (sessionManager.isLoggedIn()) sessionManager.loadSession();
     return 'MainScreen';
   }

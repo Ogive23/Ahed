@@ -12,7 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 
 class NeedyApiCaller {
-  String url = "http://192.168.1.3:8000";
+  String url = "http://192.168.1.5:8000";
   ResponseHandler responseHandler = new ResponseHandler();
   SessionManager sessionManager = new SessionManager();
   DataMapper dataMapper = new DataMapper();
