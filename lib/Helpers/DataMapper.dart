@@ -41,12 +41,12 @@ class DataMapper {
         this.getNeediesMediaFromJson(baseURL, element['medias_before']),
         this.getNeediesMediaFromJson(baseURL, element['medias_after']),
         element['url'],
-        element['createdBy']['id'].toString(),
-        element['createdBy']['name'].toString(),
-        element['createdBy']['image'] != null
-            ? baseURL + element['createdBy']['image']
+        element['userId'].toString(),
+        element['userName'].toString(),
+        element['userImage'] != null
+            ? baseURL + element['userImage']
             : 'N/A',
-        element['createdBy']['email_verified_at'] != null ? true : false,
+        element['userEmailVerifiedAt'] != null ? true : false,
       ));
     });
     return returnedNeedies;
