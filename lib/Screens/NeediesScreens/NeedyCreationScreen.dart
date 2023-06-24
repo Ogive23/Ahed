@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:ahed/ApiCallers/NeedyApiCaller.dart';
@@ -12,7 +14,6 @@ import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -24,23 +25,23 @@ class NeedyCreationScreen extends StatefulWidget {
 class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
   late double w, h;
   late CommonData commonData;
-  late AppLanguage appLanguage;
   late AppTheme appTheme;
+  late AppLanguage appLanguage;
 
-  final TextEditingController name = new TextEditingController();
-  final TextEditingController age = new TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController age = TextEditingController();
   late int severity = 1;
   String? type;
   final List<String> availableTypes = [
-    "إيجاد مسكن مناسب",
-    "تحسين مستوي المعيشة",
-    "تجهيز لفرحة",
-    "سداد الديون",
-    "إيجاد علاج"
+    'إيجاد مسكن مناسب',
+    'تحسين مستوي المعيشة',
+    'تجهيز لفرحة',
+    'سداد الديون',
+    'إيجاد علاج'
   ];
-  final TextEditingController details = new TextEditingController();
-  final TextEditingController need = new TextEditingController();
-  final TextEditingController address = new TextEditingController();
+  final TextEditingController details = TextEditingController();
+  final TextEditingController need = TextEditingController();
+  final TextEditingController address = TextEditingController();
   late List<File> selectedImages = [];
 
   String? nameError;
@@ -92,7 +93,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
   }
 
   bool onSubmittedName(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         nameError = 'الأسم لا يمكن أن يكون فارغاً';
       });
@@ -110,13 +111,13 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
       int age = int.parse(value);
       if (age < 1) {
         setState(() {
-          ageError = "صفر؟";
+          ageError = 'صفر؟';
         });
         return false;
       }
     } catch (e) {
       setState(() {
-        ageError = "برجاء إدخال قيمة صحيحة";
+        ageError = 'برجاء إدخال قيمة صحيحة';
       });
       return false;
     }
@@ -129,7 +130,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
   bool onSubmittedDetails(String value) {
     print('value');
     print(value);
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         detailsError = 'التفاصيل لا يمكن أن تكون فارغة';
       });
@@ -147,13 +148,13 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
       double need = double.parse(value);
       if (need < 1) {
         setState(() {
-          needError = "صفر؟";
+          needError = 'صفر؟';
         });
         return false;
       }
     } catch (e) {
       setState(() {
-        needError = "برجاء إدخال قيمة صحيحة";
+        needError = 'برجاء إدخال قيمة صحيحة';
       });
       return false;
     }
@@ -164,7 +165,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
   }
 
   bool onSubmittedAddress(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         addressError = 'العنوان لا يمكن أن يكون فارغاً';
       });
@@ -177,7 +178,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
   }
 
   Future<File?> pickImageFromGallery(ImageSource source) async {
-    PickedFile? pickedFile = await new ImagePicker().getImage(source: source);
+    PickedFile? pickedFile = await ImagePicker().getImage(source: source);
     if (pickedFile == null) return null;
     return File(pickedFile.path);
   }
@@ -192,6 +193,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
     appTheme = Provider.of<AppTheme>(context);
+    appLanguage = Provider.of<AppLanguage>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -218,7 +220,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
           )
         ],
       ),
-      body: Container(
+      body: SizedBox(
         // width: w,
         height: double.infinity,
         child: SingleChildScrollView(
@@ -251,7 +253,8 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                             CustomTextField(
                                 controller: name,
                                 label: 'أسم الحالة',
-                                selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                                selectedColor:
+                                    const Color.fromRGBO(38, 92, 126, 1.0),
                                 borderColor: Colors.grey,
                                 obscureText: false,
                                 keyboardType: TextInputType.name,
@@ -260,19 +263,22 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                 width: w,
                                 onSubmitted: onSubmittedName,
                                 enableFormatters: false,
-                                maxLines: 1),Center(
+                                maxLines: 1),
+                            Center(
                                 child: Text(
-                                  '*يمكنك عدم الإفصاح عن أسم الشخص، فقط أدخل كلمة شخص*',
-                                  textAlign: TextAlign.center,
-                                  style: appTheme.themeData.primaryTextTheme.subtitle1,
-                                )),
-                            CustomSpacing(
+                              '*يمكنك عدم الإفصاح عن أسم الشخص، فقط أدخل كلمة شخص*',
+                              textAlign: TextAlign.center,
+                              style:
+                                  appTheme.themeData.primaryTextTheme.subtitle1,
+                            )),
+                            const CustomSpacing(
                               value: 100,
                             ),
                             CustomTextField(
                                 controller: age,
                                 label: 'عمر الحالة',
-                                selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                                selectedColor:
+                                    const Color.fromRGBO(38, 92, 126, 1.0),
                                 borderColor: Colors.grey,
                                 obscureText: false,
                                 keyboardType: TextInputType.number,
@@ -282,13 +288,14 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                 onSubmitted: onSubmittedAge,
                                 enableFormatters: true,
                                 maxLines: 1),
-                            CustomSpacing(
+                            const CustomSpacing(
                               value: 100,
                             ),
                             CustomTextField(
                                 controller: details,
                                 label: 'التفاصيل',
-                                selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                                selectedColor:
+                                    const Color.fromRGBO(38, 92, 126, 1.0),
                                 borderColor: Colors.grey,
                                 obscureText: false,
                                 keyboardType: TextInputType.text,
@@ -298,13 +305,14 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                 onSubmitted: onSubmittedDetails,
                                 enableFormatters: false,
                                 maxLines: 3),
-                            CustomSpacing(
+                            const CustomSpacing(
                               value: 100,
                             ),
                             CustomTextField(
                                 controller: need,
                                 label: 'المبلغ المطلوب',
-                                selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                                selectedColor:
+                                    const Color.fromRGBO(38, 92, 126, 1.0),
                                 borderColor: Colors.grey,
                                 obscureText: false,
                                 keyboardType: TextInputType.number,
@@ -314,13 +322,14 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                 onSubmitted: onSubmittedNeed,
                                 enableFormatters: true,
                                 maxLines: 1),
-                            CustomSpacing(
+                            const CustomSpacing(
                               value: 100,
                             ),
                             CustomTextField(
                                 controller: address,
                                 label: 'عنوان الحالة',
-                                selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                                selectedColor:
+                                    const Color.fromRGBO(38, 92, 126, 1.0),
                                 borderColor: Colors.grey,
                                 obscureText: false,
                                 keyboardType: TextInputType.streetAddress,
@@ -330,7 +339,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                 onSubmitted: onSubmittedAddress,
                                 enableFormatters: false,
                                 maxLines: 1),
-                            CustomSpacing(
+                            const CustomSpacing(
                               value: 100,
                             ),
                           ],
@@ -361,7 +370,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                   style: appTheme
                                       .themeData.primaryTextTheme.headline3,
                                 )),
-                            CustomSpacing(
+                            const CustomSpacing(
                               value: 100,
                             ),
                             Padding(
@@ -388,10 +397,11 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                           },
                                           items: availableTypes
                                               .map((type) => DropdownMenuItem(
+                                                    value: type,
                                                     child: Directionality(
                                                         textDirection:
                                                             TextDirection.rtl,
-                                                        child: Container(
+                                                        child: SizedBox(
                                                           width: w,
                                                           child: Text(
                                                             type,
@@ -399,13 +409,12 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                                                 TextAlign.right,
                                                           ),
                                                         )),
-                                                    value: type,
                                                   ))
                                               .toList())),
                                 ),
                               ),
                             ),
-                            CustomSpacing(
+                            const CustomSpacing(
                               value: 100,
                             ),
                             Align(
@@ -429,7 +438,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                 divisions: 2,
                                 label: getLabelBasedOnSeverity(severity),
                                 activeColor: getColorBasedOnSeverity(severity),
-                                inactiveColor: appTheme.themeData.accentColor
+                                inactiveColor: appTheme.themeData.canvasColor
                                     .withOpacity(0.5),
                               ),
                             ),
@@ -463,16 +472,12 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                           File? selectedFile =
                                               await pickImageFromGallery(
                                                   ImageSource.gallery);
-                                          if (selectedFile != null)
+                                          if (selectedFile != null) {
                                             setState(() {
                                               selectedImages.add(selectedFile);
                                             });
+                                          }
                                         },
-                                        child: Text(
-                                          'إضافة صورة',
-                                          style: appTheme.themeData
-                                              .primaryTextTheme.headline5,
-                                        ),
                                         style: ButtonStyle(
                                             side: MaterialStateProperty
                                                 .all<BorderSide>(BorderSide(
@@ -481,11 +486,17 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                             minimumSize:
                                                 MaterialStateProperty.all<Size>(
                                                     Size(w / 4, h / 7))),
+                                        child: Text(
+                                          'إضافة صورة',
+                                          style: appTheme.themeData
+                                              .primaryTextTheme.headlineSmall,
+                                        ),
                                       ),
                                     ] +
                                     selectedImages.reversed
                                         .map((image) => Container(
-                                      margin: EdgeInsets.symmetric(horizontal: w/100),
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: w / 100),
                                               child: Stack(
                                                 children: [
                                                   Image.file(
@@ -494,7 +505,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                                     height: h / 7,
                                                   ),
                                                   IconButton(
-                                                      icon: Icon(
+                                                      icon: const Icon(
                                                         Icons.remove_circle,
                                                         color: Colors.red,
                                                       ),
@@ -527,9 +538,9 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                             .apply(
                                 decoration: TextDecoration.underline,
                                 color: Colors.blue),
-                        recognizer: new TapGestureRecognizer()
+                        recognizer: TapGestureRecognizer()
                           ..onTap = () => print('Tap Here onTap')),
-                    TextSpan(
+                    const TextSpan(
                         text:
                             ' الخاصة بإنشاء الحالات حتي لا تتعرض لأي مسائلة قانونية')
                   ]),
@@ -537,55 +548,54 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                   style: appTheme.themeData.primaryTextTheme.subtitle1,
                 ),
               ),
-              isLoading
-                  ? CustomButtonLoading()
-                  : ElevatedButton(
-                      onPressed: () async {
-                        if (fullValidator()) {
-                          changeLoadingState();
-                          NeedyApiCaller needyApiCaller = new NeedyApiCaller();
-                          SessionManager sessionManager = new SessionManager();
-                          Map<String, dynamic> status =
-                              await needyApiCaller.create(
-                                  sessionManager.user!.id,
-                                  name.text,
-                                  int.parse(age.text),
-                                  severity,
-                                  type!,
-                                  details.text,
-                                  int.parse(need.text),
-                                  address.text,
-                                  selectedImages);
-                          changeLoadingState();
-                          if (status['Err_Flag']) {
-                            return CoolAlert.show(
-                                context: context,
-                                type: CoolAlertType.error,
-                                lottieAsset:
-                                    'assets/animations/38213-error.json',
-                                text: status['Err_Desc'],
-                                confirmBtnColor: Color(0xff1c9691),
-                                title: '');
-                          }
-                          commonData.back();
-                          return CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.success,
-                              lottieAsset:
-                                  'assets/animations/6951-success.json',
-                              text: status['message'],
-                              confirmBtnColor: Color(0xff1c9691),
-                              title: '');
-                        }
-                      },
-                      child: Text(
-                        'إنشاء الطلب',
-                        style: appTheme.themeData.primaryTextTheme.bodyText2,
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromRGBO(38, 92, 126, 1.0))),
-                    ),
+              if (isLoading)
+                const CustomButtonLoading()
+              else
+                ElevatedButton(
+                  onPressed: () async {
+                    if (fullValidator()) {
+                      changeLoadingState();
+                      NeedyApiCaller needyApiCaller = NeedyApiCaller();
+                      SessionManager sessionManager = SessionManager();
+                      Map<String, dynamic> status = await needyApiCaller.create(
+                          appLanguage.language!,
+                          sessionManager.user!.id,
+                          name.text,
+                          int.parse(age.text),
+                          severity,
+                          type!,
+                          details.text,
+                          int.parse(need.text),
+                          address.text,
+                          selectedImages);
+                      changeLoadingState();
+                      if (status['Err_Flag']) {
+                        return CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.error,
+                            lottieAsset: 'assets/animations/38213-error.json',
+                            text: status['Err_Desc'],
+                            confirmBtnColor: const Color(0xff1c9691),
+                            title: '');
+                      }
+                      commonData.back();
+                      return CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.success,
+                          lottieAsset: 'assets/animations/6951-success.json',
+                          text: status['message'],
+                          confirmBtnColor: const Color(0xff1c9691),
+                          title: '');
+                    }
+                  },
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromRGBO(38, 92, 126, 1.0))),
+                  child: Text(
+                    'إنشاء الطلب',
+                    style: appTheme.themeData.primaryTextTheme.bodyText2,
+                  ),
+                ),
             ],
           ),
         ),

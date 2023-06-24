@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:ahed/ApiCallers/TransactionApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomButtonLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
@@ -27,7 +29,7 @@ class _OfflineTransactionCreationScreenState
   late NeedyData needyData;
   late AppLanguage appLanguage;
   late AppTheme appTheme;
-  final TextEditingController amount = new TextEditingController();
+  final TextEditingController amount = TextEditingController();
   late String preferredSection;
   late TextEditingController address;
   late TextEditingController mobileNumber;
@@ -61,13 +63,13 @@ class _OfflineTransactionCreationScreenState
       return true;
     }
     setState(() {
-      dateError = "خطأ في إختيار الفترة";
+      dateError = 'خطأ في إختيار الفترة';
     });
     return false;
   }
 
   bool onSubmittedAddress(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         addressError = 'العنوان لا يمكن أن يكون فارغاً';
       });
@@ -84,13 +86,13 @@ class _OfflineTransactionCreationScreenState
       double amount = double.parse(value);
       if (amount < 1) {
         setState(() {
-          amountError = "صفر؟";
+          amountError = 'صفر؟';
         });
         return false;
       }
     } catch (e) {
       setState(() {
-        amountError = "برجاء إدخال قيمة صحيحة";
+        amountError = 'برجاء إدخال قيمة صحيحة';
       });
       return false;
     }
@@ -101,7 +103,7 @@ class _OfflineTransactionCreationScreenState
   }
 
   bool onSubmittedMobileNumber(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         mobileNumberError = 'رقم الهاتف لا يمكن أن يكون فارغاً';
       });
@@ -119,10 +121,11 @@ class _OfflineTransactionCreationScreenState
         initialDate: startCollectDate,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != startCollectDate)
+    if (picked != null && picked != startCollectDate) {
       setState(() {
         startCollectDate = picked;
       });
+    }
   }
 
   Future<void> selectToDate(BuildContext context) async {
@@ -131,10 +134,11 @@ class _OfflineTransactionCreationScreenState
         initialDate: endCollectDate,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != endCollectDate)
+    if (picked != null && picked != endCollectDate) {
       setState(() {
         endCollectDate = picked;
       });
+    }
   }
 
   changeLoadingState() {
@@ -148,18 +152,19 @@ class _OfflineTransactionCreationScreenState
     commonData = Provider.of<CommonData>(context);
     needyData = Provider.of<NeedyData>(context);
     appTheme = Provider.of<AppTheme>(context);
+    appLanguage = Provider.of<AppLanguage>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     if (firstTime) {
-      SessionManager sessionManager = new SessionManager();
-      if(sessionManager.user == null){
-        address = new TextEditingController();
-        mobileNumber = new TextEditingController();
-      }
-      else{
-        address = new TextEditingController(text: sessionManager.user!.address);
+      SessionManager sessionManager = SessionManager();
+      if (sessionManager.user == null) {
+        address = TextEditingController();
+        mobileNumber = TextEditingController();
+      } else {
+        print(sessionManager.user!.address == 'null');
+        address = TextEditingController(text: sessionManager.user!.address);
         mobileNumber =
-        new TextEditingController(text: sessionManager.user!.phoneNumber);
+            TextEditingController(text: sessionManager.user!.phoneNumber);
       }
       firstTime = false;
     }
@@ -213,7 +218,7 @@ class _OfflineTransactionCreationScreenState
                         ),
                       ],
                     ),
-                    CustomSpacing(
+                    const CustomSpacing(
                       value: 100,
                     ),
                     Row(
@@ -229,14 +234,12 @@ class _OfflineTransactionCreationScreenState
                         ),
                       ],
                     ),
-                    CustomSpacing(
+                    const CustomSpacing(
                       value: 100,
                     ),
                     ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: h/5,
-                        minHeight: h/10
-                      ),
+                      constraints:
+                          BoxConstraints(maxHeight: h / 5, minHeight: h / 10),
                       child: SingleChildScrollView(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,7 +258,7 @@ class _OfflineTransactionCreationScreenState
                         ),
                       ),
                     ),
-                    CustomSpacing(
+                    const CustomSpacing(
                       value: 100,
                     ),
                     Row(
@@ -270,15 +273,12 @@ class _OfflineTransactionCreationScreenState
                           padding: EdgeInsets.symmetric(vertical: h / 100),
                           animationDuration: 1000,
                           lineHeight: h / 25,
-                          linearGradient: LinearGradient(
+                          linearGradient: const LinearGradient(
                               colors: [Colors.green, Colors.greenAccent]),
                           percent: needyData.selectedNeedy!.collected! /
                               needyData.selectedNeedy!.need!,
                           center: Text(
-                            (needyData.selectedNeedy!.need! -
-                                        needyData.selectedNeedy!.collected!)
-                                    .toStringAsFixed(0) +
-                                ' جنيه',
+                            '${(needyData.selectedNeedy!.need! - needyData.selectedNeedy!.collected!).toStringAsFixed(0)} جنيه',
                             style:
                                 appTheme.themeData.primaryTextTheme.bodyText2,
                           ),
@@ -307,7 +307,8 @@ class _OfflineTransactionCreationScreenState
                             controller: amount,
                             label: 'المبلغ',
                             selectedIcon: FontAwesomeIcons.moneyBill,
-                            selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                            selectedColor:
+                                const Color.fromRGBO(38, 92, 126, 1.0),
                             borderColor: Colors.grey,
                             obscureText: false,
                             keyboardType: TextInputType.number,
@@ -336,7 +337,7 @@ class _OfflineTransactionCreationScreenState
                         controller: address,
                         label: 'العنوان',
                         selectedIcon: FontAwesomeIcons.addressCard,
-                        selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                        selectedColor: const Color.fromRGBO(38, 92, 126, 1.0),
                         borderColor: Colors.grey,
                         obscureText: false,
                         keyboardType: TextInputType.streetAddress,
@@ -351,7 +352,7 @@ class _OfflineTransactionCreationScreenState
                         controller: mobileNumber,
                         label: 'رقم الهاتف',
                         selectedIcon: FontAwesomeIcons.phoneAlt,
-                        selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                        selectedColor: const Color.fromRGBO(38, 92, 126, 1.0),
                         borderColor: Colors.grey,
                         obscureText: false,
                         keyboardType: TextInputType.phone,
@@ -362,7 +363,7 @@ class _OfflineTransactionCreationScreenState
                         onSubmitted: onSubmittedMobileNumber,
                         enableFormatters: true,
                         maxLines: 1),
-                    CustomSpacing(
+                    const CustomSpacing(
                       value: 100,
                     ),
                     Row(
@@ -384,7 +385,8 @@ class _OfflineTransactionCreationScreenState
                                           .bodyText1!
                                           .color!)),
                               child: Text(
-                                '${intl.DateFormat('y-MM-dd').format(startCollectDate)}',
+                                intl.DateFormat('y-MM-dd')
+                                    .format(startCollectDate),
                                 style: appTheme
                                     .themeData.primaryTextTheme.bodyText2,
                               ),
@@ -409,7 +411,8 @@ class _OfflineTransactionCreationScreenState
                                           .bodyText1!
                                           .color!)),
                               child: Text(
-                                '${intl.DateFormat('y-MM-dd').format(endCollectDate)}',
+                                intl.DateFormat('y-MM-dd')
+                                    .format(endCollectDate),
                                 style: appTheme
                                     .themeData.primaryTextTheme.bodyText2,
                               ),
@@ -425,7 +428,7 @@ class _OfflineTransactionCreationScreenState
                     )),
                     Center(
                       child: dateError == null
-                          ? SizedBox()
+                          ? const SizedBox()
                           : Text(
                               dateError!,
                               style: appTheme
@@ -437,16 +440,17 @@ class _OfflineTransactionCreationScreenState
                 ),
               ),
               isLoading
-                  ? CustomButtonLoading()
+                  ? const CustomButtonLoading()
                   : ElevatedButton(
                       onPressed: () async {
                         if (fullValidator()) {
                           changeLoadingState();
                           TransactionApiCaller transactionApiCaller =
-                              new TransactionApiCaller();
-                          SessionManager sessionManager = new SessionManager();
+                              TransactionApiCaller();
+                          SessionManager sessionManager = SessionManager();
                           Map<String, dynamic> status =
                               await transactionApiCaller.addOfflineTransaction(
+                                  appLanguage.language!,
                                   sessionManager.user == null
                                       ? null
                                       : sessionManager.user!.id,
@@ -465,27 +469,28 @@ class _OfflineTransactionCreationScreenState
                                 lottieAsset:
                                     'assets/animations/38213-error.json',
                                 text: status['Err_Desc'],
-                                confirmBtnColor: Color(0xff1c9691),
+                                confirmBtnColor: const Color(0xff1c9691),
                                 title: '');
                           }
                           commonData.back();
+                          print('Created');
                           return CoolAlert.show(
                               context: context,
                               type: CoolAlertType.success,
                               lottieAsset:
                                   'assets/animations/6951-success.json',
                               text: status['message'],
-                              confirmBtnColor: Color(0xff1c9691),
+                              confirmBtnColor: const Color(0xff1c9691),
                               title: '');
                         }
                       },
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromRGBO(38, 92, 126, 1.0))),
                       child: Text(
                         'تبرع',
                         style: appTheme.themeData.primaryTextTheme.bodyText2,
                       ),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromRGBO(38, 92, 126, 1.0))),
                     ),
             ],
           ),

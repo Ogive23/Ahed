@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:ahed/ApiCallers/TransactionApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomButtonLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
@@ -23,13 +25,13 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   late NeedyData needyData;
   late AppLanguage appLanguage;
   late AppTheme appTheme;
-  final TextEditingController cardNumber = new TextEditingController();
+  final TextEditingController cardNumber = TextEditingController();
   String? cardNumberError;
-  final TextEditingController expiryDate = new TextEditingController();
+  final TextEditingController expiryDate = TextEditingController();
   String? expiryDateError;
-  final TextEditingController cvv = new TextEditingController();
+  final TextEditingController cvv = TextEditingController();
   String? cvvError;
-  final TextEditingController amount = new TextEditingController();
+  final TextEditingController amount = TextEditingController();
   String? amountError;
   bool isLoading = false;
 
@@ -44,7 +46,6 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
         amountValidation;
   }
 
-
   onChangedExpiryDate(String value) {
     if (value.length == 0) {
       return setState(() {
@@ -54,29 +55,28 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
     if (value.length > 2 && value.contains('/')) {
     } else if (value.length == 3 && !value.contains('/')) {
       setState(() {
-        expiryDate.text = value[0] + value[1] + "/" + value[2];
+        expiryDate.text = value[0] + value[1] + '/' + value[2];
         expiryDate.selection = TextSelection.fromPosition(
             TextPosition(offset: expiryDate.text.length));
       });
     }
   }
 
-
   bool onSubmittedCardNumber(String value) {
     if (value.length == 0) {
       setState(() {
-        cardNumberError = "هذا الحقل لا يمكن أن يكون فارغاً.";
+        cardNumberError = 'هذا الحقل لا يمكن أن يكون فارغاً.';
       });
       return false;
     }
     if (value.length > 16 || value.length < 15) {
       setState(() {
-        this.cardNumberError = "يجب أن يكون بين 15-16 رقماً";
+        cardNumberError = 'يجب أن يكون بين 15-16 رقماً';
       });
       return false;
     }
     setState(() {
-      this.cardNumberError = null;
+      cardNumberError = null;
     });
     return true;
   }
@@ -84,7 +84,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   bool onSubmittedExpiryDate(String value) {
     if (value.length == 0) {
       setState(() {
-        expiryDateError = "هذا الحقل لا يمكن أن يكون فارغاً.";
+        expiryDateError = 'هذا الحقل لا يمكن أن يكون فارغاً.';
       });
       return false;
     }
@@ -119,7 +119,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
       return false;
     }
     setState(() {
-      this.expiryDateError = null;
+      expiryDateError = null;
     });
     return true;
   }
@@ -127,7 +127,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   bool onSubmittedCVV(String value) {
     if (value.length == 0) {
       setState(() {
-        cvvError = "رقم خاطئ.";
+        cvvError = 'رقم خاطئ.';
       });
       return false;
     }
@@ -149,14 +149,14 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
       double amount = double.parse(value);
       if (amount < 1) {
         setState(() {
-          amountError = "صفر؟";
+          amountError = 'صفر؟';
         });
         return false;
       }
       print(amount);
     } catch (e) {
       setState(() {
-        amountError = "مبلغ خاطئ";
+        amountError = 'مبلغ خاطئ';
       });
       return false;
     }
@@ -185,20 +185,20 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
           onSubmittedAmount(amount.text);
           onSubmittedCVV(cvv.text);
           onSubmittedExpiryDate(expiryDate.text);
-          FocusScope.of(context).requestFocus(new FocusNode());
+          FocusScope.of(context).requestFocus(FocusNode());
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: w / 10),
           width: w,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
           ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomSpacing(value: 50),
+                const CustomSpacing(value: 50),
                 CustomTextField(
                     controller: cardNumber,
                     label: 'رقم بطاقة الدفع',
@@ -264,10 +264,10 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                     SizedBox(
                       width: w / 100,
                     ),
-                    Text('جنيه مصري')
+                    const Text('جنيه مصري')
                   ],
                 ),
-                CustomSpacing(
+                const CustomSpacing(
                   value: 100,
                 ),
                 // CustomSpacing(),
@@ -293,19 +293,20 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                         // ),
                       ),
                       isLoading
-                          ? CustomButtonLoading()
+                          ? const CustomButtonLoading()
                           : ElevatedButton(
                               onPressed: () async {
                                 print('h');
                                 if (fullValidator()) {
                                   changeLoadingState();
                                   TransactionApiCaller transactionApiCaller =
-                                      new TransactionApiCaller();
+                                      TransactionApiCaller();
                                   SessionManager sessionManager =
-                                      new SessionManager();
+                                      SessionManager();
                                   Map<String, dynamic> status =
                                       await transactionApiCaller
                                           .addOnlineTransaction(
+                                              appLanguage.language!,
                                               sessionManager.user == null
                                                   ? null
                                                   : sessionManager.user!.id,
@@ -322,7 +323,8 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                                         lottieAsset:
                                             'assets/animations/38213-error.json',
                                         text: status['Err_Desc'],
-                                        confirmBtnColor: Color(0xff1c9691),
+                                        confirmBtnColor:
+                                            const Color(0xff1c9691),
                                         title: '');
                                   }
                                   commonData.back();
@@ -332,15 +334,15 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
                                       lottieAsset:
                                           'assets/animations/6951-success.json',
                                       text: status['message'],
-                                      confirmBtnColor: Color(0xff1c9691),
+                                      confirmBtnColor: const Color(0xff1c9691),
                                       title: '');
                                 }
                               },
-                              child: Text('تبرع'),
+                              child: const Text('تبرع'),
                               style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Color.fromRGBO(38, 92, 126, 1.0))),
+                                  backgroundColor: MaterialStateProperty.all<
+                                          Color>(
+                                      const Color.fromRGBO(38, 92, 126, 1.0))),
                             ),
                     ],
                   ),

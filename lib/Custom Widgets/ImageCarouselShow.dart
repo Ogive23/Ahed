@@ -20,19 +20,19 @@ class ImageCarouselShow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: BackButton(),
+          leading: const BackButton(),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
         ),
         extendBodyBehindAppBar: true,
-        body: getView(this.type, context));
+        body: getView(type, context));
   }
 
   Widget getView(String type, context) {
-    if (type == 'Before')
+    if (type == 'Before') {
       return Container(
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(color: Colors.black),
+        decoration: const BoxDecoration(color: Colors.black),
         child: CarouselSlider(
           options: CarouselOptions(
               enlargeCenterPage: true,
@@ -59,11 +59,12 @@ class ImageCarouselShow extends StatelessWidget {
               .toList(),
         ),
       );
+    }
     return needyMedias.isEmpty
         ? Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(color: Colors.blueGrey),
+            decoration: const BoxDecoration(color: Colors.blueGrey),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -96,7 +97,7 @@ class ImageCarouselShow extends StatelessWidget {
           )
         : Container(
             height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(color: Colors.black),
+            decoration: const BoxDecoration(color: Colors.black),
             child: CarouselSlider(
               options: CarouselOptions(
                   enlargeCenterPage: true,

@@ -24,17 +24,17 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
     return commonData.lastStep()
         ? (await showDialog(
             context: context,
-            builder: (context) => new AlertDialog(
-              title: new Text('هل أت متأكد؟'),
-              content: new Text('هل  تريد إغلاق التطبيق'),
+            builder: (context) => AlertDialog(
+              title: const Text('هل أت متأكد؟'),
+              content: const Text('هل  تريد إغلاق التطبيق'),
               actions: <Widget>[
-                new TextButton(
+                TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: new Text('لا'),
+                  child: const Text('لا'),
                 ),
-                new TextButton(
+                TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: new Text('نعم'),
+                  child: const Text('نعم'),
                 ),
               ],
             ),
@@ -46,6 +46,7 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
     appTheme = Provider.of<AppTheme>(context);
+    appLanguage = Provider.of<AppLanguage>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     print(commonData.step);
@@ -53,12 +54,12 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
       onWillPop: () => _onWillPop(context),
       child: Scaffold(
         body: pageOptions[commonData.step],
-        bottomNavigationBar: new Theme(
+        bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
             canvasColor: Colors.white,
           ),
           child: commonData.step > Pages.SettingsScreen.index
-              ? SizedBox()
+              ? const SizedBox()
               : BottomNavigationBar(
                   backgroundColor: appTheme.themeData.primaryColor,
                   selectedItemColor:

@@ -90,7 +90,7 @@ class _OnlineTransactionCreationScreenState
                           ),
                         ],
                       ),
-                      CustomSpacing(
+                      const CustomSpacing(
                         value: 100,
                       ),
                       Row(
@@ -106,7 +106,7 @@ class _OnlineTransactionCreationScreenState
                           ),
                         ],
                       ),
-                      CustomSpacing(
+                      const CustomSpacing(
                         value: 100,
                       ),
                       ConstrainedBox(
@@ -132,7 +132,7 @@ class _OnlineTransactionCreationScreenState
                           ),
                         ),
                       ),
-                      CustomSpacing(
+                      const CustomSpacing(
                         value: 100,
                       ),
                       Row(
@@ -147,15 +147,14 @@ class _OnlineTransactionCreationScreenState
                             padding: EdgeInsets.symmetric(vertical: h / 100),
                             animationDuration: 1000,
                             lineHeight: h / 25,
-                            linearGradient: LinearGradient(
+                            linearGradient: const LinearGradient(
                                 colors: [Colors.green, Colors.greenAccent]),
                             percent: needyData.selectedNeedy!.collected! /
                                 needyData.selectedNeedy!.need!,
                             center: Text(
-                              (needyData.selectedNeedy!.need! -
+                              '${(needyData.selectedNeedy!.need! -
                                           needyData.selectedNeedy!.collected!)
-                                      .toStringAsFixed(0) +
-                                  ' جنيه',
+                                      .toStringAsFixed(0)} جنيه',
                               style:
                                   appTheme.themeData.primaryTextTheme.bodyText2,
                             ),
@@ -168,7 +167,7 @@ class _OnlineTransactionCreationScreenState
                 ),
               ),
             ),
-            CustomSpacing(value: 100),
+            const CustomSpacing(value: 100),
             TabBar(
               // onTap: (value) {
               //   // setState(() {});
@@ -181,7 +180,7 @@ class _OnlineTransactionCreationScreenState
                 )),
                 Tab(
                   icon: Image.asset(
-                    'assets/images/paypal_logo.png',
+                    'assets/images/new-paypal-logo.jpg',
                     width: w / 5,
                   ),
                 )
@@ -208,22 +207,22 @@ class _OnlineTransactionCreationScreenState
             ),
             Expanded(
               child: TabBarView(
+                controller: tabController,
                 children: [
                   FawryPaymentScreen(),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: w / 10),
                     width: w,
                     height: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                     ),
-                    child: Center(
+                    child: const Center(
                         child: Center(
                       child: Text('Soon.'),
                     )),
                   ),
                 ],
-                controller: tabController,
               ),
             )
           ],

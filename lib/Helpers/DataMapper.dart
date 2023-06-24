@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ahed/Helpers/Helper.dart';
 import 'package:ahed/Models/OfflineTransaction.dart';
 import 'package:ahed/Models/OnlineTransaction.dart';
@@ -9,22 +7,22 @@ import '../Models/Needy.dart';
 import '../Models/NeedyMedia.dart';
 
 class DataMapper {
-  Helper helper = new Helper();
+  Helper helper = Helper();
 
   List<NeedyMedia> getNeediesMediaFromJson(String baseURL, List<dynamic> list) {
     print('here');
     List<NeedyMedia> returnedNeediesMedia = [];
-    list.forEach((element) {
-      returnedNeediesMedia.add(
-          new NeedyMedia(element['id'].toString(), baseURL + element['path']));
-    });
+    for (var element in list) {
+      returnedNeediesMedia
+          .add(NeedyMedia(element['id'].toString(), baseURL + element['path']));
+    }
     return returnedNeediesMedia;
   }
 
   List<Needy> getNeediesFromJson(String baseURL, List<dynamic> list) {
     List<Needy> returnedNeedies = [];
-    list.forEach((element) {
-      print(element['createdBy']['image']);
+    for (var element in list) {
+      print(element['created_by']['profile']['image']);
       returnedNeedies.add(Needy(
         element['id'].toString(),
         element['name'].toString(),
@@ -38,78 +36,80 @@ class DataMapper {
         element['satisfied'] == 1 ? true : false,
         element['approved'] == 1 ? true : false,
         DateTime.parse(element['created_at']),
-        this.getNeediesMediaFromJson(baseURL, element['medias_before']),
-        this.getNeediesMediaFromJson(baseURL, element['medias_after']),
+        getNeediesMediaFromJson(baseURL, element['medias_before']),
+        getNeediesMediaFromJson(baseURL, element['medias_after']),
         element['url'],
-        element['userId'].toString(),
-        element['userName'].toString(),
-        element['userImage'] != null
-            ? baseURL + element['userImage']
-            : 'N/A',
-        element['userEmailVerifiedAt'] != null ? true : false,
+        element['created_by']['id'].toString(),
+        element['created_by']['name'].toString(),
+        element['created_by']['profile']['image'] != null
+            ? baseURL + element['created_by']['profile']['image']
+            : null,
+        element['created_by']['email_verified_at'] != null ? true : false,
       ));
-    });
+    }
     return returnedNeedies;
   }
 
   User getUserFromJson(String url, Map<String, dynamic> info) {
     return User(
-        helper.getAppropriateText(info['user']['id']),
-        helper.getAppropriateText(info['user']['name'].toString()),
-        helper.getAppropriateText(info['user']['user_name'].toString()),
-        helper.getAppropriateText(info['user']['email'].toString()),
-        helper.getAppropriateText(info['user']['gender'].toString()),
-        helper.getAppropriateText(info['user']['phone_number'].toString()),
-        helper.getAppropriateText(info['user']['address'].toString()),
+        info['user']['id'].toString(),
+        info['user']['name'].toString(),
+        info['user']['user_name'].toString(),
+        info['user']['email'].toString(),
+        info['user']['gender'].toString(),
+        info['user']['phone_number'].toString(),
+        info['user']['address']?.toString(),
         info['user']['email_verified_at'] != null ? true : false,
         info['profile']['image'] != null
             ? url + info['profile']['image']
-            : 'N/A',
+            : null,
         info['profile']['cover'] != null
             ? url + info['profile']['cover']
-            : 'N/A',
-        helper.getAppropriateText(info['profile']['bio'].toString()));
+            : null,
+        info['profile']['bio']?.toString());
   }
 
-  List<OnlineTransaction> getOnlineTransactionsFromJson(List<dynamic> data) {
+  List<OnlineTransaction> getOnlineTransactionsFromJson(
+      String url, List<dynamic> data) {
     List<OnlineTransaction> returnedOnlineTransactions = [];
-    data.forEach((onlineTransaction) {
+    for (var onlineTransaction in data) {
       returnedOnlineTransactions.add(OnlineTransaction(
           onlineTransaction['id'].toString(),
           onlineTransaction['giver'].toString(),
-          onlineTransaction['needy'].toString(),
+          getNeedyFromJson(url, onlineTransaction['needy']),
           double.parse(onlineTransaction['amount'].toString()),
           DateTime.parse(onlineTransaction['created_at']),
           'OnlineTransaction',
           double.parse(onlineTransaction['remaining'].toString())));
-    });
+    }
     return returnedOnlineTransactions;
   }
 
-  List<OfflineTransaction> getOfflineTransactionsFromJson(List<dynamic> data) {
+  List<OfflineTransaction> getOfflineTransactionsFromJson(
+      String url, List<dynamic> data) {
     List<OfflineTransaction> returnedOfflineTransactions = [];
-    data.forEach((offlineTransaction) {
+    for (var offlineTransaction in data) {
       returnedOfflineTransactions.add(OfflineTransaction(
           offlineTransaction['id'].toString(),
           offlineTransaction['giver'].toString(),
-          offlineTransaction['needy'].toString(),
+          getNeedyFromJson(url, offlineTransaction['needy']),
           double.parse(offlineTransaction['amount'].toString()),
           DateTime.parse(offlineTransaction['created_at']),
           'OfflineTransaction',
-          offlineTransaction['preferredSection'].toString(),
+          offlineTransaction['preferred_section'].toString(),
           offlineTransaction['address'].toString(),
-          offlineTransaction['phoneNumber'].toString(),
-          DateTime.parse(offlineTransaction['startCollectDate']),
-          DateTime.parse(offlineTransaction['endCollectDate']),
-          offlineTransaction['selectedDate'] != null
-              ? DateTime.parse(offlineTransaction['selectedDate'])
+          offlineTransaction['phone_number'].toString(),
+          DateTime.parse(offlineTransaction['start_collect_date']),
+          DateTime.parse(offlineTransaction['end_collect_date']),
+          offlineTransaction['selected_date'] != null
+              ? DateTime.parse(offlineTransaction['selected_date'])
               : null,
-          offlineTransaction['collected'] == 1 ? true : false));
-    });
+          offlineTransaction['collected']));
+    }
     return returnedOfflineTransactions;
   }
 
-  getNeedyFromJson(String baseURL,Map<String,dynamic> json) {
+  getNeedyFromJson(String baseURL, Map<String, dynamic> json) {
     print(json);
     return Needy(
         json['id'].toString(),
@@ -121,17 +121,18 @@ class DataMapper {
         double.parse(json['need'].toString()),
         double.parse(json['collected'].toString()),
         json['address'],
-        json['satisfied'] == 1 ? true : false,
-        json['approved'] == 1 ? true : false,
+        json['satisfied'],
+        json['approved'],
         DateTime.parse(json['created_at']),
-        this.getNeediesMediaFromJson(baseURL, json['medias_before']),
-        this.getNeediesMediaFromJson(baseURL, json['medias_after']),
+        getNeediesMediaFromJson(baseURL, json['medias_before']),
+        getNeediesMediaFromJson(baseURL, json['medias_after']),
         json['url'],
-        json['createdBy']['id'].toString(),
-        json['createdBy']['name'].toString(),
-        json['createdBy']['image'] != null
-            ? baseURL + json['createdBy']['image']
-            : 'N/A',
-        json['createdBy']['email_verified_at'] != null ? true : false);
+        json['createdBy'] != null ? json['createdBy']['id'].toString() : null,
+        json['createdBy'] != null ? json['createdBy']['name'].toString() : null,
+        json['createdBy'] != null ? baseURL + json['createdBy']['image'] : null,
+        json['createdBy'] != null
+            ? json['createdBy']['email_verified_at']
+            : null
+        );
   }
 }

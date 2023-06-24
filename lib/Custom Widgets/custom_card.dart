@@ -10,8 +10,8 @@ class CustomCard extends StatelessWidget {
   final IconData icon;
   final TextDirection textDirection;
   static late AppTheme appTheme;
-  CustomCard(
-      {required this.title,
+  const CustomCard(
+      {super.key, required this.title,
       required this.subtitle,
       required this.url,
       required this.icon,
@@ -20,18 +20,19 @@ class CustomCard extends StatelessWidget {
       required this.textDirection});
   Future<void> launchURL(String url, kind) async {
     late String protocolURL;
-    if (kind == 'fb')
-      protocolURL = "fb://page/716275428808273";
-    else if (kind == 'twitter')
-      protocolURL = "twitter:///user?screen_name=\(MahmouedMartin)";
+    if (kind == 'fb') {
+      protocolURL = 'fb://page/716275428808273';
+    } else if (kind == 'twitter') {
+      protocolURL = 'twitter:///user?screen_name=\(MahmouedMartin)';
+    }
     try {
       bool launched = await launch(protocolURL,
           forceSafariVC: false, universalLinksOnly: false);
       if (!launched) {
-        await launch(url, forceSafariVC: false);
+        await launchUrl(Uri(path: url),mode: LaunchMode.inAppWebView);
       }
     } catch (e) {
-      await launch(url, forceSafariVC: false);
+      await launchUrl(Uri(path: url),mode: LaunchMode.inAppWebView);
     }
   }
 
@@ -39,7 +40,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     appTheme = Provider.of<AppTheme>(context);
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient:
               LinearGradient(colors: [Colors.blueAccent, Colors.pinkAccent])),
       child: GestureDetector(
@@ -47,7 +48,7 @@ class CustomCard extends StatelessWidget {
           launchURL(url, kind);
         },
         child: Card(
-          color: appTheme.themeData.accentColor,
+          color: appTheme.themeData.canvasColor,
           elevation: 3,
           child: Column(
             mainAxisSize: MainAxisSize.min,

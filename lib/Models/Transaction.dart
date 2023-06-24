@@ -1,7 +1,9 @@
+import 'package:ahed/Models/Needy.dart';
+
 class Transaction{
   String id;
   String giver;
-  String? needy;
+  Needy needy;
   double amount;
   DateTime createdAt;
   String type;

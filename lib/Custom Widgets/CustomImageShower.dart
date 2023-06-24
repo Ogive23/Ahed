@@ -2,9 +2,9 @@ import 'package:ahed/Session/session_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomImageShower extends StatelessWidget {
-  final url;
-  final SessionManager sessionManager = new SessionManager();
-  CustomImageShower({required this.url});
+  final String? url;
+  final SessionManager sessionManager = SessionManager();
+  CustomImageShower({super.key, this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,12 @@ class CustomImageShower extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.sizeOf(context).height,
+        width: MediaQuery.sizeOf(context).width,
         color: Colors.white,
-        child: url != 'N/A'
+        child: url != null
             ? Image.network(
-                this.url,
+                url!,
                 errorBuilder: (context, error, stackTrace) =>
                     Image.asset('assets/images/user.png'),
               )

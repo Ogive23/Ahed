@@ -28,14 +28,14 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   late AppTheme appTheme;
   late List<Transaction> transactions;
   late TabController tabController;
-  final DataMapper dataMapper = new DataMapper();
-  final TransactionApiCaller transactionApiCaller = new TransactionApiCaller();
-  SessionManager sessionManager = new SessionManager();
+  final DataMapper dataMapper = DataMapper();
+  final TransactionApiCaller transactionApiCaller = TransactionApiCaller();
+  SessionManager sessionManager = SessionManager();
 
   @override
   initState() {
     super.initState();
-    tabController = new TabController(length: 2, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
   }
 
   //ToDo: Ahed V2 When adding Prize
@@ -44,12 +44,12 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   // String prizeImage;
   Future<Map<String, dynamic>> getOnlineTransactions() async {
     return await transactionApiCaller
-        .getOnlineTransactions(sessionManager.user!.id);
+        .getOnlineTransactions(appLanguage.language!, sessionManager.user!.id);
   }
 
   Future<Map<String, dynamic>> getOfflineTransactions() async {
     return await transactionApiCaller
-        .getOfflineTransactions(sessionManager.user!.id);
+        .getOfflineTransactions(appLanguage.language!, sessionManager.user!.id);
   }
 
   Widget getOnlineTransactionsBody(context) {
@@ -133,6 +133,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
             snapshot.data != null &&
             !snapshot.data!['Err_Flag'] &&
             snapshot.data!['Values'].isNotEmpty) {
+          print('finally');
           // return Expanded(
           return SingleChildScrollView(
             child: Column(
@@ -200,6 +201,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
     appTheme = Provider.of<AppTheme>(context);
+    appLanguage = Provider.of<AppLanguage>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -218,7 +220,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
       body: Container(
         height: double.infinity,
         child: Column(children: [
-          CustomSpacing(
+          const CustomSpacing(
             value: 33,
           ),
           TabBar(
@@ -268,11 +270,12 @@ class _MyDonationScreenState extends State<MyDonationScreen>
             //     TextDecoration.none,
             //     'Delius'),
           ),
-          CustomSpacing(
+          const CustomSpacing(
             value: 100,
           ),
           Expanded(
             child: TabBarView(
+              controller: tabController,
               children: [
                 sessionManager.isLoggedIn()
                     ? getOnlineTransactionsBody(context)
@@ -286,7 +289,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, "LoginScreen");
+                              Navigator.pushNamed(context, 'LoginScreen');
                             },
                             child: Text(
                               'تسجيل الدخول',
@@ -314,7 +317,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, "LoginScreen");
+                              Navigator.pushNamed(context, 'LoginScreen');
                             },
                             child: Text(
                               'تسجيل الدخول',
@@ -331,7 +334,6 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                         ],
                       ),
               ],
-              controller: tabController,
             ),
           )
         ]),

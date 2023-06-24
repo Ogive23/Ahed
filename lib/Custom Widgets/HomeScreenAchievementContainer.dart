@@ -8,12 +8,12 @@ class HomeScreenAchievementContainer extends StatelessWidget {
   final double? count;
   final String text;
   final TextStyle countTextStyle;
-  TextStyle achievementTextStyle;
-  int? precision;
-  String? suffix;
-  String? prefix;
-  HomeScreenAchievementContainer(
-      {required this.w,
+  final TextStyle achievementTextStyle;
+  final int? precision;
+  final String? suffix;
+  final String? prefix;
+  const HomeScreenAchievementContainer(
+      {super.key, required this.w,
       this.count,
       required this.text,
       required this.countTextStyle,
@@ -33,7 +33,7 @@ class HomeScreenAchievementContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          this.count != null
+          count != null
               ? Row(
                   children: [
                     Text(

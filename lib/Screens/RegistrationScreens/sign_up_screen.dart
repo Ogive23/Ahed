@@ -53,14 +53,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         },
         child: Material(
           child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   gradient: RadialGradient(radius: 1, colors: [
                     Color.fromRGBO(242, 95, 76, 0.5),
                     Color.fromRGBO(229, 49, 112, 0.5),
                     Color.fromRGBO(15, 14, 23, 1)
                   ])),
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.only(top: 30, bottom: 20),
+              padding: const EdgeInsets.only(top: 30, bottom: 20),
               child: SingleChildScrollView(
                 child: Column(
                   children: [

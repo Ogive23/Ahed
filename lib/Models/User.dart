@@ -5,7 +5,7 @@ class User {
   String email;
   String gender;
   String phoneNumber;
-  String address;
+  String? address;
   bool verified;
   String? profileImage;
   String? profileCover;
@@ -26,17 +26,17 @@ class User {
 
   List<String> toList() {
     return [
-      this.id,
-      this.name,
-      this.username,
-      this.email,
-      this.gender,
-      this.phoneNumber,
-      this.address,
-      this.verified.toString(),
-      this.profileImage!,
-      this.profileCover!,
-      this.profileBio!
+      id,
+      name,
+      username,
+      email,
+      gender,
+      phoneNumber,
+      address ?? '',
+      verified.toString(),
+      profileImage ?? '',
+      profileCover ?? '',
+      profileBio ?? ''
     ];
   }
 }

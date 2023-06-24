@@ -4,6 +4,8 @@ import 'package:lottie/lottie.dart';
 
 class CustomButtonLoading extends StatelessWidget {
   static late double h;
+
+  const CustomButtonLoading({super.key});
   @override
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;

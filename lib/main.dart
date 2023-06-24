@@ -17,12 +17,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   ErrorWidget.builder = (errorDetails) {
-    return Container(child: Text('حدث خطأ ما'));
+    return const Text('حدث خطأ ما');
   };
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,27 +36,29 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       routes: <String, WidgetBuilder>{
-        "SplashScreen": (BuildContext context) => SplashScreen(),
-        "MainScreen": (BuildContext context) => MainScreen(),
-        "WelcomeScreen": (BuildContext context) => WelcomeScreen(),
-        "LoginScreen": (BuildContext context) => LoginScreen(),
-        "SignUp": (BuildContext context) => SignUpScreen(),
+        'SplashScreen': (BuildContext context) => SplashScreen(),
+        'MainScreen': (BuildContext context) => MainScreen(),
+        'WelcomeScreen': (BuildContext context) => const WelcomeScreen(),
+        'LoginScreen': (BuildContext context) => LoginScreen(),
+        'SignUp': (BuildContext context) => SignUpScreen(),
       },
     );
   }
 }
 
 class MainScreen extends StatelessWidget {
-  final SessionManager sessionManager = new SessionManager();
+  final SessionManager sessionManager = SessionManager();
   static late AppTheme appTheme;
   static late AppLanguage appLanguage;
-  final NeedyData needyData = new NeedyData();
-  final CommonData commonData = new CommonData();
-  final TransactionData transactionData = new TransactionData();
+  final NeedyData needyData = NeedyData();
+  final CommonData commonData = CommonData();
+  final TransactionData transactionData = TransactionData();
+
+  MainScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    appTheme = new AppTheme(sessionManager.loadPreferredTheme(),context);
-    appLanguage = new AppLanguage(sessionManager.loadPreferredLanguage());
+    appTheme = AppTheme(sessionManager.loadPreferredTheme(),context);
+    appLanguage = AppLanguage(sessionManager.loadPreferredLanguage());
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<AppTheme>(

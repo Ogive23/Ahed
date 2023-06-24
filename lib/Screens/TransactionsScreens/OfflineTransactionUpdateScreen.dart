@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:ahed/ApiCallers/TransactionApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomButtonLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
@@ -69,7 +71,7 @@ class _OfflineTransactionUpdateScreenState
       return true;
     }
     setState(() {
-      dateError = "خطأ في إختيار الفترة";
+      dateError = 'خطأ في إختيار الفترة';
     });
     return false;
   }
@@ -92,13 +94,13 @@ class _OfflineTransactionUpdateScreenState
       double amount = double.parse(value);
       if (amount < 1) {
         setState(() {
-          amountError = "صفر؟";
+          amountError = 'صفر؟';
         });
         return false;
       }
     } catch (e) {
       setState(() {
-        amountError = "برجاء إدخال قيمة صحيحة";
+        amountError = 'برجاء إدخال قيمة صحيحة';
       });
       return false;
     }
@@ -127,10 +129,11 @@ class _OfflineTransactionUpdateScreenState
         initialDate: startCollectDate,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != startCollectDate)
+    if (picked != null && picked != startCollectDate) {
       setState(() {
         startCollectDate = picked;
       });
+    }
   }
 
   Future<void> selectToDate(BuildContext context) async {
@@ -139,10 +142,11 @@ class _OfflineTransactionUpdateScreenState
         initialDate: endCollectDate,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != endCollectDate)
+    if (picked != null && picked != endCollectDate) {
       setState(() {
         endCollectDate = picked;
       });
+    }
   }
 
   changeLoadingState() {
@@ -156,15 +160,16 @@ class _OfflineTransactionUpdateScreenState
     commonData = Provider.of<CommonData>(context);
     needyData = Provider.of<NeedyData>(context);
     appTheme = Provider.of<AppTheme>(context);
+    appLanguage = Provider.of<AppLanguage>(context);
     transactionData = Provider.of<TransactionData>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     if (firstTime) {
-      amount = new TextEditingController(
+      amount = TextEditingController(
           text: transactionData.selectedTransaction!.amount.toInt().toString());
-      address = new TextEditingController(
+      address = TextEditingController(
           text: transactionData.selectedTransaction!.address);
-      mobileNumber = new TextEditingController(
+      mobileNumber = TextEditingController(
           text: transactionData.selectedTransaction!.phoneNumber);
       startCollectDate = transactionData.selectedTransaction!.startCollectDate;
       endCollectDate = transactionData.selectedTransaction!.endCollectDate;
@@ -217,7 +222,7 @@ class _OfflineTransactionUpdateScreenState
                                 appTheme.themeData.primaryTextTheme.headline5),
                       ],
                     ),
-                    CustomSpacing(
+                    const CustomSpacing(
                       value: 100,
                     ),
                     Row(
@@ -227,10 +232,10 @@ class _OfflineTransactionUpdateScreenState
                                 appTheme.themeData.primaryTextTheme.headline5),
                         Text('${needyData.selectedNeedy!.type}',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                       ],
                     ),
-                    CustomSpacing(
+                    const CustomSpacing(
                       value: 100,
                     ),
                     ConstrainedBox(
@@ -244,26 +249,26 @@ class _OfflineTransactionUpdateScreenState
                           children: [
                             Text('التفاصيل: ',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                             Flexible(
                               child: Text(
                                 '${needyData.selectedNeedy!.details}',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5,
+                                    .themeData.primaryTextTheme.headlineSmall,
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    CustomSpacing(
+                    const CustomSpacing(
                       value: 100,
                     ),
                     Row(
                       children: [
                         Text('المتبقي: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                         LinearPercentIndicator(
                           width: w / 2,
                           alignment: MainAxisAlignment.center,
@@ -271,15 +276,14 @@ class _OfflineTransactionUpdateScreenState
                           padding: EdgeInsets.symmetric(vertical: h / 100),
                           animationDuration: 1000,
                           lineHeight: h / 25,
-                          linearGradient: LinearGradient(
+                          linearGradient: const LinearGradient(
                               colors: [Colors.green, Colors.greenAccent]),
                           percent: needyData.selectedNeedy!.collected! /
                               needyData.selectedNeedy!.need!,
                           center: Text(
-                            (needyData.selectedNeedy!.need! -
+                            '${(needyData.selectedNeedy!.need! -
                                         needyData.selectedNeedy!.collected!)
-                                    .toStringAsFixed(0) +
-                                ' جنيه',
+                                    .toStringAsFixed(0)} جنيه',
                             style:
                                 appTheme.themeData.primaryTextTheme.bodyText2,
                           ),
@@ -300,7 +304,7 @@ class _OfflineTransactionUpdateScreenState
                         padding: EdgeInsets.symmetric(vertical: h / 100),
                         child: Text('بيانات الدفع',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline3)),
+                                appTheme.themeData.primaryTextTheme.displaySmall)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -308,7 +312,7 @@ class _OfflineTransactionUpdateScreenState
                             controller: amount,
                             label: 'المبلغ',
                             selectedIcon: FontAwesomeIcons.moneyBill,
-                            selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                            selectedColor: const Color.fromRGBO(38, 92, 126, 1.0),
                             borderColor: Colors.grey,
                             obscureText: false,
                             keyboardType: TextInputType.number,
@@ -324,7 +328,7 @@ class _OfflineTransactionUpdateScreenState
                         ),
                         Text(
                           'جنيه مصري',
-                          style: appTheme.themeData.primaryTextTheme.subtitle1,
+                          style: appTheme.themeData.primaryTextTheme.titleMedium,
                         )
                       ],
                     ),
@@ -332,12 +336,12 @@ class _OfflineTransactionUpdateScreenState
                         padding: EdgeInsets.symmetric(vertical: h / 100),
                         child: Text('بيانات التوصيل',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline3)),
+                                appTheme.themeData.primaryTextTheme.displaySmall)),
                     CustomTextField(
                         controller: address,
                         label: 'العنوان',
                         selectedIcon: FontAwesomeIcons.addressCard,
-                        selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                        selectedColor: const Color.fromRGBO(38, 92, 126, 1.0),
                         borderColor: Colors.grey,
                         obscureText: false,
                         keyboardType: TextInputType.streetAddress,
@@ -352,7 +356,7 @@ class _OfflineTransactionUpdateScreenState
                         controller: mobileNumber,
                         label: 'رقم الهاتف',
                         selectedIcon: FontAwesomeIcons.phoneAlt,
-                        selectedColor: Color.fromRGBO(38, 92, 126, 1.0),
+                        selectedColor: const Color.fromRGBO(38, 92, 126, 1.0),
                         borderColor: Colors.grey,
                         obscureText: false,
                         keyboardType: TextInputType.phone,
@@ -363,7 +367,7 @@ class _OfflineTransactionUpdateScreenState
                         onSubmitted: onSubmittedMobileNumber,
                         enableFormatters: true,
                         maxLines: 1),
-                    CustomSpacing(
+                    const CustomSpacing(
                       value: 100,
                     ),
                     Row(
@@ -385,21 +389,21 @@ class _OfflineTransactionUpdateScreenState
                                           .bodyText1!
                                           .color!)),
                               child: Text(
-                                '${intl.DateFormat('y-MM-dd').format(startCollectDate)}',
+                                intl.DateFormat('y-MM-dd').format(startCollectDate),
                                 style: appTheme
-                                    .themeData.primaryTextTheme.bodyText2,
+                                    .themeData.primaryTextTheme.bodyMedium,
                               ),
                             ),
                           ],
                         ),
                         Text('-',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                         Column(
                           children: [
                             Text('إلي',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                             ElevatedButton(
                               onPressed: () => selectToDate(context),
                               style: ButtonStyle(
@@ -410,7 +414,7 @@ class _OfflineTransactionUpdateScreenState
                                           .bodyText1!
                                           .color!)),
                               child: Text(
-                                '${intl.DateFormat('y-MM-dd').format(endCollectDate)}',
+                                intl.DateFormat('y-MM-dd').format(endCollectDate),
                                 style: appTheme
                                     .themeData.primaryTextTheme.bodyText2,
                               ),
@@ -426,7 +430,7 @@ class _OfflineTransactionUpdateScreenState
                     )),
                     Center(
                       child: dateError == null
-                          ? SizedBox()
+                          ? const SizedBox()
                           : Text(
                               dateError!,
                               style: appTheme
@@ -438,17 +442,17 @@ class _OfflineTransactionUpdateScreenState
                 ),
               ),
               isLoading
-                  ? CustomButtonLoading()
+                  ? const CustomButtonLoading()
                   : ElevatedButton(
                       onPressed: () async {
                         if (fullValidator()) {
                           changeLoadingState();
                           TransactionApiCaller transactionApiCaller =
-                              new TransactionApiCaller();
-                          SessionManager sessionManager = new SessionManager();
+                              TransactionApiCaller();
+                          SessionManager sessionManager = SessionManager();
                           Map<String, dynamic> status =
                               await transactionApiCaller
-                                  .updateOfflineTransaction(
+                                  .updateOfflineTransaction(appLanguage.language!,
                                       sessionManager.user == null
                                           ? null
                                           : sessionManager.user!.id,
@@ -468,7 +472,7 @@ class _OfflineTransactionUpdateScreenState
                                 lottieAsset:
                                     'assets/animations/38213-error.json',
                                 text: status['Err_Desc'],
-                                confirmBtnColor: Color(0xff1c9691),
+                                confirmBtnColor: const Color(0xff1c9691),
                                 title: '');
                           }
                           commonData.back();
@@ -478,17 +482,17 @@ class _OfflineTransactionUpdateScreenState
                               lottieAsset:
                                   'assets/animations/6951-success.json',
                               text: status['message'],
-                              confirmBtnColor: Color(0xff1c9691),
+                              confirmBtnColor: const Color(0xff1c9691),
                               title: '');
                         }
                       },
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromRGBO(38, 92, 126, 1.0))),
                       child: Text(
                         'تعديل',
                         style: appTheme.themeData.primaryTextTheme.bodyText2,
                       ),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromRGBO(38, 92, 126, 1.0))),
                     ),
             ],
           ),

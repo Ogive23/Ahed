@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:ahed/ApiCallers/TokenApiCaller.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:ahed/Helpers/DataMapper.dart';
@@ -9,42 +10,41 @@ import 'package:ahed/Session/session_manager.dart';
 import 'package:intl/intl.dart';
 
 class TransactionApiCaller {
-  String url = "http://192.168.1.5:8000";
-  ResponseHandler responseHandler = new ResponseHandler();
-  SessionManager sessionManager = new SessionManager();
-  DataMapper dataMapper = new DataMapper();
+  String url = 'http://192.168.1.2:8000';
+  ResponseHandler responseHandler = ResponseHandler();
+  SessionManager sessionManager = SessionManager();
+  DataMapper dataMapper = DataMapper();
+  TokenApiCaller tokenApiCaller = TokenApiCaller();
 
-  Future<Map<String, dynamic>> getOnlineTransactions(String userId) async {
-    // QuerySnapshot snapshot = await urls.get();
-    // for(int index = 0; index < snapshot.size; index++){
-    //   String url = snapshot.docs[index]['url'];
-    // if (sessionManager.accessTokenExpired()) {
-    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
-    // }
+  Future<Map<String, dynamic>> getOnlineTransactions(
+      String language, String userId) async {
+    if (sessionManager.accessTokenExpired()) {
+      await tokenApiCaller.refreshAccessToken();
+    }
     var headers = {
-      "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+      'Content-Type': 'application/json',
+      'Content-Language': language,
+      'Authorization': 'Bearer ${sessionManager.accessToken}',
     };
     try {
-      print(url + "/api/ahed/onlinetransactions?userId=$userId");
+      print('$url/api/ahed/onlinetransactions?userId=$userId');
       var response = await http
-          .get(Uri.parse(url + "/api/ahed/onlinetransactions?userId=$userId"),
+          .get(Uri.parse('$url/api/ahed/onlinetransactions?userId=$userId'),
               headers: headers)
           .catchError((error) {
         throw error;
-      }).timeout(Duration(seconds: 120));
+      }).timeout(const Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
       if (responseToJson['Err_Flag']) return responseToJson;
       return {
-        "Err_Flag": responseToJson['Err_Flag'],
-        "Values":
-            dataMapper.getOnlineTransactionsFromJson(responseToJson['data'])
+        'Err_Flag': responseToJson['Err_Flag'],
+        'Values':
+            dataMapper.getOnlineTransactionsFromJson(url, responseToJson['data'])
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
     } on SocketException {
-      return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
+      return responseHandler.errorPrinter('برجاء التأكد من خدمة الإنترنت لديك');
     } catch (e) {
       print('e = $e');
       return responseHandler.errorPrinter('حدث خطأ ما');
@@ -52,81 +52,88 @@ class TransactionApiCaller {
     // }
   }
 
-  Future<Map<String, dynamic>> getOfflineTransactions(String userId) async {
-    // QuerySnapshot snapshot = await urls.get();
-    // for(int index = 0; index < snapshot.size; index++){
-    //   String url = snapshot.docs[index]['url'];
-    // if (sessionManager.accessTokenExpired()) {
-    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
-    // }
+  Future<Map<String, dynamic>> getOfflineTransactions(
+      String language, String userId) async {
+    if (sessionManager.accessTokenExpired()) {
+      await tokenApiCaller.refreshAccessToken();
+    }
     var headers = {
-      "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+      'Content-Type': 'application/json',
+      'Content-Language': language,
+      'Authorization': 'Bearer ${sessionManager.accessToken}',
     };
     try {
-      print(url + "/api/ahed/offlinetransactions?userId=$userId");
+      print('$url/api/ahed/offlinetransactions?userId=$userId');
       var response = await http
-          .get(Uri.parse(url + "/api/ahed/offlinetransactions?userId=$userId"),
+          .get(Uri.parse('$url/api/ahed/offlinetransactions?userId=$userId'),
               headers: headers)
           .catchError((error) {
         throw error;
-      }).timeout(Duration(seconds: 120));
+      }).timeout(const Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
       if (responseToJson['Err_Flag']) return responseToJson;
       print(responseToJson);
       return {
-        "Err_Flag": responseToJson['Err_Flag'],
-        "Values":
-            dataMapper.getOfflineTransactionsFromJson(responseToJson['data'])
+        'Err_Flag': responseToJson['Err_Flag'],
+        'Values':
+            dataMapper.getOfflineTransactionsFromJson(url, responseToJson['data'])
       };
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
     } on SocketException {
-      return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
+      return responseHandler.errorPrinter('برجاء التأكد من خدمة الإنترنت لديك');
     } catch (e) {
       print('e = $e');
       return responseHandler.errorPrinter('حدث خطأ ما');
     }
-    // }
   }
 
   Future<Map<String, dynamic>> addOnlineTransaction(
-      String? userId, String needyId, int amount,String cardNumber,String expiryDate,String cvv) async {
-    // QuerySnapshot snapshot = await urls.get();
-    // for(int index = 0; index < snapshot.size; index++){
-    //   String url = snapshot.docs[index]['url'];
-    // if (sessionManager.accessTokenExpired()) {
-    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
-    // }
+      String language,
+      String? userId,
+      String needyId,
+      int amount,
+      String cardNumber,
+      String expiryDate,
+      String cvv) async {
+    if (sessionManager.accessTokenExpired()) {
+      await tokenApiCaller.refreshAccessToken();
+    }
     var headers = {
-      "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+      'Content-Type': 'application/json',
+      'Content-Language': language,
+      'Authorization': 'Bearer ${sessionManager.accessToken}',
     };
-    var body = {'giver': userId, 'needy': needyId, 'amount': amount,'cardNumber': cardNumber, 'expiryDate': expiryDate,'cvv': cvv};
+    var body = {
+      'giver': userId,
+      'needy': needyId,
+      'amount': amount,
+      'cardNumber': cardNumber,
+      'expiryDate': expiryDate,
+      'cvv': cvv
+    };
     try {
-      print(url + "/api/ahed/onlinetransactions");
+      print('$url/api/ahed/onlinetransactions');
       var response = await http
-          .post(Uri.parse(url + "/api/ahed/onlinetransactions"),
+          .post(Uri.parse('$url/api/ahed/onlinetransactions'),
               headers: headers, body: jsonEncode(body))
           .catchError((error) {
         throw error;
-      }).timeout(Duration(seconds: 120));
+      }).timeout(const Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
       return responseToJson;
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
     } on SocketException {
-      return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
+      return responseHandler.errorPrinter('برجاء التأكد من خدمة الإنترنت لديك');
     } catch (e) {
       print('e = $e');
       return responseHandler.errorPrinter('حدث خطأ ما');
     }
-    // }
   }
 
   Future<Map<String, dynamic>> addOfflineTransaction(
+      String language,
       String? userId,
       String needyId,
       String preferredSection,
@@ -135,15 +142,13 @@ class TransactionApiCaller {
       String address,
       DateTime startCollectDate,
       DateTime endCollectDate) async {
-    // QuerySnapshot snapshot = await urls.get();
-    // for(int index = 0; index < snapshot.size; index++){
-    //   String url = snapshot.docs[index]['url'];
-    // if (sessionManager.accessTokenExpired()) {
-    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
-    // }
+    if (sessionManager.accessTokenExpired()) {
+      await tokenApiCaller.refreshAccessToken();
+    }
     var headers = {
-      "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+      'Content-Type': 'application/json',
+      'Content-Language': language,
+      'Authorization': 'Bearer ${sessionManager.accessToken}',
     };
     var body = {
       'needy': needyId,
@@ -160,29 +165,28 @@ class TransactionApiCaller {
     }
     print(body);
     try {
-      print(url + "/api/ahed/offlinetransactions");
+      print('$url/api/ahed/offlinetransactions');
       var response = await http
-          .post(Uri.parse(url + "/api/ahed/offlinetransactions"),
+          .post(Uri.parse('$url/api/ahed/offlinetransactions'),
               headers: headers, body: jsonEncode(body))
           .catchError((error) {
         throw error;
-      }).timeout(Duration(seconds: 120));
+      }).timeout(const Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
       print(responseToJson);
       return responseToJson;
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
     } on SocketException {
-      return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
+      return responseHandler.errorPrinter('برجاء التأكد من خدمة الإنترنت لديك');
     } catch (e) {
       print('e = $e');
       return responseHandler.errorPrinter('حدث خطأ ما');
     }
-    // }
   }
 
   Future<Map<String, dynamic>> updateOfflineTransaction(
+      String language,
       String? userId,
       String transactionId,
       String needyId,
@@ -192,15 +196,13 @@ class TransactionApiCaller {
       String address,
       DateTime startCollectDate,
       DateTime endCollectDate) async {
-    // QuerySnapshot snapshot = await urls.get();
-    // for(int index = 0; index < snapshot.size; index++){
-    //   String url = snapshot.docs[index]['url'];
-    // if (sessionManager.accessTokenExpired()) {
-    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
-    // }
+    if (sessionManager.accessTokenExpired()) {
+      await tokenApiCaller.refreshAccessToken();
+    }
     var headers = {
-      "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+      'Content-Type': 'application/json',
+      'Content-Language': language,
+      'Authorization': 'Bearer ${sessionManager.accessToken}',
     };
     var body = {
       '_method': 'put',
@@ -215,63 +217,55 @@ class TransactionApiCaller {
       'endCollectDate': DateFormat('y-MM-dd HH:mm:ss').format(endCollectDate)
     };
     try {
-      print(url + "/api/ahed/offlinetransactions/$transactionId");
+      print('$url/api/ahed/offlinetransactions/$transactionId');
       var response = await http
-          .post(Uri.parse(url + "/api/ahed/offlinetransactions/$transactionId"),
+          .post(Uri.parse('$url/api/ahed/offlinetransactions/$transactionId'),
               headers: headers, body: jsonEncode(body))
           .catchError((error) {
         throw error;
-      }).timeout(Duration(seconds: 120));
+      }).timeout(const Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
       return responseToJson;
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
     } on SocketException {
-      return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
+      return responseHandler.errorPrinter('برجاء التأكد من خدمة الإنترنت لديك');
     } catch (e) {
       print('e = $e');
       return responseHandler.errorPrinter('حدث خطأ ما');
     }
-    // }
   }
 
   Future<Map<String, dynamic>> deleteOfflineTransactions(
-      String userId, String transactionId) async {
-    // QuerySnapshot snapshot = await urls.get();
-    // for(int index = 0; index < snapshot.size; index++){
-    //   String url = snapshot.docs[index]['url'];
-    // if (sessionManager.accessTokenExpired()) {
-    //   await tokenApiCaller.refreshAccessToken(sessionManager.user.id,sessionManager.oauthToken);
-    // }
+      String language, String userId, String transactionId) async {
+    if (sessionManager.accessTokenExpired()) {
+      await tokenApiCaller.refreshAccessToken();
+    }
     var headers = {
-      "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ${sessionManager.oauthToken}',
+      'Content-Type': 'application/json',
+      'Content-Language': language,
+      'Authorization': 'Bearer ${sessionManager.accessToken}',
     };
     var body = {
       'userId': userId,
     };
     try {
-      print(url + "/api/ahed/offlinetransactions/$transactionId");
+      print('$url/api/ahed/offlinetransactions/$transactionId');
       var response = await http
-          .delete(
-              Uri.parse(url + "/api/ahed/offlinetransactions/$transactionId"),
-              headers: headers,
-              body: jsonEncode(body))
+          .delete(Uri.parse('$url/api/ahed/offlinetransactions/$transactionId'),
+              headers: headers, body: jsonEncode(body))
           .catchError((error) {
         throw error;
-      }).timeout(Duration(seconds: 120));
+      }).timeout(const Duration(seconds: 120));
       var responseToJson = jsonDecode(response.body);
       return responseToJson;
     } on TimeoutException {
       return responseHandler.timeOutPrinter();
     } on SocketException {
-      return responseHandler
-          .errorPrinter("برجاء التأكد من خدمة الإنترنت لديك");
+      return responseHandler.errorPrinter('برجاء التأكد من خدمة الإنترنت لديك');
     } catch (e) {
       print('e = $e');
       return responseHandler.errorPrinter('حدث خطأ ما');
     }
-    // }
   }
 }

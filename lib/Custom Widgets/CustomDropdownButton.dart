@@ -5,13 +5,13 @@ import 'package:provider/provider.dart';
 class CustomDropdownButton extends StatelessWidget {
   final String text;
   // final double iconSize;
-  String? selectedValue;
-  final onChanged;
-  final items;
-  late AppTheme appTheme;
+  final String? selectedValue;
+  final void Function(String?) onChanged;
+  final List<DropdownMenuItem<String>> items;
+  static late AppTheme appTheme;
 
-  CustomDropdownButton(
-      {required this.text,
+  const CustomDropdownButton(
+      {super.key, required this.text,
       // required this.iconSize,
       required this.selectedValue,
       required this.onChanged,
@@ -22,19 +22,19 @@ class CustomDropdownButton extends StatelessWidget {
     return DropdownButtonHideUnderline(
       child: ButtonTheme(
         alignedDropdown: true,
+        buttonColor: Colors.black,
         child: DropdownButton(
             hint: Text(text,
-              style: appTheme.themeData.primaryTextTheme.headline5,),
+              style: appTheme.themeData.primaryTextTheme.headlineSmall,),
             isExpanded: true,
-            icon: Flexible(
+            icon: const Flexible(
                 child: Icon(Icons.arrow_drop_down,
                     color: Color.fromRGBO(127, 127, 127, 1.0))),
-            style: appTheme.themeData.primaryTextTheme.headline5,
+            style: appTheme.themeData.primaryTextTheme.headlineSmall,
             // iconSize: iconSize,
             value: selectedValue,
             onChanged: onChanged,
             items: items),
-        buttonColor: Colors.black,
       ),
     );
   }

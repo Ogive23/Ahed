@@ -5,6 +5,7 @@ import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/LoadingNeedyContainer.dart';
 import 'package:ahed/Models/Needy.dart';
 import 'package:ahed/Session/session_manager.dart';
+import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,10 @@ class NeediesScreen extends StatefulWidget {
 class _NeediesScreenState extends State<NeediesScreen> {
   static late double w, h;
   static late AppTheme appTheme;
+  static late AppLanguage appLanguage;
   List<Needy>? needies;
   int current = 0;
-  SessionManager sessionManager = new SessionManager();
+  SessionManager sessionManager = SessionManager();
   int currentPage = 1;
   late int total;
 
@@ -48,15 +50,17 @@ class _NeediesScreenState extends State<NeediesScreen> {
   }
 
   Widget getNeediesBody(context) {
-    if (needies == null)
+    if (needies == null) {
       return Container(alignment: Alignment.center, child: CustomLoading());
-    if (needies!.isEmpty)
+    }
+    if (needies!.isEmpty) {
       return Center(
         child: Text(
           'لا توجد حالات متاحة',
           style: appTheme.themeData.primaryTextTheme.subtitle1,
         ),
       );
+    }
     return Center(
         child: CarouselSlider(
             options: CarouselOptions(
@@ -67,11 +71,7 @@ class _NeediesScreenState extends State<NeediesScreen> {
               enableInfiniteScroll: false,
               onPageChanged: (index, reason) async {
                 current = index;
-                print(current);
-                print(this.total);
-                print(needies!.length);
-                print(current == needies!.length && current < this.total);
-                if (current == needies!.length && current < this.total) {
+                if (current == needies!.length && current < total) {
                   currentPage++;
                   List<Needy> addedNeedies =
                       await getGeneratedNeedies(widget.type);
@@ -92,17 +92,21 @@ class _NeediesScreenState extends State<NeediesScreen> {
     //ToDo: Future V2
     // if (widget.type == "Bookmarked") return <Widget>[];
     return needies!.isEmpty || needies!.length < total
-        ? <Widget>[LoadingNeedyContainer()]
+        ? <Widget>[const LoadingNeedyContainer()]
         : <Widget>[];
   }
 
   Future<List<Needy>> getGeneratedNeedies(String type,
       [List<String>? bookmarkedNeediesIDs]) async {
-    NeedyApiCaller needyApiCaller = new NeedyApiCaller();
+    NeedyApiCaller needyApiCaller = NeedyApiCaller();
     late Map<String, dynamic> status;
-    if (type == 'Urgent')
-      status = await needyApiCaller.getAllUrgent(currentPage);
-    if (type == 'Not Urgent') status = await needyApiCaller.getAll(currentPage);
+    if (type == 'Urgent') {
+      status =
+          await needyApiCaller.getAllUrgent(appLanguage.language!, currentPage);
+    }
+    if (type == 'Not Urgent') {
+      status = await needyApiCaller.getAll(appLanguage.language!, currentPage);
+    }
 
     print(status);
     //ToDo: Future V2
@@ -112,7 +116,7 @@ class _NeediesScreenState extends State<NeediesScreen> {
     if (!status['Err_Flag']) {
       setState(() {
         // this.lastPage = status['lastPage'];
-        this.total = status['total'];
+        total = status['total'];
       });
       return status['Values'];
     }
@@ -122,14 +126,17 @@ class _NeediesScreenState extends State<NeediesScreen> {
   @override
   Widget build(BuildContext context) {
     appTheme = Provider.of<AppTheme>(context);
+    appLanguage = Provider.of<AppLanguage>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-            Text(this.widget.type == 'Urgent' ? 'الحالات الحرجة' : 'الحالات',
-                style: appTheme.themeData.primaryTextTheme.headline3),
-        CustomSpacing(value: 100,),
+        Text(widget.type == 'Urgent' ? 'الحالات الحرجة' : 'الحالات',
+            style: appTheme.themeData.primaryTextTheme.headline3),
+        const CustomSpacing(
+          value: 100,
+        ),
         getNeediesBody(context),
       ],
     );

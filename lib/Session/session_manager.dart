@@ -21,7 +21,7 @@ class SessionManager {
   createSession(User user, String accessToken, DateTime expiryDate) {
     this.user = user;
     this.accessToken = accessToken;
-    this.accessTokenExpireDate = expiryDate;
+    accessTokenExpireDate = expiryDate;
     print(user.toList());
     sharedPreferences!.setStringList('user', user.toList());
     sharedPreferences!.setString('accessToken', accessToken);
@@ -36,19 +36,20 @@ class SessionManager {
     }
     accessToken = sharedPreferences!.getString('accessToken')!;
     List<String> userData = sharedPreferences!.getStringList('user')!;
-    user = new User(
-        userData[0],
-        userData[1],
-        userData[2],
-        userData[3],
-        userData[4],
-        userData[5],
-        userData[6],
-        //ToDo: Review
-        userData[7] == "true" ? true : false,
-        userData[8],
-        userData[9],
-        userData[10]);
+    user = User(
+      userData[0],
+      userData[1],
+      userData[2],
+      userData[3],
+      userData[4],
+      userData[5],
+      userData[6] == '' ? null : userData[6],
+      //ToDo: Review
+      userData[7] == "true" ? true : false,
+      userData[8] == '' ? null : userData[8],
+      userData[9] == '' ? null : userData[9],
+      userData[10] == '' ? null : userData[10],
+    );
   }
 
   bool notFirstTime() {
@@ -84,21 +85,21 @@ class SessionManager {
   }
 
   logout() {
-    this.user = null;
-    this.accessToken = null;
-    this.accessTokenExpireDate = null;
+    user = null;
+    accessToken = null;
+    accessTokenExpireDate = null;
     sharedPreferences!.remove('accessTokenExpireDate');
     sharedPreferences!.remove('accessToken');
     sharedPreferences!.remove('user');
   }
 
   void changeUserInfo(String bio, String address, String phoneNumber) {
-    this.user!.profileBio = bio;
-    this.user!.address = address;
-    this.user!.phoneNumber = phoneNumber;
+    user!.profileBio = bio;
+    user!.address = address;
+    user!.phoneNumber = phoneNumber;
     sharedPreferences!.setStringList('user', user!.toList());
     List<String> userData = sharedPreferences!.getStringList('user')!;
-    user = new User(
+    user = User(
         userData[0],
         userData[1],
         userData[2],
@@ -111,6 +112,13 @@ class SessionManager {
         userData[9],
         userData[10],
         userData[11]);
+  }
+
+  void refreshSessionToken(String accessToken, String expiryDate) {
+    this.accessToken = accessToken;
+    accessTokenExpireDate = DateTime.parse(expiryDate);
+    sharedPreferences!.setString('accessToken', accessToken);
+    sharedPreferences!.setString('expiryDate', expiryDate);
   }
 
   //ToDo: Future V2

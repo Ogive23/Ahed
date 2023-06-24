@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 class CustomRowText extends StatelessWidget {
   final String firstText;
   final String secondText;
-  late double w;
-  late AppTheme appTheme;
-  CustomRowText({required this.firstText, required this.secondText});
+  static late double w;
+  static late AppTheme appTheme;
+  const CustomRowText({super.key, required this.firstText, required this.secondText});
 
   @override
   Widget build(BuildContext context) {

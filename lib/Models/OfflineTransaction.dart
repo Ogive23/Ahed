@@ -1,3 +1,5 @@
+import 'package:ahed/Models/Needy.dart';
+
 import 'Transaction.dart';
 
 class OfflineTransaction extends Transaction {
@@ -12,7 +14,7 @@ class OfflineTransaction extends Transaction {
   OfflineTransaction(
       String id,
       String giver,
-      String needy,
+      Needy needy,
       double amount,
       DateTime createdAt,
       String type,

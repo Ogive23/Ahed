@@ -16,29 +16,29 @@ import '../../GeneralInfo.dart';
 
 extension on TimeOfDay {
   bool operator >(TimeOfDay timeOfDay) {
-    return this.hour > timeOfDay.hour ||
-        this.hour == timeOfDay.hour && this.minute > timeOfDay.minute;
+    return hour > timeOfDay.hour ||
+        hour == timeOfDay.hour && minute > timeOfDay.minute;
   }
 
   bool operator <(TimeOfDay timeOfDay) {
-    return this.hour < timeOfDay.hour ||
-        this.hour == timeOfDay.hour && this.minute < timeOfDay.minute;
+    return hour < timeOfDay.hour ||
+        hour == timeOfDay.hour && minute < timeOfDay.minute;
   }
 
   bool operator >=(TimeOfDay timeOfDay) {
-    return this.hour > timeOfDay.hour ||
-        this.hour == timeOfDay.hour && this.minute > timeOfDay.minute ||
-        this.hour == timeOfDay.hour && this.minute == timeOfDay.minute;
+    return hour > timeOfDay.hour ||
+        hour == timeOfDay.hour && minute > timeOfDay.minute ||
+        hour == timeOfDay.hour && minute == timeOfDay.minute;
   }
 
   bool operator <=(TimeOfDay timeOfDay) {
-    return this.hour < timeOfDay.hour ||
-        this.hour == timeOfDay.hour && this.minute < timeOfDay.minute ||
-        this.hour == timeOfDay.hour && this.minute == timeOfDay.minute;
+    return hour < timeOfDay.hour ||
+        hour == timeOfDay.hour && minute < timeOfDay.minute ||
+        hour == timeOfDay.hour && minute == timeOfDay.minute;
   }
 
   bool equals(TimeOfDay timeOfDay) {
-    return this.hour == timeOfDay.hour && this.minute == timeOfDay.minute;
+    return hour == timeOfDay.hour && minute == timeOfDay.minute;
   }
 }
 
@@ -46,35 +46,39 @@ String getGreetingText() {
   //12 AM -> 11 AM
   //11 AM -> 5 PM
   //5 PM -> 12 AM
-  print(TimeOfDay(hour: 0, minute: 0) > TimeOfDay(hour: 11, minute: 0) &&
+  print(const TimeOfDay(hour: 0, minute: 0) > TimeOfDay(hour: 11, minute: 0) &&
       TimeOfDay(hour: 1, minute: 0) <= TimeOfDay(hour: 17, minute: 0));
-  if (TimeOfDay.now() > TimeOfDay(hour: 0, minute: 0) &&
-      TimeOfDay.now() <= TimeOfDay(hour: 11, minute: 0)) {
+  if (TimeOfDay.now() > const TimeOfDay(hour: 0, minute: 0) &&
+      TimeOfDay.now() <= const TimeOfDay(hour: 11, minute: 0)) {
     return 'صباح الخير🌅';
   }
-  if (TimeOfDay.now() > TimeOfDay(hour: 11, minute: 0) &&
-      TimeOfDay.now() <= TimeOfDay(hour: 17, minute: 0)) {
+  if (TimeOfDay.now() > const TimeOfDay(hour: 11, minute: 0) &&
+      TimeOfDay.now() <= const TimeOfDay(hour: 17, minute: 0)) {
     return 'نتمنالك يوم سعيد☀';
   }
-  if (TimeOfDay.now() > TimeOfDay(hour: 17, minute: 0) &&
-      TimeOfDay.now() <= TimeOfDay(hour: 24, minute: 0)) {
+  if (TimeOfDay.now() > const TimeOfDay(hour: 17, minute: 0) &&
+      TimeOfDay.now() <= const TimeOfDay(hour: 24, minute: 0)) {
     return 'مساء الخير🌙';
   }
   return 'Hello';
 }
 
 class HomeScreen extends StatelessWidget {
-  SessionManager sessionManager = new SessionManager();
+  final SessionManager sessionManager = SessionManager();
   static late double w, h;
   static late CommonData commonData;
   static late AppLanguage appLanguage;
   static late AppTheme appTheme;
-  final Helper helper = new Helper();
+  final Helper helper = Helper();
+
+  HomeScreen({super.key});
 
   Future<Map<String, dynamic>?> getAchievements() async {
-    UserApiCaller userApiCaller = new UserApiCaller();
+    print('xD');
+    UserApiCaller userApiCaller = UserApiCaller();
+    print('xD');
     Map<String, dynamic> status =
-        await userApiCaller.getAchievements(sessionManager.user?.id);
+        await userApiCaller.getAchievements(appLanguage.language!);
     if (status['Err_Flag']) return null;
     return status['Values'];
   }
@@ -84,7 +88,7 @@ class HomeScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('إنجازاتك', style: appTheme.themeData.primaryTextTheme.headline3),
-        CustomSpacing(
+        const CustomSpacing(
           value: 100,
         ),
         Container(
@@ -141,11 +145,11 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        CustomSpacing(
+        const CustomSpacing(
           value: 50,
         ),
         Text('إنجازتنا', style: appTheme.themeData.primaryTextTheme.headline3),
-        CustomSpacing(
+        const CustomSpacing(
           value: 100,
         ),
         Container(
@@ -185,7 +189,7 @@ class HomeScreen extends StatelessWidget {
                 HomeScreenAchievementContainer(
                   w: w / 3,
                   count:
-                      double.parse(data['NeediesFoundTheirNewHome'].toString()),
+                      double.parse(data['NeediesHelpedWithFindingBetterPlaceforLiving'].toString()),
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
@@ -213,7 +217,7 @@ class HomeScreen extends StatelessWidget {
                 HomeScreenAchievementContainer(
                   w: w / 3,
                   count: double.parse(
-                      data['NeediesUpgradedTheirStandardOfLiving'].toString()),
+                      data['NeediesHelpedWithUpgradingStandardofLiving'].toString()),
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
@@ -241,7 +245,7 @@ class HomeScreen extends StatelessWidget {
                 HomeScreenAchievementContainer(
                   w: w / 3,
                   count: double.parse(
-                      data['NeediesHelpedToPrepareForPride'].toString()),
+                      data['NeediesHelpedWithPreparingForJoy'].toString()),
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
@@ -269,7 +273,7 @@ class HomeScreen extends StatelessWidget {
                 HomeScreenAchievementContainer(
                   w: w / 3,
                   count:
-                      double.parse(data['NeediesHelpedToPayDept'].toString()),
+                      double.parse(data['NeediesHelpedWithDeptPaying'].toString()),
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
@@ -296,7 +300,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 HomeScreenAchievementContainer(
                   w: w / 3,
-                  count: double.parse(data['NeediesHelpedToCure'].toString()),
+                  count: double.parse(data['NeediesHelpedWithFindingaCure'].toString()),
                   countTextStyle: appTheme.nonStaticGetTextStyle(
                       1.0,
                       Colors.green,
@@ -319,7 +323,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        CustomSpacing(
+        const CustomSpacing(
           value: 100,
         ),
         HomeScreenAchievementContainer(
@@ -350,6 +354,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget getAchievementCenter(context) {
+    print('xD');
     return FutureBuilder<Map<String, dynamic>?>(
       future: getAchievements(),
       builder: (BuildContext context,
@@ -359,16 +364,18 @@ class HomeScreen extends StatelessWidget {
           return getAchievementCenterBody(snapshot.data!, context);
         } else if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data == null) {
+          print(snapshot.error);
           return Container(
             alignment: Alignment.center,
             child:
-                Text('حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
+                const Text('حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
           );
         } else if (snapshot.error != null) {
+          print(snapshot.error);
           return Container(
             alignment: Alignment.center,
             child:
-                Text('حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
+                const Text('حدث خطأ أثناء تحميل الإنجازات برجاء المحاولة مرة أخري.'),
           );
         } else {
           return Container(
@@ -384,6 +391,7 @@ class HomeScreen extends StatelessWidget {
     // print('profileImage : ${sessionManager.user.profileImage}');
     commonData = Provider.of<CommonData>(context);
     appTheme = Provider.of<AppTheme>(context);
+    appLanguage = Provider.of<AppLanguage>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -411,7 +419,7 @@ class HomeScreen extends StatelessWidget {
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 2,
                                   blurRadius: 5,
-                                  offset: Offset(
+                                  offset: const Offset(
                                       0, 1), // changes position of shadow
                                 ),
                               ],
@@ -422,7 +430,7 @@ class HomeScreen extends StatelessWidget {
                                 backgroundColor: Colors.transparent,
                                 child: ClipOval(
                                   child: sessionManager.user!.profileImage !=
-                                          'N/A'
+                                          null
                                       ? Image.network(
                                           sessionManager.user!.profileImage!,
                                           fit: BoxFit.contain,
@@ -501,7 +509,7 @@ class HomeScreen extends StatelessWidget {
                 : null,
             backgroundColor:
                 sessionManager.isLoggedIn() ? Colors.green : Colors.grey,
-            child: Icon(FontAwesomeIcons.handsHelping),
+            child: const Icon(FontAwesomeIcons.handsHelping),
           ),
         ),
         body: Container(
@@ -509,9 +517,9 @@ class HomeScreen extends StatelessWidget {
             children: [
               Center(
                 child: Text('${getGreetingText()}',
-                    style: appTheme.themeData.primaryTextTheme.headline3),
+                    style: appTheme.themeData.primaryTextTheme.displaySmall),
               ),
-              CustomSpacing(
+              const CustomSpacing(
                 value: 100,
               ),
               Expanded(

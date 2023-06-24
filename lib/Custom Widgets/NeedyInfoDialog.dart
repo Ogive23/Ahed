@@ -5,8 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:provider/provider.dart';
-import 'package:share/share.dart';
+// import 'package:share_plus/share_plus.dart';
 
 import 'CustomSpacing.dart';
 import 'ImageCarouselShow.dart';
@@ -93,7 +92,7 @@ class NeedyInfoDialog extends StatelessWidget {
                         ),
                         child: Text(
                           'حالة حرجة',
-                          style: appTheme.themeData.primaryTextTheme.headline5!
+                          style: appTheme.themeData.primaryTextTheme.headlineSmall!
                               .apply(color: Colors.white),
                         ),
                       ),
@@ -108,15 +107,15 @@ class NeedyInfoDialog extends StatelessWidget {
                           children: [
                             Text('نوع الحالة: ',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                             Flexible(
                               child: Text('${needy.type}',
                                   style: appTheme
-                                      .themeData.primaryTextTheme.headline5),
+                                      .themeData.primaryTextTheme.headlineSmall),
                             ),
                           ],
                         ),
-                        CustomSpacing(
+                        const CustomSpacing(
                           value: 100,
                         ),
                         ConstrainedBox(
@@ -128,26 +127,26 @@ class NeedyInfoDialog extends StatelessWidget {
                               children: [
                                 Text('التفاصيل: ',
                                     style: appTheme
-                                        .themeData.primaryTextTheme.headline5),
+                                        .themeData.primaryTextTheme.headlineSmall),
                                 Flexible(
                                   child: Text(
                                     '${needy.details}',
                                     style: appTheme
-                                        .themeData.primaryTextTheme.headline5,
+                                        .themeData.primaryTextTheme.headlineSmall,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        CustomSpacing(
+                        const CustomSpacing(
                           value: 100,
                         ),
                         Row(
                           children: [
                             Text('المتبقي: ',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                             LinearPercentIndicator(
                               width: w / 2,
                               alignment: MainAxisAlignment.center,
@@ -155,13 +154,12 @@ class NeedyInfoDialog extends StatelessWidget {
                               padding: EdgeInsets.symmetric(vertical: h / 100),
                               animationDuration: 1000,
                               lineHeight: h / 25,
-                              linearGradient: LinearGradient(
+                              linearGradient: const LinearGradient(
                                   colors: [Colors.green, Colors.greenAccent]),
                               percent: needy.collected! / needy.need!,
                               center: Text(
-                                (needy.need! - needy.collected!)
-                                        .toStringAsFixed(0) +
-                                    ' جنيه',
+                                '${(needy.need! - needy.collected!)
+                                        .toStringAsFixed(0)} جنيه',
                                 style: appTheme
                                     .themeData.primaryTextTheme.bodyText2,
                               ),
@@ -172,7 +170,7 @@ class NeedyInfoDialog extends StatelessWidget {
                       ],
                     ),
                   ),
-                  CustomSpacing(
+                  const CustomSpacing(
                     value: 100,
                   ),
                   needy.satisfied!
@@ -217,12 +215,12 @@ class NeedyInfoDialog extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
-                              Share.share(
-                                //ToDo: Add application url
-                                needy.satisfied!
-                                    ? 'Check out what Ahed made to change these people\'s life ${needy.url!}, You can start to be part of it by downloading Ahed Application from ${'Application URL'}.'
-                                    : 'Only ${needy.need! - needy.collected!} EGP Left, Help ${needy.name!} To ${needy.type!}!\n ${needy.url!}',
-                              );
+                              // Share.share(
+                              //   //ToDo: Add application url
+                              //   needy.satisfied!
+                              //       ? 'Check out what Ahed made to change these people\'s life ${needy.url!}, You can start to be part of it by downloading Ahed Application from ${'Application URL'}.'
+                              //       : 'Only ${needy.need! - needy.collected!} EGP Left, Help ${needy.name!} To ${needy.type!}!\n ${needy.url!}',
+                              // );
                             },
                             style: ButtonStyle(
                                 backgroundColor:

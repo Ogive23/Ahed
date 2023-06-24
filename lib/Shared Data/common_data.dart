@@ -10,14 +10,14 @@ class CommonData extends ChangeNotifier {
 
   changeStep(int step) {
     this.step = step;
-    this.previousSteps.add(step);
+    previousSteps.add(step);
     print(previousSteps);
     notifyListeners();
   }
 
   back() {
     previousSteps.removeLast();
-    this.step = previousSteps.last;
+    step = previousSteps.last;
     print('removed $previousSteps');
     notifyListeners();
   }
@@ -42,8 +42,8 @@ class CommonData extends ChangeNotifier {
   // }
 
   goHome() {
-    this.previousSteps = [1];
-    this.step = previousSteps.last;
+    previousSteps = [1];
+    step = previousSteps.last;
     notifyListeners();
   }
 

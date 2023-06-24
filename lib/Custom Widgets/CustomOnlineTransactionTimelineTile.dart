@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:ahed/ApiCallers/NeedyApiCaller.dart';
 import 'package:ahed/Helpers/Helper.dart';
 import 'package:ahed/Models/Needy.dart';
 import 'package:ahed/Models/OnlineTransaction.dart';
+import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +18,10 @@ import 'package:ahed/Custom Widgets/NeedyInfoDialog.dart';
 class CustomOnlineTransactionTimelineTile extends StatelessWidget {
   final OnlineTransaction transaction;
   static late AppTheme appTheme;
+  static late AppLanguage appLanguage;
   //ToDo: Ahed v2 prize
   final bool done;
-  final Helper helper = new Helper();
+  final Helper helper = Helper();
   static late double w, h;
 
   CustomOnlineTransactionTimelineTile(
@@ -41,6 +45,7 @@ class CustomOnlineTransactionTimelineTile extends StatelessWidget {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     appTheme = Provider.of<AppTheme>(context);
+    appLanguage = Provider.of<AppLanguage>(context);
     return TimelineTile(
       alignment: TimelineAlign.manual,
       lineXY: 0.5,
@@ -52,12 +57,12 @@ class CustomOnlineTransactionTimelineTile extends StatelessWidget {
         width: 30,
         // height: 30,
         indicator: Container(
-          margin: EdgeInsets.only(left: 13),
+          margin: const EdgeInsets.only(left: 13),
           width: 20,
           decoration: BoxDecoration(
               color: done ? Colors.green : Colors.grey,
               borderRadius:
-                  BorderRadius.only(bottomRight: Radius.circular(30))),
+                  const BorderRadius.only(bottomRight: Radius.circular(30))),
         ),
       ),
       startChild: Center(
@@ -77,42 +82,18 @@ class CustomOnlineTransactionTimelineTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              transaction.amount.toStringAsFixed(2) + " جنيه مصري",
-              style: appTheme.themeData.primaryTextTheme.headline5!
+              '${transaction.amount.toStringAsFixed(2)} جنيه مصري',
+              style: appTheme.themeData.primaryTextTheme.headlineSmall!
                   .apply(fontWeightDelta: 2),
             ),
-            CustomSpacing(value: 100),
-            transaction.needy == null
-                ? Text('لا حالة مرتبطة.')
-                : GestureDetector(
+            const CustomSpacing(value: 100),
+            GestureDetector(
                     onTap: () async {
-                      CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.loading,
-                          lottieAsset:
-                              'assets/animations/890-loading-animation.json',
-                          text: 'جاري تحميل بيانات الحالة',
-                          // confirmBtnColor: Color(0xff1c9691),
-                          title: '');
-                      NeedyApiCaller needyApiCaller = new NeedyApiCaller();
-                      Map<String, dynamic> status =
-                          await needyApiCaller.getById(transaction.needy!);
-                      Navigator.pop(context);
-                      if (!status['Err_Flag']) {
-                        showNeedyDialog(context, status['Value']);
-                      } else {
-                        return CoolAlert.show(
-                            context: context,
-                            type: CoolAlertType.error,
-                            lottieAsset: 'assets/animations/38213-error.json',
-                            text: status['Err_Desc'],
-                            confirmBtnColor: Color(0xff1c9691),
-                            title: '');
-                      }
+                      showNeedyDialog(context, transaction.needy);
                     },
                     child: Text(
                       'عرض الحالة المرتبطة',
-                      style: appTheme.themeData.primaryTextTheme.headline5!
+                      style: appTheme.themeData.primaryTextTheme.headlineSmall!
                           .apply(
                               decoration: TextDecoration.underline,
                               color: Colors.blue),

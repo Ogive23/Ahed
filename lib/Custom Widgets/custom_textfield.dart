@@ -88,10 +88,10 @@ class CustomTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.7),
               ),
               errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.red),
+                  borderSide: const BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.circular(15.0)),
               focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.red),
+                  borderSide: const BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.circular(15.0)),
               errorText: error,
               errorStyle: appTheme.themeData.primaryTextTheme.subtitle2!
@@ -108,7 +108,7 @@ class CustomTextField extends StatelessWidget {
                       //ToDo: Dynamic number
                       size: selectedIcon == null ? 0 : h / 25,
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               labelText: label,
             ),
             keyboardType: keyboardType,

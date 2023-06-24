@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'dart:ui';
 import 'package:ahed/ApiCallers/UserApiCaller.dart';
@@ -7,6 +9,7 @@ import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/custom_textfield.dart';
 import 'package:ahed/Helpers/Helper.dart';
 import 'package:ahed/Session/session_manager.dart';
+import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:cool_alert/cool_alert.dart';
@@ -23,11 +26,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   static late double w, h;
-  final SessionManager sessionManager = new SessionManager();
+  final SessionManager sessionManager = SessionManager();
   static late AppTheme appTheme;
+  static late AppLanguage appLanguage;
   static late CommonData commonData;
-  final Helper helper = new Helper();
-  UserApiCaller userApiCaller = new UserApiCaller();
+  final Helper helper = Helper();
+  UserApiCaller userApiCaller = UserApiCaller();
   List<String> contributions = [
     'My Pets',
     'Pets Acquired',
@@ -48,10 +52,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    address = new TextEditingController(text: sessionManager.user!.address);
-    phoneNumber =
-        new TextEditingController(text: sessionManager.user!.phoneNumber);
-    bio = new TextEditingController(
+    address = TextEditingController(text: sessionManager.user!.address);
+    phoneNumber = TextEditingController(text: sessionManager.user!.phoneNumber);
+    bio = TextEditingController(
         text: helper.getAppropriateText(sessionManager.user!.profileBio));
   }
 
@@ -66,15 +69,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     appTheme = Provider.of<AppTheme>(context);
+    appLanguage = Provider.of<AppLanguage>(context);
     commonData = Provider.of<CommonData>(context);
     return SafeArea(
-      child: Container(
+      child: SizedBox(
           height: h,
           child: SingleChildScrollView(
             child: Container(
               width: w,
               decoration: BoxDecoration(
-                  image: sessionManager.user!.profileCover != 'N/A'
+                  image: sessionManager.user!.profileCover != null
                       ? DecorationImage(
                           image: NetworkImage(
                             sessionManager.user!.profileCover!,
@@ -85,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fit: BoxFit.cover,
                         )
                       : DecorationImage(
-                          image: AssetImage(
+                          image: const AssetImage(
                             'assets/images/user.png',
                           ),
                           colorFilter: ColorFilter.mode(
@@ -96,15 +100,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: ClipRRect(
                   child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
-                      child: Container(
+                      child: SizedBox(
                         width: w,
                         height: h,
                         child: Column(
                           // alignment: Alignment.topCenter,
                           children: [
                             Container(
-                              color: appTheme
-                                  .themeData.primaryTextTheme.headline5!.color!
+                              color: appTheme.themeData.primaryTextTheme
+                                  .headlineSmall!.color!
                                   .withOpacity(0.5),
                               child: Row(
                                 mainAxisAlignment:
@@ -130,21 +134,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Container(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextButton(
-                                    child: Text('تغيير الغلاف'),
+                                    child: const Text('تغيير الغلاف'),
                                     onPressed: () {
-                                      onImagePressed(context, "Cover");
+                                      onImagePressed(context, 'Cover');
                                     },
                                   ),
                                   Align(
                                     alignment: Alignment.topLeft,
                                     child: isEditing
                                         ? isLoading
-                                            ? CustomButtonLoading()
+                                            ? const CustomButtonLoading()
                                             : IconButton(
-                                                icon: Icon(
+                                                icon: const Icon(
                                                   Icons.done,
                                                   color: Colors.green,
                                                 ),
@@ -153,6 +158,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   Map<String, dynamic> status =
                                                       await userApiCaller
                                                           .changeUserInformation(
+                                                              appLanguage
+                                                                  .language!,
                                                               sessionManager
                                                                   .user!.id,
                                                               bio.text,
@@ -174,7 +181,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             'assets/animations/6951-success.json',
                                                         text: status['message'],
                                                         confirmBtnColor:
-                                                            Color(0xff1c9691),
+                                                            const Color(
+                                                                0xff1c9691),
                                                         title: '');
                                                   } else {
                                                     return CoolAlert.show(
@@ -186,13 +194,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         text:
                                                             status['Err_Desc'],
                                                         confirmBtnColor:
-                                                            Color(0xff1c9691),
+                                                            const Color(
+                                                                0xff1c9691),
                                                         title: '');
                                                   }
                                                 },
                                               )
                                         : IconButton(
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.build,
                                               color: Colors.blue,
                                             ),
@@ -212,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 BoxShadow(
                                     color: Colors.black.withOpacity(0.5),
                                     blurRadius: 60,
-                                    offset: Offset(0, 4))
+                                    offset: const Offset(0, 4))
                               ]),
                               child: GestureDetector(
                                 child: CircleAvatar(
@@ -220,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   backgroundColor: Colors.transparent,
                                   child: ClipOval(
                                     child: sessionManager.user!.profileImage !=
-                                            'N/A'
+                                            null
                                         ? Image.network(
                                             sessionManager.user!.profileImage!,
                                             fit: BoxFit.cover,
@@ -240,7 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 onTap: () {
-                                  onImagePressed(context, "Profile");
+                                  onImagePressed(context, 'Profile');
                                 },
                               ),
                             ),
@@ -252,7 +261,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               decoration: BoxDecoration(
                                   color: appTheme.themeData.primaryTextTheme
-                                      .headline5!.color!
+                                      .headlineSmall!.color!
                                       .withOpacity(0.8)),
                               child: Column(
                                 children: [
@@ -266,22 +275,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       FontWeight.w500,
                                       1.0,
                                       TextDecoration.none,
-                                      "OpenSans",
+                                      'OpenSans',
                                     ),
                                   ),
-                                  CustomSpacing(
+                                  const CustomSpacing(
                                     value: 100,
                                   ),
                                   isEditing
                                       ? CustomTextField(
                                           controller: bio,
-                                          label: "نبذة مختصرة",
+                                          label: 'نبذة مختصرة',
                                           selectedColor: Colors.grey,
                                           borderColor: Colors.grey,
                                           obscureText: false,
                                           keyboardType:
                                               TextInputType.streetAddress,
-                                          hint: "أدخل نبذة مختصرة عنك",
+                                          hint: 'أدخل نبذة مختصرة عنك',
                                           error: null,
                                           maxLength: 300,
                                           width: w,
@@ -304,44 +313,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               .primaryTextTheme.headline3,
                                         ),
                                       )),
-                                  CustomSpacing(
+                                  const CustomSpacing(
                                     value: 100,
                                   ),
                                   isEditing
                                       ? CustomTextField(
                                           controller: address,
-                                          label: "العنوان",
+                                          label: 'العنوان',
                                           selectedColor: Colors.grey,
                                           borderColor: Colors.grey,
                                           obscureText: false,
                                           keyboardType:
                                               TextInputType.streetAddress,
-                                          hint: "أدخل عنوانك",
+                                          hint: 'أدخل عنوانك',
                                           error: null,
                                           width: w,
                                           enableFormatters: false)
                                       : CustomRowText(
-                                          firstText: "العنوان",
+                                          firstText: 'العنوان',
                                           secondText:
-                                              sessionManager.user!.address),
-                                  CustomSpacing(
+                                              sessionManager.user!.address ??
+                                                  ''),
+                                  const CustomSpacing(
                                     value: 100,
                                   ),
                                   isEditing
                                       ? CustomTextField(
                                           controller: phoneNumber,
-                                          label: "رقم الهاتف",
+                                          label: 'رقم الهاتف',
                                           selectedColor: Colors.grey,
                                           borderColor: Colors.grey,
                                           obscureText: false,
                                           keyboardType:
                                               TextInputType.streetAddress,
-                                          hint: "أدخل رقم هاتفك",
+                                          hint: 'أدخل رقم هاتفك',
                                           error: null,
                                           width: w,
                                           enableFormatters: false)
                                       : CustomRowText(
-                                          firstText: "رقم الهاتف",
+                                          firstText: 'رقم الهاتف',
                                           secondText:
                                               sessionManager.user!.phoneNumber),
                                 ],
@@ -356,7 +366,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<File?> pickImageFromGallery(ImageSource source) async {
-    PickedFile? pickedFile = await new ImagePicker().getImage(source: source);
+    PickedFile? pickedFile = await ImagePicker().getImage(source: source);
     return File(pickedFile!.path);
   }
 
@@ -364,22 +374,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     File? image = await pickImageFromGallery(source);
     if (image != null) {
       Map<String, dynamic> status;
-      if (relatedImage == "Profile")
+      if (relatedImage == 'Profile') {
         status = await userApiCaller.changeProfilePicture(
-            sessionManager.user!.id, image);
-      else
+            appLanguage.language!, sessionManager.user!.id, image);
+      } else {
         status = await userApiCaller.changeCoverPicture(
-            sessionManager.user!.id, image);
+            appLanguage.language!, sessionManager.user!.id, image);
+      }
       if (!status['Err_Flag']) {
-        imageCache!.clear();
-        imageCache!.clearLiveImages();
+        imageCache.clear();
+        imageCache.clearLiveImages();
         setState(() {});
         return CoolAlert.show(
             context: context,
             type: CoolAlertType.success,
             lottieAsset: 'assets/animations/6951-success.json',
             text: status['message'],
-            confirmBtnColor: Color(0xff1c9691),
+            confirmBtnColor: const Color(0xff1c9691),
             title: '');
       } else {
         return CoolAlert.show(
@@ -387,7 +398,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             type: CoolAlertType.error,
             lottieAsset: 'assets/animations/38213-error.json',
             text: status['Err_Desc'],
-            confirmBtnColor: Color(0xff1c9691),
+            confirmBtnColor: const Color(0xff1c9691),
             title: '');
       }
     }
@@ -397,14 +408,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30), topRight: Radius.circular(30))),
       builder: (context) {
         return Container(
           decoration: BoxDecoration(
             color: appTheme.themeData.primaryColor,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           ),
           child: Column(
@@ -416,25 +427,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     elevation: MaterialStateProperty.all<double>(0.0),
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.transparent)),
-                onPressed: relatedImage == "Profile" &&
-                            sessionManager.user!.profileImage == 'N/A' ||
-                        relatedImage == "Cover" &&
-                            sessionManager.user!.profileCover == 'N/A'
+                onPressed: relatedImage == 'Profile' &&
+                            sessionManager.user!.profileImage == null ||
+                        relatedImage == 'Cover' &&
+                            sessionManager.user!.profileCover == null
                     ? null
                     : () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => CustomImageShower(
-                                    url: relatedImage == "Profile"
+                                    url: relatedImage == 'Profile'
                                         ? sessionManager.user!.profileImage
                                         : sessionManager.user!.profileCover)));
                       },
                 child: Text(
-                  relatedImage == "Profile"
+                  relatedImage == 'Profile'
                       ? 'Show Profile Picture'
                       : 'Show Cover Picture',
-                  style: appTheme.themeData.primaryTextTheme.headline5,
+                  style: appTheme.themeData.primaryTextTheme.headlineSmall,
                 ),
               ),
               Divider(
@@ -452,10 +463,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   await uploadImage(ImageSource.gallery, relatedImage);
                 },
                 child: Text(
-                  relatedImage == "Profile"
+                  relatedImage == 'Profile'
                       ? 'Change Profile Picture'
                       : 'Change Cover Picture',
-                  style: appTheme.themeData.primaryTextTheme.headline5,
+                  style: appTheme.themeData.primaryTextTheme.headlineSmall,
                 ),
               ),
             ],
