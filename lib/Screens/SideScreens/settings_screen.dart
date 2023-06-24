@@ -10,10 +10,12 @@ import '../../Session/session_manager.dart';
 
 class SettingsScreen extends StatelessWidget {
   static late double w, h;
-  final SessionManager sessionManager = new SessionManager();
+  final SessionManager sessionManager = SessionManager();
   static late CommonData commonData;
   static late  AppTheme appTheme;
   static late  AppLanguage appLanguage;
+
+  SettingsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
@@ -30,17 +32,17 @@ class SettingsScreen extends StatelessWidget {
           padding: EdgeInsets.only(top: h / 20),
           child: Text(
             'الإعدادات',
-            style: appTheme.themeData.primaryTextTheme.headline2,
+            style: appTheme.themeData.primaryTextTheme.displayMedium,
           ),
         ),
       ),
-      body: Container(
+      body: SizedBox(
         height: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CustomSpacing(value: 33,),
+            const CustomSpacing(value: 33,),
             Directionality(
                 textDirection: appLanguage.textDirection,
                 child: Column(
@@ -56,7 +58,7 @@ class SettingsScreen extends StatelessWidget {
                           children: <Widget>[
                             Text(appLanguage.words['SettingsDarkMode']!,
                                 style: appTheme
-                                    .themeData.primaryTextTheme.subtitle1),
+                                    .themeData.primaryTextTheme.titleMedium),
                             Switch(
                               value: appTheme.isDark,
                               activeColor:
@@ -68,7 +70,7 @@ class SettingsScreen extends StatelessWidget {
                             ),
                           ]),
                     ),
-                    Divider(),
+                    const Divider(),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width / 10,
@@ -78,29 +80,29 @@ class SettingsScreen extends StatelessWidget {
                           children: <Widget>[
                             Text(appLanguage.words['SettingsLanguage']!,
                                 style: appTheme
-                                    .themeData.primaryTextTheme.subtitle1),
+                                    .themeData.primaryTextTheme.titleMedium),
                             DropdownButton(
                                 items: [
                                   DropdownMenuItem(
+                                    value: 'Ar',
                                     child: Text(
                                       'العربية',
                                       style: appTheme
-                                          .themeData.primaryTextTheme.bodyText2,
+                                          .themeData.primaryTextTheme.bodyMedium,
                                     ),
-                                    value: 'Ar',
                                   ),
                                   DropdownMenuItem(
+                                    value: 'En',
                                     child: Text(
                                       'En',
                                       style: appTheme
-                                          .themeData.primaryTextTheme.bodyText2,
+                                          .themeData.primaryTextTheme.bodyMedium,
                                     ),
-                                    value: 'En',
                                   )
                                 ],
                                 value: appLanguage.language,
                                 dropdownColor: Colors.grey,
-                                icon: Icon(Icons.language),
+                                icon: const Icon(Icons.language),
                                 // style: appTheme.themeData.textTheme.body1,
                                 onChanged: (String? value) {
                                   sessionManager.createPreferredLanguage(value!);
@@ -108,7 +110,7 @@ class SettingsScreen extends StatelessWidget {
                                 }),
                           ]),
                     ),
-                    Divider(),
+                    const Divider(),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width / 10,
@@ -119,9 +121,9 @@ class SettingsScreen extends StatelessWidget {
                         children: [
                           Text('Legal Info',
                               style: appTheme
-                                  .themeData.primaryTextTheme.subtitle1),
+                                  .themeData.primaryTextTheme.titleMedium),
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.info,
                               color: Colors.grey,
                             ),
@@ -133,9 +135,9 @@ class SettingsScreen extends StatelessWidget {
                                     applicationName: 'Ahed',
                                     applicationVersion: '1.0.0',
                                     children: <Widget>[
-                                      Text(
+                                      const Text(
                                           'Animations rights reserved to Lottie'),
-                                      Text(
+                                      const Text(
                                           'Fonts rights reserved to Google Fonts'),
                                       Text('OGIVE ©${DateTime.now().year}')
                                     ],
@@ -148,7 +150,7 @@ class SettingsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Divider(),
+                    const Divider(),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width / 10,
@@ -159,9 +161,9 @@ class SettingsScreen extends StatelessWidget {
                         children: [
                           Text('مجتمعنا',
                               style: appTheme
-                                  .themeData.primaryTextTheme.subtitle1),
+                                  .themeData.primaryTextTheme.titleMedium),
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.people,
                               color: Colors.grey,
                             ),

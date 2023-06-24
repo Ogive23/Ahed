@@ -27,7 +27,7 @@ enum Pages {
 
 
 final pageOptions = [
-  MyDonationScreen(),
+  const MyDonationScreen(),
   HomeScreen(),
   SettingsScreen(),
   NeedyCreationScreen(),

@@ -22,7 +22,7 @@ class CustomRowText extends StatelessWidget {
           child: Text(
             firstText,
             textAlign: TextAlign.center,
-            style: appTheme.themeData.primaryTextTheme.bodyText1,
+            style: appTheme.themeData.primaryTextTheme.bodyLarge,
           ),
         ),
         SizedBox(
@@ -30,7 +30,7 @@ class CustomRowText extends StatelessWidget {
           child: Text(
             secondText,
             textAlign: TextAlign.center,
-            style: appTheme.themeData.primaryTextTheme.bodyText1,
+            style: appTheme.themeData.primaryTextTheme.bodyLarge,
           ),
         )
       ],

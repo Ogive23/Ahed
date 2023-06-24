@@ -177,7 +177,7 @@ class _OfflineTransactionCreationScreenState
           padding: EdgeInsets.only(top: h / 20, bottom: h / 40),
           child: Text(
             'تبرع',
-            style: appTheme.themeData.primaryTextTheme.headline2,
+            style: appTheme.themeData.primaryTextTheme.displayMedium,
           ),
         ),
         actions: [
@@ -192,7 +192,7 @@ class _OfflineTransactionCreationScreenState
           )
         ],
       ),
-      body: Container(
+      body: SizedBox(
         // width: w,
         height: double.infinity,
         child: SingleChildScrollView(
@@ -210,11 +210,11 @@ class _OfflineTransactionCreationScreenState
                       children: [
                         Text('أسم الحالة: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                         Flexible(
                           child: Text('${needyData.selectedNeedy!.name}',
                               style: appTheme
-                                  .themeData.primaryTextTheme.headline5),
+                                  .themeData.primaryTextTheme.headlineSmall),
                         ),
                       ],
                     ),
@@ -226,11 +226,11 @@ class _OfflineTransactionCreationScreenState
                       children: [
                         Text('نوع الحالة: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                         Flexible(
                           child: Text('${needyData.selectedNeedy!.type}',
                               style: appTheme
-                                  .themeData.primaryTextTheme.headline5),
+                                  .themeData.primaryTextTheme.headlineSmall),
                         ),
                       ],
                     ),
@@ -246,12 +246,12 @@ class _OfflineTransactionCreationScreenState
                           children: [
                             Text('التفاصيل: ',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                             Flexible(
                               child: Text(
                                 '${needyData.selectedNeedy!.details}',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5,
+                                    .themeData.primaryTextTheme.headlineSmall,
                               ),
                             ),
                           ],
@@ -265,7 +265,7 @@ class _OfflineTransactionCreationScreenState
                       children: [
                         Text('المتبقي: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                         LinearPercentIndicator(
                           width: w / 2,
                           alignment: MainAxisAlignment.center,
@@ -280,7 +280,7 @@ class _OfflineTransactionCreationScreenState
                           center: Text(
                             '${(needyData.selectedNeedy!.need! - needyData.selectedNeedy!.collected!).toStringAsFixed(0)} جنيه',
                             style:
-                                appTheme.themeData.primaryTextTheme.bodyText2,
+                                appTheme.themeData.primaryTextTheme.bodyMedium,
                           ),
                           linearStrokeCap: LinearStrokeCap.butt,
                         ),
@@ -299,7 +299,7 @@ class _OfflineTransactionCreationScreenState
                         padding: EdgeInsets.symmetric(vertical: h / 100),
                         child: Text('بيانات الدفع',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline3)),
+                                appTheme.themeData.primaryTextTheme.displaySmall)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -324,7 +324,7 @@ class _OfflineTransactionCreationScreenState
                         ),
                         Text(
                           'جنيه مصري',
-                          style: appTheme.themeData.primaryTextTheme.subtitle1,
+                          style: appTheme.themeData.primaryTextTheme.titleMedium,
                         )
                       ],
                     ),
@@ -332,7 +332,7 @@ class _OfflineTransactionCreationScreenState
                         padding: EdgeInsets.symmetric(vertical: h / 100),
                         child: Text('بيانات التوصيل',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline3)),
+                                appTheme.themeData.primaryTextTheme.displaySmall)),
                     CustomTextField(
                         controller: address,
                         label: 'العنوان',
@@ -374,7 +374,7 @@ class _OfflineTransactionCreationScreenState
                           children: [
                             Text('من',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                             ElevatedButton(
                               onPressed: () => selectFromDate(context),
                               style: ButtonStyle(
@@ -382,25 +382,25 @@ class _OfflineTransactionCreationScreenState
                                       MaterialStateProperty.all<Color>(appTheme
                                           .themeData
                                           .primaryTextTheme
-                                          .bodyText1!
+                                          .bodyLarge!
                                           .color!)),
                               child: Text(
                                 intl.DateFormat('y-MM-dd')
                                     .format(startCollectDate),
                                 style: appTheme
-                                    .themeData.primaryTextTheme.bodyText2,
+                                    .themeData.primaryTextTheme.bodyMedium,
                               ),
                             ),
                           ],
                         ),
                         Text('-',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                         Column(
                           children: [
                             Text('إلي',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                             ElevatedButton(
                               onPressed: () => selectToDate(context),
                               style: ButtonStyle(
@@ -408,13 +408,13 @@ class _OfflineTransactionCreationScreenState
                                       MaterialStateProperty.all<Color>(appTheme
                                           .themeData
                                           .primaryTextTheme
-                                          .bodyText1!
+                                          .bodyLarge!
                                           .color!)),
                               child: Text(
                                 intl.DateFormat('y-MM-dd')
                                     .format(endCollectDate),
                                 style: appTheme
-                                    .themeData.primaryTextTheme.bodyText2,
+                                    .themeData.primaryTextTheme.bodyMedium,
                               ),
                             ),
                           ],
@@ -424,7 +424,7 @@ class _OfflineTransactionCreationScreenState
                     Center(
                         child: Text(
                       '*يجب أن يكون الفارق بين التاريخين يوم علي الأقل*',
-                      style: appTheme.themeData.primaryTextTheme.subtitle1,
+                      style: appTheme.themeData.primaryTextTheme.titleMedium,
                     )),
                     Center(
                       child: dateError == null
@@ -432,7 +432,7 @@ class _OfflineTransactionCreationScreenState
                           : Text(
                               dateError!,
                               style: appTheme
-                                  .themeData.primaryTextTheme.subtitle2!
+                                  .themeData.primaryTextTheme.titleSmall!
                                   .apply(color: Colors.red),
                             ),
                     )
@@ -489,7 +489,7 @@ class _OfflineTransactionCreationScreenState
                               const Color.fromRGBO(38, 92, 126, 1.0))),
                       child: Text(
                         'تبرع',
-                        style: appTheme.themeData.primaryTextTheme.bodyText2,
+                        style: appTheme.themeData.primaryTextTheme.bodyMedium,
                       ),
                     ),
             ],

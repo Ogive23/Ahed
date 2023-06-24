@@ -11,7 +11,7 @@ class TransactionData extends ChangeNotifier {
 
 
   deleteSelectedNeedy() {
-    this.selectedTransaction = null;
+    selectedTransaction = null;
     notifyListeners();
   }
 }

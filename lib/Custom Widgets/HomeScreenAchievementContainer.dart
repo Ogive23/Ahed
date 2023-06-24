@@ -55,7 +55,7 @@ class HomeScreenAchievementContainer extends StatelessWidget {
                 )
               : Text(
                   '---',
-                  style: appTheme.themeData.primaryTextTheme.subtitle1,
+                  style: appTheme.themeData.primaryTextTheme.titleMedium,
                 ),
           Text(
             text,

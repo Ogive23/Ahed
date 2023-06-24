@@ -59,7 +59,7 @@ class CustomTextField extends StatelessWidget {
             textDirection: TextDirection.ltr,
             maxLines: maxLines,
             textAlign: TextAlign.center,
-            style: appTheme.themeData.primaryTextTheme.bodyText1,
+            style: appTheme.themeData.primaryTextTheme.bodyLarge,
             textInputAction: TextInputAction.done,
             onChanged: onChanged != null
                 ? (value) {
@@ -94,11 +94,11 @@ class CustomTextField extends StatelessWidget {
                   borderSide: const BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.circular(15.0)),
               errorText: error,
-              errorStyle: appTheme.themeData.primaryTextTheme.subtitle2!
+              errorStyle: appTheme.themeData.primaryTextTheme.titleSmall!
                   .apply(color: Colors.red),
               errorMaxLines: 2,
-              labelStyle: appTheme.themeData.primaryTextTheme.bodyText1,
-              hintStyle: appTheme.themeData.primaryTextTheme.subtitle2,
+              labelStyle: appTheme.themeData.primaryTextTheme.bodyLarge,
+              hintStyle: appTheme.themeData.primaryTextTheme.titleSmall,
               helperText: helperText,
               helperStyle: helperStyle,
               icon: selectedIcon != null

@@ -11,7 +11,7 @@ class NeedyData extends ChangeNotifier {
 
 
   deleteSelectedNeedy() {
-    this.selectedNeedy = null;
+    selectedNeedy = null;
     notifyListeners();
   }
 }

@@ -4,9 +4,7 @@ import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:ahed/Shared%20Data/NeedyData.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +22,7 @@ class CustomNeedyContainer extends StatelessWidget {
   static late CommonData commonData;
   static late NeedyData needyData;
   static late double w, h;
-  final SessionManager sessionManager = new SessionManager();
+  final SessionManager sessionManager = SessionManager();
   @override
   Widget build(BuildContext context) {
     commonData = Provider.of<CommonData>(context);
@@ -94,7 +92,7 @@ class CustomNeedyContainer extends StatelessWidget {
                                         child: Text(
                                           'حدث خطأ أثناء تحميل الصورة',
                                           style: appTheme.themeData
-                                              .primaryTextTheme.headline4!
+                                              .primaryTextTheme.headlineMedium!
                                               .apply(color: Colors.red),
                                         ),
                                       );
@@ -269,7 +267,7 @@ class CustomNeedyContainer extends StatelessWidget {
                 child: Text('${needy.name}',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: appTheme.themeData.primaryTextTheme.headline4!
+                    style: appTheme.themeData.primaryTextTheme.headlineMedium!
                         .apply(fontWeightDelta: 4)),
               ),
               const CustomSpacing(
@@ -349,7 +347,7 @@ class CustomNeedyContainer extends StatelessWidget {
                                 Colors.green[500]!.withOpacity(0.7))),
                         child: Text(
                           'أظهر التغيير',
-                          style: appTheme.themeData.primaryTextTheme.bodyText2,
+                          style: appTheme.themeData.primaryTextTheme.bodyMedium,
                         ),
                       ),
                     )
@@ -377,10 +375,10 @@ class CustomNeedyContainer extends StatelessWidget {
                               }),
                               textStyle: MaterialStateProperty.all<TextStyle>(
                                   appTheme
-                                      .themeData.primaryTextTheme.subtitle2!)),
+                                      .themeData.primaryTextTheme.titleSmall!)),
                           child: Text('دفع إلكتروني',
                               style: appTheme
-                                  .themeData.primaryTextTheme.bodyText2),
+                                  .themeData.primaryTextTheme.bodyMedium),
                         ),
                         ElevatedButton(
                           onPressed: () {
@@ -393,7 +391,7 @@ class CustomNeedyContainer extends StatelessWidget {
                                   Colors.green[400]!)),
                           child: Text('دفع كاش',
                               style: appTheme
-                                  .themeData.primaryTextTheme.bodyText2),
+                                  .themeData.primaryTextTheme.bodyMedium),
                         ),
                       ],
                     ),
@@ -414,7 +412,7 @@ class CustomNeedyContainer extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text('مشاركة',
-                          style: appTheme.themeData.primaryTextTheme.bodyText2),
+                          style: appTheme.themeData.primaryTextTheme.bodyMedium),
                       Icon(
                         // Icons.share,
                         FontAwesomeIcons.share,

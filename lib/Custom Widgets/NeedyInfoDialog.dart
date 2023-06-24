@@ -1,6 +1,5 @@
 import 'package:ahed/Models/Needy.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,7 +14,7 @@ class NeedyInfoDialog extends StatelessWidget {
   final AppTheme appTheme;
   int currentIndex = 0;
   static late double w, h;
-  NeedyInfoDialog({required this.needy, required this.appTheme});
+  NeedyInfoDialog({super.key, required this.needy, required this.appTheme});
 
   @override
   Widget build(BuildContext context) {
@@ -187,33 +186,19 @@ class NeedyInfoDialog extends StatelessWidget {
                                             appTheme: appTheme,
                                           )));
                             },
-                            child: Text(
-                              'أظهر التغيير',
-                              style:
-                                  appTheme.themeData.primaryTextTheme.bodyText2,
-                            ),
                             style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
                                         Colors.green[500]!.withOpacity(0.7))),
+                            child: Text(
+                              'أظهر التغيير',
+                              style:
+                                  appTheme.themeData.primaryTextTheme.bodyMedium,
+                            ),
                           ),
                         )
                       : Center(
                           child: ElevatedButton(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('مشاركة',
-                                    style: appTheme
-                                        .themeData.primaryTextTheme.bodyText2),
-                                Icon(
-                                  // Icons.share,
-                                  FontAwesomeIcons.share,
-                                  color: Colors.white,
-                                  size: appTheme.largeTextSize(context),
-                                ),
-                              ],
-                            ),
                             onPressed: () {
                               // Share.share(
                               //   //ToDo: Add application url
@@ -226,6 +211,20 @@ class NeedyInfoDialog extends StatelessWidget {
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
                                         Colors.blue[400]!)),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('مشاركة',
+                                    style: appTheme
+                                        .themeData.primaryTextTheme.bodyMedium),
+                                Icon(
+                                  // Icons.share,
+                                  FontAwesomeIcons.share,
+                                  color: Colors.white,
+                                  size: appTheme.largeTextSize(context),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                 ],

@@ -7,10 +7,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController _fullName = new TextEditingController();
-  TextEditingController _userName = new TextEditingController();
-  TextEditingController _email = new TextEditingController();
-  TextEditingController _password = new TextEditingController();
+  final TextEditingController _fullName = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
   static late String nameError;
   static late String userNameError;
   static late String emailError;
@@ -49,7 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
+          FocusScope.of(context).requestFocus(FocusNode());
         },
         child: Material(
           child: Container(

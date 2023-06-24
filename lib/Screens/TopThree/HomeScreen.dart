@@ -46,8 +46,8 @@ String getGreetingText() {
   //12 AM -> 11 AM
   //11 AM -> 5 PM
   //5 PM -> 12 AM
-  print(const TimeOfDay(hour: 0, minute: 0) > TimeOfDay(hour: 11, minute: 0) &&
-      TimeOfDay(hour: 1, minute: 0) <= TimeOfDay(hour: 17, minute: 0));
+  print(const TimeOfDay(hour: 0, minute: 0) > const TimeOfDay(hour: 11, minute: 0) &&
+      const TimeOfDay(hour: 1, minute: 0) <= const TimeOfDay(hour: 17, minute: 0));
   if (TimeOfDay.now() > const TimeOfDay(hour: 0, minute: 0) &&
       TimeOfDay.now() <= const TimeOfDay(hour: 11, minute: 0)) {
     return 'صباح الخير🌅';
@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('إنجازاتك', style: appTheme.themeData.primaryTextTheme.headline3),
+        Text('إنجازاتك', style: appTheme.themeData.primaryTextTheme.displaySmall),
         const CustomSpacing(
           value: 100,
         ),
@@ -104,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                       ? double.parse(
                           data['NumberOfNeediesUserHelped'].toString())
                       : null,
-                  countTextStyle: appTheme.themeData.primaryTextTheme.headline5!
+                  countTextStyle: appTheme.themeData.primaryTextTheme.headlineSmall!
                       .apply(fontSizeFactor: 1.5),
                   text: 'حالات قدرت تغير حياتهم للأحسن',
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
@@ -117,10 +117,10 @@ class HomeScreen extends StatelessWidget {
                       'Delius'),
                 ),
                 SizedBox(
+                  height: h / 20,
                   child: VerticalDivider(
                     color: Colors.black.withOpacity(0.5),
                   ),
-                  height: h / 20,
                 ),
                 HomeScreenAchievementContainer(
                   w: w / 2 - w / 15,
@@ -129,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                       : null,
                   precision: 2,
                   suffix: 'جنيه',
-                  countTextStyle: appTheme.themeData.primaryTextTheme.headline5!
+                  countTextStyle: appTheme.themeData.primaryTextTheme.headlineSmall!
                       .apply(fontSizeFactor: 1.5),
                   text: 'هي حجم مساعدتك لينا',
                   achievementTextStyle: appTheme.nonStaticGetTextStyle(
@@ -148,7 +148,7 @@ class HomeScreen extends StatelessWidget {
         const CustomSpacing(
           value: 50,
         ),
-        Text('إنجازتنا', style: appTheme.themeData.primaryTextTheme.headline3),
+        Text('إنجازتنا', style: appTheme.themeData.primaryTextTheme.displaySmall),
         const CustomSpacing(
           value: 100,
         ),
@@ -181,10 +181,10 @@ class HomeScreen extends StatelessWidget {
                       'Delius'),
                 ),
                 SizedBox(
+                  height: h / 20,
                   child: VerticalDivider(
                     color: Colors.black.withOpacity(0.5),
                   ),
-                  height: h / 20,
                 ),
                 HomeScreenAchievementContainer(
                   w: w / 3,
@@ -209,10 +209,10 @@ class HomeScreen extends StatelessWidget {
                       'Delius'),
                 ),
                 SizedBox(
+                  height: h / 20,
                   child: VerticalDivider(
                     color: Colors.black.withOpacity(0.5),
                   ),
-                  height: h / 20,
                 ),
                 HomeScreenAchievementContainer(
                   w: w / 3,
@@ -237,10 +237,10 @@ class HomeScreen extends StatelessWidget {
                       'Delius'),
                 ),
                 SizedBox(
+                  height: h / 20,
                   child: VerticalDivider(
                     color: Colors.black.withOpacity(0.5),
                   ),
-                  height: h / 20,
                 ),
                 HomeScreenAchievementContainer(
                   w: w / 3,
@@ -265,10 +265,10 @@ class HomeScreen extends StatelessWidget {
                       'Delius'),
                 ),
                 SizedBox(
+                  height: h / 20,
                   child: VerticalDivider(
                     color: Colors.black.withOpacity(0.5),
                   ),
-                  height: h / 20,
                 ),
                 HomeScreenAchievementContainer(
                   w: w / 3,
@@ -293,10 +293,10 @@ class HomeScreen extends StatelessWidget {
                       'Delius'),
                 ),
                 SizedBox(
+                  height: h / 20,
                   child: VerticalDivider(
                     color: Colors.black.withOpacity(0.5),
                   ),
-                  height: h / 20,
                 ),
                 HomeScreenAchievementContainer(
                   w: w / 3,
@@ -403,7 +403,7 @@ class HomeScreen extends StatelessWidget {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('عهد', style: appTheme.themeData.primaryTextTheme.headline1),
+              Text('عهد', style: appTheme.themeData.primaryTextTheme.displayLarge),
               sessionManager.isLoggedIn()
                   ? GestureDetector(
                       onTap: () =>
@@ -446,33 +446,34 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               onSelected: (value) {
-                                if (value == 'Profile')
-                                  return commonData
+                                if (value == 'Profile') {
+                                  commonData
                                       .changeStep(Pages.ProfileScreen.index);
-                                else if (value == 'Logout') {
+                                  return;
+                                } else if (value == 'Logout') {
                                   sessionManager.logout();
                                   Navigator.popUntil(context, (route) => false);
-                                  Navigator.pushNamed(context, "MainScreen");
+                                  Navigator.pushNamed(context, 'MainScreen');
                                   return;
                                 }
                               },
                               itemBuilder: (context) {
                                 return [
                                   PopupMenuItem(
+                                    value: 'Profile',
                                     child: Text(
                                       'الملف الشخصي',
                                       style: appTheme
-                                          .themeData.primaryTextTheme.headline4,
+                                          .themeData.primaryTextTheme.headlineMedium,
                                     ),
-                                    value: 'Profile',
                                   ),
                                   PopupMenuItem(
+                                    value: 'Logout',
                                     child: Text(
                                       'تسجيل الخروج',
                                       style: appTheme
-                                          .themeData.primaryTextTheme.headline4,
+                                          .themeData.primaryTextTheme.headlineMedium,
                                     ),
-                                    value: 'Logout',
                                   ),
                                 ];
                               },
@@ -481,7 +482,7 @@ class HomeScreen extends StatelessWidget {
                     )
                   : GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, "LoginScreen");
+                        Navigator.pushNamed(context, 'LoginScreen');
                       },
                       child: Text(
                         'تسجيل الدخول',
@@ -512,53 +513,51 @@ class HomeScreen extends StatelessWidget {
             child: const Icon(FontAwesomeIcons.handsHelping),
           ),
         ),
-        body: Container(
-          child: Column(
-            children: [
-              Center(
-                child: Text('${getGreetingText()}',
-                    style: appTheme.themeData.primaryTextTheme.displaySmall),
-              ),
-              const CustomSpacing(
-                value: 100,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                    // controller: scrollController,
-                    child: Padding(
-                  padding: EdgeInsets.only(right: w / 30),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        getAchievementCenter(context),
-                        //ToDo: Future V2
-                        // Visibility(
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text('الحالات المحفوظة',
-                        //           style: appTheme
-                        //               .themeData.primaryTextTheme.headline3),
-                        //       NeediesScreen(
-                        //         type: "Bookmarked",
-                        //       ),
-                        //     ],
-                        //   ),
-                        //   visible: sessionManager.hasAnyBookmarked(),
-                        // ),
+        body: Column(
+          children: [
+            Center(
+              child: Text(getGreetingText(),
+                  style: appTheme.themeData.primaryTextTheme.displaySmall),
+            ),
+            const CustomSpacing(
+              value: 100,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                  // controller: scrollController,
+                  child: Padding(
+                padding: EdgeInsets.only(right: w / 30),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      getAchievementCenter(context),
+                      //ToDo: Future V2
+                      // Visibility(
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Text('الحالات المحفوظة',
+                      //           style: appTheme
+                      //               .themeData.primaryTextTheme.headline3),
+                      //       NeediesScreen(
+                      //         type: "Bookmarked",
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   visible: sessionManager.hasAnyBookmarked(),
+                      // ),
 
-                        NeediesScreen(
-                          type: "Urgent",
-                        ),
+                      NeediesScreen(
+                        type: 'Urgent',
+                      ),
 
-                        NeediesScreen(
-                          type: "Not Urgent",
-                        ),
-                      ]),
-                )),
-              ),
-            ],
-          ),
+                      NeediesScreen(
+                        type: 'Not Urgent',
+                      ),
+                    ]),
+              )),
+            ),
+          ],
         ));
   }
 }

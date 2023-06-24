@@ -61,12 +61,12 @@ class CustomCard extends StatelessWidget {
                 ),
                 title: Text(
                   title,
-                  style: appTheme.themeData.primaryTextTheme.subtitle1,
+                  style: appTheme.themeData.primaryTextTheme.titleMedium,
                   textDirection: textDirection,
                 ),
                 subtitle: Text(
                   subtitle,
-                  style: appTheme.themeData.primaryTextTheme.subtitle1,
+                  style: appTheme.themeData.primaryTextTheme.titleMedium,
                   textDirection: textDirection,
                 ),
               ),

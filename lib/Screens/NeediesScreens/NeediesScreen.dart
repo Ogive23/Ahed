@@ -57,7 +57,7 @@ class _NeediesScreenState extends State<NeediesScreen> {
       return Center(
         child: Text(
           'لا توجد حالات متاحة',
-          style: appTheme.themeData.primaryTextTheme.subtitle1,
+          style: appTheme.themeData.primaryTextTheme.titleMedium,
         ),
       );
     }
@@ -133,7 +133,7 @@ class _NeediesScreenState extends State<NeediesScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.type == 'Urgent' ? 'الحالات الحرجة' : 'الحالات',
-            style: appTheme.themeData.primaryTextTheme.headline3),
+            style: appTheme.themeData.primaryTextTheme.displaySmall),
         const CustomSpacing(
           value: 100,
         ),

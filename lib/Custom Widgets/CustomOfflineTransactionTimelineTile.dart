@@ -170,7 +170,7 @@ class CustomOfflineTransactionTimelineTile extends StatelessWidget {
           child: Text(
             helper.getAppropriateText(
                 intl.DateFormat('y/MM/dd').format(transaction.createdAt)),
-            style: appTheme.themeData.primaryTextTheme.headline4,
+            style: appTheme.themeData.primaryTextTheme.headlineMedium,
           ),
         ),
       ),
@@ -181,27 +181,22 @@ class CustomOfflineTransactionTimelineTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              transaction.amount.toStringAsFixed(2) + " جنيه مصري",
+              '${transaction.amount.toStringAsFixed(2)} جنيه مصري',
               style: appTheme.themeData.primaryTextTheme.headlineSmall!
                   .apply(fontWeightDelta: 2),
             ),
             const CustomSpacing(value: 100),
-            transaction.needy == null
-                ? Text(
-                    'تبرعك ذهب إلي جهة ${helper.getAppropriateText(transaction.preferredSection)}',
-                    style: appTheme.themeData.primaryTextTheme.headlineSmall,
-                  )
-                : GestureDetector(
-                    onTap: () async {
-                      showNeedyDialog(context, transaction.needy);
-                    },
-                    child: Text(
-                      'عرض الحالة المرتبطة',
-                      style: appTheme.themeData.primaryTextTheme.headlineSmall!
-                          .apply(
-                              decoration: TextDecoration.underline,
-                              color: Colors.blue),
-                    )),
+            GestureDetector(
+                onTap: () async {
+                  showNeedyDialog(context, transaction.needy);
+                },
+                child: Text(
+                  'عرض الحالة المرتبطة',
+                  style: appTheme.themeData.primaryTextTheme.headlineSmall!
+                      .apply(
+                          decoration: TextDecoration.underline,
+                          color: Colors.blue),
+                )),
             const CustomSpacing(value: 100),
             transaction.collected
                 ? const SizedBox()

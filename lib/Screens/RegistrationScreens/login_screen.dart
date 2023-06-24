@@ -2,7 +2,6 @@ import 'package:ahed/ApiCallers/UserApiCaller.dart';
 import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ahed/Custom Widgets/CustomButtonLoading.dart';
 
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     changeLoadingState();
     if (status['Err_Flag']) {
       setState(() {
-        this.error = status['Err_Desc'];
+        error = status['Err_Desc'];
       });
       return;
     }
@@ -300,7 +299,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(context, "SignUp");
+                                  Navigator.pushNamed(context, 'SignUp');
                                 },
                                 child: Text(
                                   'Join Us Now!',

@@ -50,7 +50,7 @@ class ImageCarouselShow extends StatelessWidget {
                         child: Text(
                           'حدث خطأ أثناء تحميل الصورة',
                           style: appTheme.themeData
-                              .primaryTextTheme.headline4!
+                              .primaryTextTheme.headlineMedium!
                               .apply(color: Colors.red),
                         ),
                       ),
@@ -115,7 +115,7 @@ class ImageCarouselShow extends StatelessWidget {
                             child: Text(
                               'حدث خطأ أثناء تحميل الصورة',
                               style: appTheme.themeData
-                                  .primaryTextTheme.headline4!
+                                  .primaryTextTheme.headlineMedium!
                                   .apply(color: Colors.red),
                             ),
                           ),

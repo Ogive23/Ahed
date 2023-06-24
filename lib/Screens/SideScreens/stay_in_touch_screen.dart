@@ -10,7 +10,7 @@ import '../../Shared Data/common_data.dart';
 
 class StayInTouchScreen extends StatelessWidget {
   static late double w, h;
-  final SessionManager sessionManager = new SessionManager();
+  final SessionManager sessionManager = SessionManager();
   static late CommonData commonData;
   static late AppTheme appTheme;
   static late AppLanguage appLanguage;
@@ -35,10 +35,10 @@ class StayInTouchScreen extends StatelessWidget {
                     padding: EdgeInsets.only(right: w / 20),
                     child: Text(
                       'مجتمعنا',
-                      style: appTheme.themeData.primaryTextTheme.headline2!
+                      style: appTheme.themeData.primaryTextTheme.displayMedium!
                           .apply(
                               color: appTheme.themeData.primaryTextTheme
-                                  .headline5!.color!),
+                                  .headlineSmall!.color!),
                     ),
                   ),
                   Directionality(
@@ -47,14 +47,14 @@ class StayInTouchScreen extends StatelessWidget {
                       icon: Icon(
                         Icons.arrow_back_ios_sharp,
                         color: appTheme
-                            .themeData.primaryTextTheme.headline5!.color!,
+                            .themeData.primaryTextTheme.headlineSmall!.color!,
                       ),
                       onPressed: () => commonData.back(),
                     ),
                   ),
                 ],
               ),
-              CustomSpacing(
+              const CustomSpacing(
                 value: 100,
               ),
               Container(

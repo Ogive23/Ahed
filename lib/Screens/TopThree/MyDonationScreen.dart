@@ -1,5 +1,4 @@
 import 'package:ahed/ApiCallers/TransactionApiCaller.dart';
-import 'package:ahed/ApiCallers/UserApiCaller.dart';
 import 'package:ahed/Custom%20Widgets/CustomLoading.dart';
 import 'package:ahed/Custom%20Widgets/CustomOfflineTransactionTimelineTile.dart';
 import 'package:ahed/Custom%20Widgets/CustomOnlineTransactionTimelineTile.dart';
@@ -16,6 +15,8 @@ import 'package:ahed/Models/OnlineTransaction.dart';
 import 'package:ahed/Models/OfflineTransaction.dart';
 
 class MyDonationScreen extends StatefulWidget {
+  const MyDonationScreen({super.key});
+
   @override
   _MyDonationScreenState createState() => _MyDonationScreenState();
 }
@@ -100,7 +101,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
             alignment: Alignment.center,
             child: Text(
               'لا توجد تبرعات متاحة',
-              style: appTheme.themeData.primaryTextTheme.headline4,
+              style: appTheme.themeData.primaryTextTheme.headlineMedium,
             ),
           );
         } else if (snapshot.connectionState == ConnectionState.done &&
@@ -173,7 +174,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
             alignment: Alignment.center,
             child: Text(
               'لا توجد تبرعات متاحة',
-              style: appTheme.themeData.primaryTextTheme.headline4,
+              style: appTheme.themeData.primaryTextTheme.headlineMedium,
             ),
           );
         } else if (snapshot.connectionState == ConnectionState.done &&
@@ -213,11 +214,11 @@ class _MyDonationScreenState extends State<MyDonationScreen>
           padding: EdgeInsets.only(top: h / 20),
           child: Text(
             'تبرعاتي',
-            style: appTheme.themeData.primaryTextTheme.headline2,
+            style: appTheme.themeData.primaryTextTheme.displayMedium,
           ),
         ),
       ),
-      body: Container(
+      body: SizedBox(
         height: double.infinity,
         child: Column(children: [
           const CustomSpacing(
@@ -230,7 +231,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 'الدفع الإلكتروني',
                 style: appTheme.nonStaticGetTextStyle(
                     1.0,
-                    appTheme.themeData.primaryTextTheme.headline2!.color,
+                    appTheme.themeData.primaryTextTheme.displayMedium!.color,
                     appTheme.mediumTextSize(context),
                     FontWeight.w600,
                     1.0,
@@ -242,7 +243,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                 'الدفع النقدي',
                 style: appTheme.nonStaticGetTextStyle(
                     1.0,
-                    appTheme.themeData.primaryTextTheme.headline2!.color,
+                    appTheme.themeData.primaryTextTheme.displayMedium!.color,
                     appTheme.mediumTextSize(context),
                     FontWeight.w600,
                     1.0,
@@ -285,7 +286,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                           Text(
                             'عليك تسجيل الدخول للمتابعة',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline6,
+                                appTheme.themeData.primaryTextTheme.titleLarge,
                           ),
                           GestureDetector(
                             onTap: () {
@@ -313,7 +314,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
                           Text(
                             'عليك تسجيل الدخول للمتابعة',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline6,
+                                appTheme.themeData.primaryTextTheme.titleLarge,
                           ),
                           GestureDetector(
                             onTap: () {

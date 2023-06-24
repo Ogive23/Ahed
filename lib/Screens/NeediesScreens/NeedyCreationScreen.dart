@@ -205,7 +205,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
           padding: EdgeInsets.only(top: h / 20, bottom: h / 40),
           child: Text(
             'إنشاء طلب إضافة حالة',
-            style: appTheme.themeData.primaryTextTheme.headline2,
+            style: appTheme.themeData.primaryTextTheme.displayMedium,
           ),
         ),
         actions: [
@@ -248,7 +248,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                             Text(
                               'المعلومات العامة',
                               style:
-                                  appTheme.themeData.primaryTextTheme.headline3,
+                                  appTheme.themeData.primaryTextTheme.displaySmall,
                             ),
                             CustomTextField(
                                 controller: name,
@@ -269,7 +269,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                               '*يمكنك عدم الإفصاح عن أسم الشخص، فقط أدخل كلمة شخص*',
                               textAlign: TextAlign.center,
                               style:
-                                  appTheme.themeData.primaryTextTheme.subtitle1,
+                                  appTheme.themeData.primaryTextTheme.titleMedium,
                             )),
                             const CustomSpacing(
                               value: 100,
@@ -361,14 +361,14 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                             Text(
                               'المعلومات الفرعية',
                               style:
-                                  appTheme.themeData.primaryTextTheme.headline3,
+                                  appTheme.themeData.primaryTextTheme.displaySmall,
                             ),
                             Align(
                                 alignment: Alignment.topRight,
                                 child: Text(
                                   'نوع الحالة',
                                   style: appTheme
-                                      .themeData.primaryTextTheme.headline3,
+                                      .themeData.primaryTextTheme.displaySmall,
                                 )),
                             const CustomSpacing(
                               value: 100,
@@ -422,7 +422,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                                 child: Text(
                                   'معدل الخطورة',
                                   style: appTheme
-                                      .themeData.primaryTextTheme.headline3,
+                                      .themeData.primaryTextTheme.displaySmall,
                                 )),
                             Directionality(
                               textDirection: TextDirection.ltr,
@@ -461,7 +461,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                             Text(
                               'ركن الصور',
                               style:
-                                  appTheme.themeData.primaryTextTheme.headline3,
+                                  appTheme.themeData.primaryTextTheme.displaySmall,
                             ),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
@@ -534,7 +534,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                   TextSpan(text: 'برجاء مراجعة ', children: [
                     TextSpan(
                         text: 'القواعد',
-                        style: appTheme.themeData.primaryTextTheme.headline4!
+                        style: appTheme.themeData.primaryTextTheme.headlineMedium!
                             .apply(
                                 decoration: TextDecoration.underline,
                                 color: Colors.blue),
@@ -545,7 +545,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                             ' الخاصة بإنشاء الحالات حتي لا تتعرض لأي مسائلة قانونية')
                   ]),
                   textAlign: TextAlign.center,
-                  style: appTheme.themeData.primaryTextTheme.subtitle1,
+                  style: appTheme.themeData.primaryTextTheme.titleMedium,
                 ),
               ),
               if (isLoading)
@@ -593,7 +593,7 @@ class _NeedyCreationScreenState extends State<NeedyCreationScreen> {
                           const Color.fromRGBO(38, 92, 126, 1.0))),
                   child: Text(
                     'إنشاء الطلب',
-                    style: appTheme.themeData.primaryTextTheme.bodyText2,
+                    style: appTheme.themeData.primaryTextTheme.bodyMedium,
                   ),
                 ),
             ],

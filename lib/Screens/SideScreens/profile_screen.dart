@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Text(
                                     'الملف الشخصي',
                                     style: appTheme
-                                        .themeData.primaryTextTheme.headline2,
+                                        .themeData.primaryTextTheme.displayMedium,
                                   ),
                                   Directionality(
                                     textDirection: TextDirection.ltr,
@@ -132,89 +132,87 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ),
                             ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                    child: const Text('تغيير الغلاف'),
-                                    onPressed: () {
-                                      onImagePressed(context, 'Cover');
-                                    },
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: isEditing
-                                        ? isLoading
-                                            ? const CustomButtonLoading()
-                                            : IconButton(
-                                                icon: const Icon(
-                                                  Icons.done,
-                                                  color: Colors.green,
-                                                ),
-                                                onPressed: () async {
-                                                  changeLoadingState();
-                                                  Map<String, dynamic> status =
-                                                      await userApiCaller
-                                                          .changeUserInformation(
-                                                              appLanguage
-                                                                  .language!,
-                                                              sessionManager
-                                                                  .user!.id,
-                                                              bio.text,
-                                                              address.text,
-                                                              phoneNumber.text);
-                                                  isEditing = !isEditing;
-                                                  changeLoadingState();
-                                                  if (!status['Err_Flag']) {
-                                                    sessionManager
-                                                        .changeUserInfo(
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  child: const Text('تغيير الغلاف'),
+                                  onPressed: () {
+                                    onImagePressed(context, 'Cover');
+                                  },
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: isEditing
+                                      ? isLoading
+                                          ? const CustomButtonLoading()
+                                          : IconButton(
+                                              icon: const Icon(
+                                                Icons.done,
+                                                color: Colors.green,
+                                              ),
+                                              onPressed: () async {
+                                                changeLoadingState();
+                                                Map<String, dynamic> status =
+                                                    await userApiCaller
+                                                        .changeUserInformation(
+                                                            appLanguage
+                                                                .language!,
+                                                            sessionManager
+                                                                .user!.id,
                                                             bio.text,
                                                             address.text,
                                                             phoneNumber.text);
-                                                    return CoolAlert.show(
-                                                        context: context,
-                                                        type: CoolAlertType
-                                                            .success,
-                                                        lottieAsset:
-                                                            'assets/animations/6951-success.json',
-                                                        text: status['message'],
-                                                        confirmBtnColor:
-                                                            const Color(
-                                                                0xff1c9691),
-                                                        title: '');
-                                                  } else {
-                                                    return CoolAlert.show(
-                                                        context: context,
-                                                        type:
-                                                            CoolAlertType.error,
-                                                        lottieAsset:
-                                                            'assets/animations/38213-error.json',
-                                                        text:
-                                                            status['Err_Desc'],
-                                                        confirmBtnColor:
-                                                            const Color(
-                                                                0xff1c9691),
-                                                        title: '');
-                                                  }
-                                                },
-                                              )
-                                        : IconButton(
-                                            icon: const Icon(
-                                              Icons.build,
-                                              color: Colors.blue,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
                                                 isEditing = !isEditing;
-                                              });
-                                              print(isEditing);
-                                            },
+                                                changeLoadingState();
+                                                if (!status['Err_Flag']) {
+                                                  sessionManager
+                                                      .changeUserInfo(
+                                                          bio.text,
+                                                          address.text,
+                                                          phoneNumber.text);
+                                                  return CoolAlert.show(
+                                                      context: context,
+                                                      type: CoolAlertType
+                                                          .success,
+                                                      lottieAsset:
+                                                          'assets/animations/6951-success.json',
+                                                      text: status['message'],
+                                                      confirmBtnColor:
+                                                          const Color(
+                                                              0xff1c9691),
+                                                      title: '');
+                                                } else {
+                                                  return CoolAlert.show(
+                                                      context: context,
+                                                      type:
+                                                          CoolAlertType.error,
+                                                      lottieAsset:
+                                                          'assets/animations/38213-error.json',
+                                                      text:
+                                                          status['Err_Desc'],
+                                                      confirmBtnColor:
+                                                          const Color(
+                                                              0xff1c9691),
+                                                      title: '');
+                                                }
+                                              },
+                                            )
+                                      : IconButton(
+                                          icon: const Icon(
+                                            Icons.build,
+                                            color: Colors.blue,
                                           ),
-                                  ),
-                                ],
-                              ),
+                                          onPressed: () {
+                                            setState(() {
+                                              isEditing = !isEditing;
+                                            });
+                                            print(isEditing);
+                                          },
+                                        ),
+                                ),
+                              ],
                             ),
                             Container(
                               decoration: BoxDecoration(boxShadow: [
@@ -270,7 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     style: appTheme.nonStaticGetTextStyle(
                                       1.0,
                                       appTheme.themeData.primaryTextTheme
-                                          .bodyText1!.color,
+                                          .bodyLarge!.color,
                                       appTheme.largeTextSize(context),
                                       FontWeight.w500,
                                       1.0,
@@ -299,7 +297,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           '${helper.isNotAvailable(sessionManager.user!.profileBio!) ? 'لا توجد نبذة مختصرة' : sessionManager.user!.profileBio}',
                                           textAlign: TextAlign.center,
                                           style: appTheme.themeData
-                                              .primaryTextTheme.bodyText1,
+                                              .primaryTextTheme.bodyLarge,
                                         ),
                                   Align(
                                       alignment: Alignment.topRight,
@@ -310,7 +308,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'المعلومات الشخصية',
                                           style: appTheme.themeData
-                                              .primaryTextTheme.headline3,
+                                              .primaryTextTheme.displaySmall,
                                         ),
                                       )),
                                   const CustomSpacing(

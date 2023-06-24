@@ -45,7 +45,7 @@ class SessionManager {
       userData[5],
       userData[6] == '' ? null : userData[6],
       //ToDo: Review
-      userData[7] == "true" ? true : false,
+      userData[7] == 'true' ? true : false,
       userData[8] == '' ? null : userData[8],
       userData[9] == '' ? null : userData[9],
       userData[10] == '' ? null : userData[10],
@@ -108,7 +108,7 @@ class SessionManager {
         userData[5],
         userData[6],
         //ToDo: Review
-        userData[7] == "true" ? true : false,
+        userData[7] == 'true' ? true : false,
         userData[9],
         userData[10],
         userData[11]);

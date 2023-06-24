@@ -83,9 +83,9 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
                     ),
                   ],
                   unselectedLabelStyle:
-                      appTheme.themeData.primaryTextTheme.subtitle1,
+                      appTheme.themeData.primaryTextTheme.titleMedium,
                   selectedLabelStyle:
-                      appTheme.themeData.primaryTextTheme.headline4,
+                      appTheme.themeData.primaryTextTheme.headlineMedium,
                 ),
         ),
       ),

@@ -77,7 +77,7 @@ class _OfflineTransactionUpdateScreenState
   }
 
   bool onSubmittedAddress(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         addressError = 'العنوان لا يمكن أن يكون فارغاً';
       });
@@ -111,7 +111,7 @@ class _OfflineTransactionUpdateScreenState
   }
 
   bool onSubmittedMobileNumber(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         mobileNumberError = 'رقم الهاتف لا يمكن أن يكون فارغاً';
       });
@@ -184,7 +184,7 @@ class _OfflineTransactionUpdateScreenState
           padding: EdgeInsets.only(top: h / 20, bottom: h / 40),
           child: Text(
             'تبرع',
-            style: appTheme.themeData.primaryTextTheme.headline2,
+            style: appTheme.themeData.primaryTextTheme.displayMedium,
           ),
         ),
         actions: [
@@ -216,10 +216,10 @@ class _OfflineTransactionUpdateScreenState
                       children: [
                         Text('أسم الحالة: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                         Text('${needyData.selectedNeedy!.name}',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                       ],
                     ),
                     const CustomSpacing(
@@ -229,7 +229,7 @@ class _OfflineTransactionUpdateScreenState
                       children: [
                         Text('نوع الحالة: ',
                             style:
-                                appTheme.themeData.primaryTextTheme.headline5),
+                                appTheme.themeData.primaryTextTheme.headlineSmall),
                         Text('${needyData.selectedNeedy!.type}',
                             style:
                                 appTheme.themeData.primaryTextTheme.headlineSmall),
@@ -285,7 +285,7 @@ class _OfflineTransactionUpdateScreenState
                                         needyData.selectedNeedy!.collected!)
                                     .toStringAsFixed(0)} جنيه',
                             style:
-                                appTheme.themeData.primaryTextTheme.bodyText2,
+                                appTheme.themeData.primaryTextTheme.bodyMedium,
                           ),
                           linearStrokeCap: LinearStrokeCap.butt,
                         ),
@@ -378,7 +378,7 @@ class _OfflineTransactionUpdateScreenState
                           children: [
                             Text('من',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                             ElevatedButton(
                               onPressed: () => selectFromDate(context),
                               style: ButtonStyle(
@@ -386,7 +386,7 @@ class _OfflineTransactionUpdateScreenState
                                       MaterialStateProperty.all<Color>(appTheme
                                           .themeData
                                           .primaryTextTheme
-                                          .bodyText1!
+                                          .bodyLarge!
                                           .color!)),
                               child: Text(
                                 intl.DateFormat('y-MM-dd').format(startCollectDate),
@@ -411,12 +411,12 @@ class _OfflineTransactionUpdateScreenState
                                       MaterialStateProperty.all<Color>(appTheme
                                           .themeData
                                           .primaryTextTheme
-                                          .bodyText1!
+                                          .bodyLarge!
                                           .color!)),
                               child: Text(
                                 intl.DateFormat('y-MM-dd').format(endCollectDate),
                                 style: appTheme
-                                    .themeData.primaryTextTheme.bodyText2,
+                                    .themeData.primaryTextTheme.bodyMedium,
                               ),
                             ),
                           ],
@@ -426,7 +426,7 @@ class _OfflineTransactionUpdateScreenState
                     Center(
                         child: Text(
                       '*يجب أن يكون الفارق بين التاريخين يوم علي الأقل*',
-                      style: appTheme.themeData.primaryTextTheme.subtitle1,
+                      style: appTheme.themeData.primaryTextTheme.titleMedium,
                     )),
                     Center(
                       child: dateError == null
@@ -434,7 +434,7 @@ class _OfflineTransactionUpdateScreenState
                           : Text(
                               dateError!,
                               style: appTheme
-                                  .themeData.primaryTextTheme.subtitle2!
+                                  .themeData.primaryTextTheme.titleSmall!
                                   .apply(color: Colors.red),
                             ),
                     )
@@ -491,7 +491,7 @@ class _OfflineTransactionUpdateScreenState
                               const Color.fromRGBO(38, 92, 126, 1.0))),
                       child: Text(
                         'تعديل',
-                        style: appTheme.themeData.primaryTextTheme.bodyText2,
+                        style: appTheme.themeData.primaryTextTheme.bodyMedium,
                       ),
                     ),
             ],

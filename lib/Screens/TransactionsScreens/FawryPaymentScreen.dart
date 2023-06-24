@@ -47,7 +47,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   }
 
   onChangedExpiryDate(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       return setState(() {
         expiryDateError = null;
       });
@@ -63,7 +63,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   }
 
   bool onSubmittedCardNumber(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         cardNumberError = 'هذا الحقل لا يمكن أن يكون فارغاً.';
       });
@@ -82,7 +82,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   }
 
   bool onSubmittedExpiryDate(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         expiryDateError = 'هذا الحقل لا يمكن أن يكون فارغاً.';
       });
@@ -125,7 +125,7 @@ class _FawryPaymentScreenState extends State<FawryPaymentScreen> {
   }
 
   bool onSubmittedCVV(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       setState(() {
         cvvError = 'رقم خاطئ.';
       });

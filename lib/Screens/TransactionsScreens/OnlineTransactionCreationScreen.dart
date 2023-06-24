@@ -3,7 +3,6 @@ import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:ahed/Shared%20Data/NeedyData.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -24,11 +23,11 @@ class _OnlineTransactionCreationScreenState
   late AppLanguage appLanguage;
   late AppTheme appTheme;
   late TabController tabController;
-  ScrollController scrollController = new ScrollController();
+  ScrollController scrollController = ScrollController();
   @override
   initState() {
     super.initState();
-    tabController = new TabController(length: 2, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -55,7 +54,7 @@ class _OnlineTransactionCreationScreenState
               padding: EdgeInsets.only(top: h / 20, bottom: h / 40),
               child: Text(
                 'تبرع',
-                style: appTheme.themeData.primaryTextTheme.headline2,
+                style: appTheme.themeData.primaryTextTheme.displayMedium,
               )),
           backgroundColor: appTheme.themeData.primaryColor,
           elevation: 0.0),
@@ -82,11 +81,11 @@ class _OnlineTransactionCreationScreenState
                         children: [
                           Text('أسم الحالة: ',
                               style: appTheme
-                                  .themeData.primaryTextTheme.headline5),
+                                  .themeData.primaryTextTheme.headlineSmall),
                           Flexible(
                             child: Text('${needyData.selectedNeedy!.name}',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                           ),
                         ],
                       ),
@@ -98,11 +97,11 @@ class _OnlineTransactionCreationScreenState
                         children: [
                           Text('نوع الحالة: ',
                               style: appTheme
-                                  .themeData.primaryTextTheme.headline5),
+                                  .themeData.primaryTextTheme.headlineSmall),
                           Flexible(
                             child: Text('${needyData.selectedNeedy!.type}',
                                 style: appTheme
-                                    .themeData.primaryTextTheme.headline5),
+                                    .themeData.primaryTextTheme.headlineSmall),
                           ),
                         ],
                       ),
@@ -120,12 +119,12 @@ class _OnlineTransactionCreationScreenState
                             children: [
                               Text('التفاصيل: ',
                                   style: appTheme
-                                      .themeData.primaryTextTheme.headline5),
+                                      .themeData.primaryTextTheme.headlineSmall),
                               Flexible(
                                 child: Text(
                                   '${needyData.selectedNeedy!.details}',
                                   style: appTheme
-                                      .themeData.primaryTextTheme.headline5,
+                                      .themeData.primaryTextTheme.headlineSmall,
                                 ),
                               ),
                             ],
@@ -139,7 +138,7 @@ class _OnlineTransactionCreationScreenState
                         children: [
                           Text('المتبقي: ',
                               style: appTheme
-                                  .themeData.primaryTextTheme.headline5),
+                                  .themeData.primaryTextTheme.headlineSmall),
                           LinearPercentIndicator(
                             width: w / 2,
                             alignment: MainAxisAlignment.center,
@@ -156,7 +155,7 @@ class _OnlineTransactionCreationScreenState
                                           needyData.selectedNeedy!.collected!)
                                       .toStringAsFixed(0)} جنيه',
                               style:
-                                  appTheme.themeData.primaryTextTheme.bodyText2,
+                                  appTheme.themeData.primaryTextTheme.bodyMedium,
                             ),
                             linearStrokeCap: LinearStrokeCap.butt,
                           ),

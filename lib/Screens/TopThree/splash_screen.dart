@@ -5,6 +5,8 @@ import 'dart:math';
 import '../../Session/session_manager.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreen createState() => _SplashScreen();
 }
@@ -121,7 +123,7 @@ class _SplashScreen extends State<SplashScreen>
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Text(
-                    '$quote',
+                    quote,
                     style: const TextStyle(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),

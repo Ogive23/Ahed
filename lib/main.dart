@@ -34,9 +34,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: const SplashScreen(),
       routes: <String, WidgetBuilder>{
-        'SplashScreen': (BuildContext context) => SplashScreen(),
+        'SplashScreen': (BuildContext context) => const SplashScreen(),
         'MainScreen': (BuildContext context) => MainScreen(),
         'WelcomeScreen': (BuildContext context) => const WelcomeScreen(),
         'LoginScreen': (BuildContext context) => LoginScreen(),

@@ -71,7 +71,7 @@ class CustomOnlineTransactionTimelineTile extends StatelessWidget {
           child: Text(
             helper.getAppropriateText(
                 intl.DateFormat('y/MM/dd').format(transaction.createdAt)),
-            style: appTheme.themeData.primaryTextTheme.headline4,
+            style: appTheme.themeData.primaryTextTheme.headlineMedium,
           ),
         ),
       ),
