@@ -41,16 +41,14 @@ class DataMapper {
         element['url'],
         element['created_by']['id'].toString(),
         element['created_by']['name'].toString(),
-        element['created_by']['profile']['image'] != null
-            ? baseURL + element['created_by']['profile']['image']
-            : null,
+        element['created_by']['profile']['image'],
         element['created_by']['email_verified_at'] != null ? true : false,
       ));
     }
     return returnedNeedies;
   }
 
-  User getUserFromJson(String url, Map<String, dynamic> info) {
+  User getUserFromJson(Map<String, dynamic> info) {
     return User(
         info['user']['id'].toString(),
         info['user']['name'].toString(),
@@ -60,12 +58,8 @@ class DataMapper {
         info['user']['phone_number'].toString(),
         info['user']['address']?.toString(),
         info['user']['email_verified_at'] != null ? true : false,
-        info['profile']['image'] != null
-            ? url + info['profile']['image']
-            : null,
-        info['profile']['cover'] != null
-            ? url + info['profile']['cover']
-            : null,
+        info['profile']['image'],
+        info['profile']['cover'],
         info['profile']['bio']?.toString());
   }
 
@@ -129,7 +123,7 @@ class DataMapper {
         json['url'],
         json['createdBy'] != null ? json['createdBy']['id'].toString() : null,
         json['createdBy'] != null ? json['createdBy']['name'].toString() : null,
-        json['createdBy'] != null ? baseURL + json['createdBy']['image'] : null,
+        json['createdBy'] != null ? json['createdBy']['image'] : null,
         json['createdBy'] != null
             ? json['createdBy']['email_verified_at']
             : null

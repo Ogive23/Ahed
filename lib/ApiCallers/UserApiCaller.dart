@@ -38,10 +38,9 @@ class UserApiCaller {
       var responseToJson = jsonDecode(response.body);
       print(responseToJson);
       if (responseToJson['Err_Flag']) return responseToJson;
-      //ToDo:move this "/storage/" to backend and make it full link
       return {
         'Err_Flag': responseToJson['Err_Flag'],
-        'User': dataMapper.getUserFromJson(url, responseToJson['data']),
+        'User': dataMapper.getUserFromJson(responseToJson['data']),
         'AccessToken': responseToJson['data']['token'],
         'ExpiryDate': responseToJson['data']['expiryDate'],
       };
