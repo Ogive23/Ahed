@@ -1,9 +1,11 @@
 import 'package:ahed/Models/User.dart';
+import 'package:ahed/Session/MixPanelManager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/User.dart';
 
 class SessionManager {
   late SharedPreferences? sharedPreferences;
+  final MixPanelManager mixPanelManager = new MixPanelManager();
   User? user;
   String? accessToken;
   DateTime? accessTokenExpireDate;
@@ -26,9 +28,28 @@ class SessionManager {
     sharedPreferences!.setStringList('user', user.toList());
     sharedPreferences!.setString('accessToken', accessToken);
     sharedPreferences!.setString('expiryDate', expiryDate.toString());
+    mixPanelManager.mixpanel!.identify(user.id);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('Name', user.name);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('Email', user.email);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('Gender', user.gender);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('Phone Number', user.phoneNumber);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('Address', user.address);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('Verified', user.verified);
   }
 
-  loadSession() {
+  loadSession() async {
     accessTokenExpireDate =
         DateTime.parse(sharedPreferences!.getString('expiryDate')!);
     if (accessTokenExpireDate!.isBefore(DateTime.now())) {
@@ -50,6 +71,29 @@ class SessionManager {
       userData[9] == '' ? null : userData[9],
       userData[10] == '' ? null : userData[10],
     );
+
+    mixPanelManager.mixpanel!.identify(user!.id);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('name', user!.name);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('username', user!.username);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('email', user!.email);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('gender', user!.gender);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('phone', user!.phoneNumber);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('address', user!.address);
+    mixPanelManager.mixpanel!
+        .getPeople()
+        .set('verified', user!.verified);
   }
 
   bool notFirstTime() {
@@ -81,7 +125,7 @@ class SessionManager {
   }
 
   bool accessTokenExpired() {
-    return accessTokenExpireDate!.isBefore(DateTime.now());
+    return accessTokenExpireDate!= null? accessTokenExpireDate!.isBefore(DateTime.now()) : true;
   }
 
   logout() {

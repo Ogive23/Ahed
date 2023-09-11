@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:ahed/Session/MixPanelManager.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -14,6 +15,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreen extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late SessionManager sessionManager;
+  late MixPanelManager mixPanelManager;
   late AnimationController _animationController;
   late Animation<Color> _colorAnimation;
   double value = 0.0;
@@ -40,18 +42,22 @@ class _SplashScreen extends State<SplashScreen>
           '― John Bunyan'
     ].elementAt(Random().nextInt(5));
     sessionManager = SessionManager();
+    mixPanelManager = new MixPanelManager();
     getSession();
     changeOpacity();
   }
 
   getSession() async {
     await sessionManager.getSessionManager();
+    await mixPanelManager.initMixpanel();
     setState(() {});
   }
 
   getHomePage() {
     if (!sessionManager.notFirstTime()) return 'WelcomeScreen';
-    if (sessionManager.isLoggedIn()) sessionManager.loadSession();
+    if (sessionManager.isLoggedIn()) {
+      sessionManager.loadSession();
+    }
     return 'MainScreen';
   }
 

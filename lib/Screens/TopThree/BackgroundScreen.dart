@@ -4,6 +4,7 @@ import 'package:ahed/Shared%20Data/app_theme.dart';
 import 'package:ahed/Shared%20Data/common_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../GeneralInfo.dart';
@@ -19,6 +20,7 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
   static late AppLanguage appLanguage;
   static late AppTheme appTheme;
   static late TabController tabController;
+  final Mixpanel mixpanel = Mixpanel('bea05d9f9bc6df748045a3bfce6c0e6b');
 
   Future<bool> _onWillPop(context) async {
     return commonData.lastStep()
@@ -40,6 +42,10 @@ class _BackgroundScreenState extends State<BackgroundScreen> {
             ),
           ))
         : commonData.back();
+  }
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override

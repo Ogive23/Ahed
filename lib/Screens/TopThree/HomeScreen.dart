@@ -5,6 +5,7 @@ import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/HomeScreenAchievementContainer.dart';
 import 'package:ahed/Helpers/Helper.dart';
 import 'package:ahed/Screens/NeediesScreens/NeediesScreen.dart';
+import 'package:ahed/Session/MixPanelManager.dart';
 import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
@@ -70,6 +71,7 @@ class HomeScreen extends StatelessWidget {
   static late AppLanguage appLanguage;
   static late AppTheme appTheme;
   final Helper helper = Helper();
+  final MixPanelManager mixPanelManager = MixPanelManager();
 
   HomeScreen({super.key});
 
@@ -394,6 +396,7 @@ class HomeScreen extends StatelessWidget {
     appLanguage = Provider.of<AppLanguage>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
+    mixPanelManager.mixpanel!.track('Visit Home Screen');
     return Scaffold(
         backgroundColor: appTheme.themeData.primaryColor,
         appBar: AppBar(
