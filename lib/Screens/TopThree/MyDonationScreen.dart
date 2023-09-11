@@ -4,6 +4,7 @@ import 'package:ahed/Custom%20Widgets/CustomOfflineTransactionTimelineTile.dart'
 import 'package:ahed/Custom%20Widgets/CustomOnlineTransactionTimelineTile.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Helpers/DataMapper.dart';
+import 'package:ahed/Session/MixPanelManager.dart';
 import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
@@ -32,6 +33,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
   final DataMapper dataMapper = DataMapper();
   final TransactionApiCaller transactionApiCaller = TransactionApiCaller();
   SessionManager sessionManager = SessionManager();
+  final MixPanelManager mixPanelManager = MixPanelManager();
 
   @override
   initState() {
@@ -205,6 +207,7 @@ class _MyDonationScreenState extends State<MyDonationScreen>
     appLanguage = Provider.of<AppLanguage>(context);
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
+    mixPanelManager.mixpanel!.track('Visit Donation Screen');
     return Scaffold(
       backgroundColor: appTheme.themeData.primaryColor,
       appBar: AppBar(

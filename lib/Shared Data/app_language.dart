@@ -31,6 +31,9 @@ class AppLanguage extends ChangeNotifier {
             'SettingsTitle': 'Settings',
             'SettingsDarkMode': 'DarkMode',
             'SettingsLanguage': 'Language',
+            'SettingsLegalInfo': 'Legal Info',
+            'AppName': 'Ahed',
+            'SettingsSocialMedia': 'Social Media',
           }
         : {
             'StayInTouchTitle': 'مجتمعنا',
@@ -45,6 +48,9 @@ class AppLanguage extends ChangeNotifier {
             'SettingsTitle': 'الإعدادات',
             'SettingsDarkMode': 'الوضع المظلم',
             'SettingsLanguage': 'اللغة',
+            'SettingsLegalInfo': 'البيانات القانونية',
+            'AppName': 'عهد',
+            'SettingsSocialMedia': 'مجتمعنا',
           };
   }
 

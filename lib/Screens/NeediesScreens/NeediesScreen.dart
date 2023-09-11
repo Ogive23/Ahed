@@ -4,6 +4,7 @@ import 'package:ahed/Custom%20Widgets/CustomNeedyContainer.dart';
 import 'package:ahed/Custom%20Widgets/CustomSpacing.dart';
 import 'package:ahed/Custom%20Widgets/LoadingNeedyContainer.dart';
 import 'package:ahed/Models/Needy.dart';
+import 'package:ahed/Session/MixPanelManager.dart';
 import 'package:ahed/Session/session_manager.dart';
 import 'package:ahed/Shared%20Data/app_language.dart';
 import 'package:ahed/Shared%20Data/app_theme.dart';
@@ -27,10 +28,12 @@ class _NeediesScreenState extends State<NeediesScreen> {
   SessionManager sessionManager = SessionManager();
   int currentPage = 1;
   late int total;
+  final MixPanelManager mixPanelManager = MixPanelManager();
 
   @override
   initState() {
     super.initState();
+    appLanguage = Provider.of<AppLanguage>(context, listen: false);
     initNeedies();
   }
 
@@ -102,10 +105,10 @@ class _NeediesScreenState extends State<NeediesScreen> {
     late Map<String, dynamic> status;
     if (type == 'Urgent') {
       status =
-          await needyApiCaller.getAllUrgent(appLanguage.language!, currentPage);
+          await needyApiCaller.getAllUrgent(appLanguage.language ?? 'En', currentPage);
     }
     if (type == 'Not Urgent') {
-      status = await needyApiCaller.getAll(appLanguage.language!, currentPage);
+      status = await needyApiCaller.getAll(appLanguage.language ?? 'En', currentPage);
     }
 
     print(status);
