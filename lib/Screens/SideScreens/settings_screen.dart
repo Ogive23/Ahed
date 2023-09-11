@@ -88,7 +88,7 @@ class SettingsScreen extends StatelessWidget {
                                     child: Text(
                                       'العربية',
                                       style: appTheme
-                                          .themeData.primaryTextTheme.bodyMedium,
+                                          .themeData.primaryTextTheme.bodySmall,
                                     ),
                                   ),
                                   DropdownMenuItem(
@@ -96,12 +96,12 @@ class SettingsScreen extends StatelessWidget {
                                     child: Text(
                                       'En',
                                       style: appTheme
-                                          .themeData.primaryTextTheme.bodyMedium,
+                                          .themeData.primaryTextTheme.bodySmall,
                                     ),
                                   )
                                 ],
                                 value: appLanguage.language,
-                                dropdownColor: Colors.grey,
+                                dropdownColor: Colors.grey.shade50,
                                 icon: const Icon(Icons.language),
                                 // style: appTheme.themeData.textTheme.body1,
                                 onChanged: (String? value) {
@@ -119,7 +119,7 @@ class SettingsScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         //ToDo: Add Word to App Language for arabic support
                         children: [
-                          Text('Legal Info',
+                          Text(appLanguage.words['SettingsLegalInfo']!,
                               style: appTheme
                                   .themeData.primaryTextTheme.titleMedium),
                           IconButton(
@@ -132,7 +132,7 @@ class SettingsScreen extends StatelessWidget {
                                 context: context,
                                 builder: (context) {
                                   return AboutDialog(
-                                    applicationName: 'Ahed',
+                                    applicationName: appLanguage.words['AppName']!,
                                     applicationVersion: '1.0.0',
                                     children: <Widget>[
                                       const Text(
@@ -159,7 +159,7 @@ class SettingsScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         //ToDo: Add Word to App Language for arabic support
                         children: [
-                          Text('مجتمعنا',
+                          Text(appLanguage.words['SettingsSocialMedia']!,
                               style: appTheme
                                   .themeData.primaryTextTheme.titleMedium),
                           IconButton(
