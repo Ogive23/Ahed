@@ -7,7 +7,7 @@ class Helper{
     return notNull(object) ? object.toString() : 'غير متوفر';
   }
 
-  bool isNotAvailable(String text){
-    return text == 'غير متوفر';
+  bool isNotAvailable(String? text){
+    return text == null || text == 'غير متوفر';
   }
 }

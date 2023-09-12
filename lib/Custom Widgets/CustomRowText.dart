@@ -17,20 +17,27 @@ class CustomRowText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          width: w / 3,
-          child: Text(
-            firstText,
-            textAlign: TextAlign.center,
-            style: appTheme.themeData.primaryTextTheme.bodyLarge,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: w/25),
+          child: SizedBox(
+            width: w / 3,
+            child: Text(
+              firstText,
+              textAlign: TextAlign.right,
+              style: appTheme.themeData.primaryTextTheme.bodyLarge!.apply(
+                color: Colors.blueGrey[900]
+              ),
+            ),
           ),
         ),
         SizedBox(
-          width: w / 3 * 2,
+          width: w / 3 * 2 - w/12.5,
           child: Text(
             secondText,
             textAlign: TextAlign.center,
-            style: appTheme.themeData.primaryTextTheme.bodyLarge,
+            style: appTheme.themeData.primaryTextTheme.bodyLarge!.apply(
+                color: Colors.blueGrey[900]
+            ),
           ),
         )
       ],

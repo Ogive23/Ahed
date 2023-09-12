@@ -101,7 +101,8 @@ class SettingsScreen extends StatelessWidget {
                                   )
                                 ],
                                 value: appLanguage.language,
-                                dropdownColor: Colors.grey.shade50,
+                                
+                                dropdownColor: appTheme.themeData.highlightColor,
                                 icon: const Icon(Icons.language),
                                 // style: appTheme.themeData.textTheme.body1,
                                 onChanged: (String? value) {

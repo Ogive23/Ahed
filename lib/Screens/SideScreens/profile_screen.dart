@@ -72,12 +72,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
     appLanguage = Provider.of<AppLanguage>(context);
     commonData = Provider.of<CommonData>(context);
     return SafeArea(
-      child: SizedBox(
-          height: h,
-          child: SingleChildScrollView(
-            child: Container(
-              width: w,
-              decoration: BoxDecoration(
+        child: Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Container(
+            color: Colors.blueGrey[900],
+            padding: EdgeInsets.fromLTRB(w / 100, 0, w / 25, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'الملف الشخصي',
+                  style: appTheme.themeData.primaryTextTheme.displaySmall!
+                      .apply(color: Colors.white),
+                ),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: IconButton(
+                      onPressed: () => commonData.back(),
+                      icon: Icon(
+                        Icons.arrow_back_ios_sharp,
+                        color: Colors.white,
+                      )),
+                )
+              ],
+            ),
+          ),
+          Stack(
+            children: [
+              Container(
+                width: w,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(100),
+                  ),
                   image: sessionManager.user!.profileCover != null
                       ? DecorationImage(
                           image: NetworkImage(
@@ -90,277 +119,275 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         )
                       : DecorationImage(
                           image: const AssetImage(
-                            'assets/images/user.png',
+                            'assets/images/2018_12_05_4268-Edit.jpg',
                           ),
                           colorFilter: ColorFilter.mode(
                               appTheme.themeData.primaryColor,
                               BlendMode.softLight),
                           fit: BoxFit.cover,
-                        )),
-              child: ClipRRect(
-                  child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
-                      child: SizedBox(
-                        width: w,
-                        height: h,
-                        child: Column(
-                          // alignment: Alignment.topCenter,
+                        ),
+                  color: Colors.blueGrey[900],
+                ),
+                child: Container(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Positioned(
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            onImagePressed(context, 'Cover');
+                          },
+                        ),
+                        top: 0,
+                        right: 0,
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: h / 25),
+                        child: GestureDetector(
+                          child: CircleAvatar(
+                            radius: h / 10,
+                            backgroundColor: Colors.transparent,
+                            child: ClipOval(
+                              child: sessionManager.user!.profileImage != null
+                                  ? Image.network(
+                                      sessionManager.user!.profileImage!,
+                                      fit: BoxFit.cover,
+                                      width: w / 2.5,
+                                      height: h / 5,
+                                      errorBuilder: (context, error,
+                                              stackTrace) =>
+                                          Image.asset('assets/images/user.png'),
+                                    )
+                                  : Image.asset(
+                                      'assets/images/user.png',
+                                      fit: BoxFit.cover,
+                                      width: w / 2.5,
+                                      height: h / 5,
+                                    ),
+                            ),
+                          ),
+                          onTap: () {
+                            onImagePressed(context, 'Profile');
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.only(top: h / 50),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  sessionManager.user!.name,
+                  style: appTheme.nonStaticGetTextStyle(
+                    1.0,
+                    appTheme.themeData.primaryTextTheme.bodyLarge!
+                        .apply(color: Colors.blueGrey[900])
+                        .color,
+                    appTheme.largeTextSize(context),
+                    FontWeight.w500,
+                    1.0,
+                    TextDecoration.none,
+                    'OpenSans',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(100),
+                  ),
+                  color: Colors.white,
+                ),
+                child: SingleChildScrollView(
+                  child: Container(
+                    // width: w,
+                    // margin: EdgeInsets.only(top: h / 5),
+                    padding: EdgeInsets.symmetric(
+                      vertical: h / 100,
+                    ),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(100),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        const CustomSpacing(
+                          value: 100,
+                        ),
+                        isEditing
+                            ? Container(
+                                padding: EdgeInsets.only(left: w / 25),
+                                child: CustomTextField(
+                                    controller: bio,
+                                    label: 'نبذة مختصرة',
+                                    selectedColor: Colors.grey,
+                                    borderColor: Colors.grey,
+                                    obscureText: false,
+                                    keyboardType: TextInputType.streetAddress,
+                                    hint: 'أدخل نبذة مختصرة عنك',
+                                    error: null,
+                                    maxLength: 300,
+                                    width: w,
+                                    enableFormatters: false),
+                              )
+                            : Text(
+                                '${helper.isNotAvailable(sessionManager.user!.profileBio) ? 'لا توجد نبذة مختصرة' : sessionManager.user!.profileBio}',
+                                textAlign: TextAlign.center,
+                                style: appTheme
+                                    .themeData.primaryTextTheme.bodyLarge!
+                                    .apply(color: Colors.blueGrey[900]),
+                              ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              color: appTheme.themeData.primaryTextTheme
-                                  .headlineSmall!.color!
-                                  .withOpacity(0.5),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'الملف الشخصي',
-                                    style: appTheme
-                                        .themeData.primaryTextTheme.displayMedium,
-                                  ),
-                                  Directionality(
-                                    textDirection: TextDirection.ltr,
-                                    child: IconButton(
-                                        onPressed: () => commonData.back(),
-                                        icon: Icon(
-                                          Icons.arrow_back_ios_sharp,
-                                          color: appTheme.themeData.appBarTheme
-                                              .iconTheme!.color,
-                                        )),
-                                  )
-                                ],
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: h / 50, horizontal: w / 40),
+                              child: Text(
+                                'المعلومات الشخصية',
+                                style: appTheme
+                                    .themeData.primaryTextTheme.displaySmall!
+                                    .apply(color: Colors.blueGrey[900]),
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextButton(
-                                  child: const Text('تغيير الغلاف'),
-                                  onPressed: () {
-                                    onImagePressed(context, 'Cover');
-                                  },
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: isEditing
-                                      ? isLoading
-                                          ? const CustomButtonLoading()
-                                          : IconButton(
-                                              icon: const Icon(
-                                                Icons.done,
-                                                color: Colors.green,
-                                              ),
-                                              onPressed: () async {
-                                                changeLoadingState();
-                                                Map<String, dynamic> status =
-                                                    await userApiCaller
-                                                        .changeUserInformation(
-                                                            appLanguage
-                                                                .language!,
-                                                            sessionManager
-                                                                .user!.id,
-                                                            bio.text,
-                                                            address.text,
-                                                            phoneNumber.text);
-                                                isEditing = !isEditing;
-                                                changeLoadingState();
-                                                if (!status['Err_Flag']) {
-                                                  sessionManager
-                                                      .changeUserInfo(
+                            Padding(
+                              padding: EdgeInsets.only(left: w / 50),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: isEditing
+                                    ? isLoading
+                                        ? const CustomButtonLoading()
+                                        : IconButton(
+                                            icon: const Icon(
+                                              Icons.done,
+                                              color: Colors.green,
+                                            ),
+                                            onPressed: () async {
+                                              changeLoadingState();
+                                              Map<String, dynamic> status =
+                                                  await userApiCaller
+                                                      .changeUserInformation(
+                                                          appLanguage.language!,
+                                                          sessionManager
+                                                              .user!.id,
                                                           bio.text,
                                                           address.text,
                                                           phoneNumber.text);
-                                                  return CoolAlert.show(
-                                                      context: context,
-                                                      type: CoolAlertType
-                                                          .success,
-                                                      lottieAsset:
-                                                          'assets/animations/6951-success.json',
-                                                      text: status['message'],
-                                                      confirmBtnColor:
-                                                          const Color(
-                                                              0xff1c9691),
-                                                      title: '');
-                                                } else {
-                                                  return CoolAlert.show(
-                                                      context: context,
-                                                      type:
-                                                          CoolAlertType.error,
-                                                      lottieAsset:
-                                                          'assets/animations/38213-error.json',
-                                                      text:
-                                                          status['Err_Desc'],
-                                                      confirmBtnColor:
-                                                          const Color(
-                                                              0xff1c9691),
-                                                      title: '');
-                                                }
-                                              },
-                                            )
-                                      : IconButton(
-                                          icon: const Icon(
-                                            Icons.build,
-                                            color: Colors.blue,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
                                               isEditing = !isEditing;
-                                            });
-                                            print(isEditing);
-                                          },
-                                        ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              decoration: BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.5),
-                                    blurRadius: 60,
-                                    offset: const Offset(0, 4))
-                              ]),
-                              child: GestureDetector(
-                                child: CircleAvatar(
-                                  radius: h / 10,
-                                  backgroundColor: Colors.transparent,
-                                  child: ClipOval(
-                                    child: sessionManager.user!.profileImage !=
-                                            null
-                                        ? Image.network(
-                                            sessionManager.user!.profileImage!,
-                                            fit: BoxFit.cover,
-                                            width: w / 5,
-                                            height: h / 10,
-                                            errorBuilder: (context, error,
-                                                    stackTrace) =>
-                                                Image.asset(
-                                                    'assets/images/user.png'),
+                                              changeLoadingState();
+                                              if (!status['Err_Flag']) {
+                                                sessionManager.changeUserInfo(
+                                                    bio.text,
+                                                    address.text,
+                                                    phoneNumber.text);
+                                                return CoolAlert.show(
+                                                    context: context,
+                                                    type: CoolAlertType.success,
+                                                    lottieAsset:
+                                                        'assets/animations/6951-success.json',
+                                                    text: status['message'],
+                                                    confirmBtnColor:
+                                                        const Color(0xff1c9691),
+                                                    title: '');
+                                              } else {
+                                                return CoolAlert.show(
+                                                    context: context,
+                                                    type: CoolAlertType.error,
+                                                    lottieAsset:
+                                                        'assets/animations/38213-error.json',
+                                                    text: status['Err_Desc'],
+                                                    confirmBtnColor:
+                                                        const Color(0xff1c9691),
+                                                    title: '');
+                                              }
+                                            },
                                           )
-                                        : Image.asset(
-                                            'assets/images/user.png',
-                                            fit: BoxFit.cover,
-                                            width: w / 5,
-                                            height: h / 10,
-                                          ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  onImagePressed(context, 'Profile');
-                                },
-                              ),
-                            ),
-                            Container(
-                              width: w,
-                              // margin: EdgeInsets.only(top: h / 5),
-                              padding: EdgeInsets.symmetric(
-                                vertical: h / 50,
-                              ),
-                              decoration: BoxDecoration(
-                                  color: appTheme.themeData.primaryTextTheme
-                                      .headlineSmall!.color!
-                                      .withOpacity(0.8)),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    sessionManager.user!.name,
-                                    style: appTheme.nonStaticGetTextStyle(
-                                      1.0,
-                                      appTheme.themeData.primaryTextTheme
-                                          .bodyLarge!.color,
-                                      appTheme.largeTextSize(context),
-                                      FontWeight.w500,
-                                      1.0,
-                                      TextDecoration.none,
-                                      'OpenSans',
-                                    ),
-                                  ),
-                                  const CustomSpacing(
-                                    value: 100,
-                                  ),
-                                  isEditing
-                                      ? CustomTextField(
-                                          controller: bio,
-                                          label: 'نبذة مختصرة',
-                                          selectedColor: Colors.grey,
-                                          borderColor: Colors.grey,
-                                          obscureText: false,
-                                          keyboardType:
-                                              TextInputType.streetAddress,
-                                          hint: 'أدخل نبذة مختصرة عنك',
-                                          error: null,
-                                          maxLength: 300,
-                                          width: w,
-                                          enableFormatters: false)
-                                      : Text(
-                                          '${helper.isNotAvailable(sessionManager.user!.profileBio!) ? 'لا توجد نبذة مختصرة' : sessionManager.user!.profileBio}',
-                                          textAlign: TextAlign.center,
-                                          style: appTheme.themeData
-                                              .primaryTextTheme.bodyLarge,
+                                    : IconButton(
+                                        icon: const Icon(
+                                          Icons.build,
+                                          color: Colors.black,
                                         ),
-                                  Align(
-                                      alignment: Alignment.topRight,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: h / 50,
-                                            horizontal: w / 40),
-                                        child: Text(
-                                          'المعلومات الشخصية',
-                                          style: appTheme.themeData
-                                              .primaryTextTheme.displaySmall,
-                                        ),
-                                      )),
-                                  const CustomSpacing(
-                                    value: 100,
-                                  ),
-                                  isEditing
-                                      ? CustomTextField(
-                                          controller: address,
-                                          label: 'العنوان',
-                                          selectedColor: Colors.grey,
-                                          borderColor: Colors.grey,
-                                          obscureText: false,
-                                          keyboardType:
-                                              TextInputType.streetAddress,
-                                          hint: 'أدخل عنوانك',
-                                          error: null,
-                                          width: w,
-                                          enableFormatters: false)
-                                      : CustomRowText(
-                                          firstText: 'العنوان',
-                                          secondText:
-                                              sessionManager.user!.address ??
-                                                  ''),
-                                  const CustomSpacing(
-                                    value: 100,
-                                  ),
-                                  isEditing
-                                      ? CustomTextField(
-                                          controller: phoneNumber,
-                                          label: 'رقم الهاتف',
-                                          selectedColor: Colors.grey,
-                                          borderColor: Colors.grey,
-                                          obscureText: false,
-                                          keyboardType:
-                                              TextInputType.streetAddress,
-                                          hint: 'أدخل رقم هاتفك',
-                                          error: null,
-                                          width: w,
-                                          enableFormatters: false)
-                                      : CustomRowText(
-                                          firstText: 'رقم الهاتف',
-                                          secondText:
-                                              sessionManager.user!.phoneNumber),
-                                ],
+                                        onPressed: () {
+                                          setState(() {
+                                            isEditing = !isEditing;
+                                          });
+                                          print(isEditing);
+                                        },
+                                      ),
                               ),
                             ),
                           ],
                         ),
-                      ))),
+                        const CustomSpacing(
+                          value: 100,
+                        ),
+                        isEditing
+                            ? Container(
+                                padding: EdgeInsets.only(left: w / 25),
+                                child: CustomTextField(
+                                    controller: address,
+                                    label: 'العنوان',
+                                    selectedColor: Colors.grey,
+                                    borderColor: Colors.grey,
+                                    obscureText: false,
+                                    keyboardType: TextInputType.streetAddress,
+                                    hint: 'أدخل عنوانك',
+                                    error: null,
+                                    width: w,
+                                    enableFormatters: false),
+                              )
+                            : CustomRowText(
+                                firstText: 'العنوان',
+                                secondText:
+                                    sessionManager.user!.address ?? '-'),
+                        const CustomSpacing(
+                          value: 50,
+                        ),
+                        isEditing
+                            ? Container(
+                                padding: EdgeInsets.only(left: w / 25),
+                                child: CustomTextField(
+                                    controller: phoneNumber,
+                                    label: 'رقم الهاتف',
+                                    selectedColor: Colors.grey,
+                                    borderColor: Colors.grey,
+                                    obscureText: false,
+                                    keyboardType: TextInputType.streetAddress,
+                                    hint: 'أدخل رقم هاتفك',
+                                    error: null,
+                                    width: w,
+                                    enableFormatters: false),
+                              )
+                            : CustomRowText(
+                                firstText: 'رقم الهاتف',
+                                secondText: sessionManager.user!.phoneNumber),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
-          )),
-    );
+          ),
+        ],
+      ),
+    ));
   }
 
   Future<File?> pickImageFromGallery(ImageSource source) async {
