@@ -10,22 +10,22 @@ import '../Session/session_manager.dart';
 import 'package:dio/dio.dart';
 
 class NeedyApiCaller {
-  String url = 'http://192.168.1.2:8000';
+  String url = 'http://192.168.1.7:8000';
   ResponseHandler responseHandler = ResponseHandler();
   SessionManager sessionManager = SessionManager();
   DataMapper dataMapper = DataMapper();
   TokenApiCaller tokenApiCaller = TokenApiCaller();
 
   getAllUrgent(String language, int pageNumber) async {
-    if (sessionManager.accessTokenExpired()) {
-      await tokenApiCaller.refreshAccessToken();
-    }
-    var headers = {
-      'Content-Type': 'application/json',
-      'Content-Language': language,
-      'Authorization': 'Bearer ${sessionManager.accessToken}',
-    };
     try {
+      if (sessionManager.accessTokenExpired()) {
+        await tokenApiCaller.refreshAccessToken();
+      }
+      var headers = {
+        'Content-Type': 'application/json',
+        'Content-Language': language,
+        'Authorization': 'Bearer ${sessionManager.accessToken}',
+      };
       print('$url/api/ahed/urgent-needies?page=$pageNumber');
       var response = await http
           .get(Uri.parse('$url/api/ahed/urgent-needies?page=$pageNumber'),
@@ -53,16 +53,16 @@ class NeedyApiCaller {
   }
 
   getAll(String language, int pageNumber) async {
-    print(language);
-    if (sessionManager.accessTokenExpired()) {
-      await tokenApiCaller.refreshAccessToken();
-    }
-    var headers = {
-      'Content-Type': 'application/json',
-      'Content-Language': language,
-      'Authorization': 'Bearer ${sessionManager.accessToken}',
-    };
     try {
+      print(language);
+      if (sessionManager.accessTokenExpired()) {
+        await tokenApiCaller.refreshAccessToken();
+      }
+      var headers = {
+        'Content-Type': 'application/json',
+        'Content-Language': language,
+        'Authorization': 'Bearer ${sessionManager.accessToken}',
+      };
       var response = await http
           .get(Uri.parse('$url/api/ahed/needies?page=$pageNumber'),
               headers: headers)

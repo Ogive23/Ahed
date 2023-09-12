@@ -14,7 +14,7 @@ class UserApiCaller {
   SessionManager sessionManager = SessionManager();
   DataMapper dataMapper = DataMapper();
   TokenApiCaller tokenApiCaller = TokenApiCaller();
-  String url = 'http://192.168.1.2:8000';
+  String url = 'http://192.168.1.7:8000';
 
   Future<Map<String, dynamic>> login(String language, String email, String password) async {
     var headers = {
